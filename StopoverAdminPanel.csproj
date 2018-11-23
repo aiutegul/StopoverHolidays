@@ -227,6 +227,7 @@
     <Content Include="Views\Main\Activities.cshtml" />
     <Content Include="Views\PassengerRecords\LoadPassengers.cshtml" />
     <Content Include="Views\Main\OrderRequests.cshtml" />
+    <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
@@ -260,9 +261,9 @@
     <Content Include="Scripts\jquery-3.1.0.min.map" />
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
-    <Content Include="Web.config">
+    <None Include="Web.config">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Main\_FlightsForOrderStopover.cshtml" />
