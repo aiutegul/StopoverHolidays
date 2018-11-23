@@ -20,8 +20,6 @@ D:\VS Projects\StopoverHolidays\StopoverAdminPanel\StopoverAdminPanel\bin\System
 D:\VS Projects\StopoverHolidays\StopoverAdminPanel\StopoverAdminPanel\bin\System.Web.WebPages.Razor.dll
 D:\VS Projects\StopoverHolidays\StopoverAdminPanel\StopoverAdminPanel\bin\WebGrease.dll
 D:\VS Projects\StopoverHolidays\StopoverAdminPanel\StopoverAdminPanel\bin\Antlr3.Runtime.pdb
-D:\VS Projects\StopoverHolidays\StopoverAdminPanel\StopoverAdminPanel\bin\DevExtreme.AspNet.Data.xml
-D:\VS Projects\StopoverHolidays\StopoverAdminPanel\StopoverAdminPanel\bin\DevExtreme.AspNet.Mvc.xml
 D:\VS Projects\StopoverHolidays\StopoverAdminPanel\StopoverAdminPanel\bin\EntityFramework.xml
 D:\VS Projects\StopoverHolidays\StopoverAdminPanel\StopoverAdminPanel\bin\EntityFramework.SqlServer.xml
 D:\VS Projects\StopoverHolidays\StopoverAdminPanel\StopoverAdminPanel\bin\Newtonsoft.Json.xml
