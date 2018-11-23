@@ -1,0 +1,4266 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Amadeus</name>
+    </assembly>
+    <members>
+        <member name="T:Amadeus.AmadeusWorkerAuthenticationException">
+            <summary>
+            AmadeusWorker authentication exception class
+            </summary>
+        </member>
+        <member name="M:Amadeus.AmadeusWorkerAuthenticationException.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Amadeus.AmadeusWorkerAuthenticationException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+            <param name="errorDetails">The error details.</param>
+        </member>
+        <member name="T:Amadeus.AmadeusWorkerException">
+            <summary>
+            AmadeusWorker specific exceptions class
+            </summary>
+        </member>
+        <member name="M:Amadeus.AmadeusWorkerException.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Amadeus.AmadeusWorkerConnectionException" /> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+            <param name="errorDetails">The error details.</param>
+        </member>
+        <member name="M:Amadeus.AmadeusWorkerException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Amadeus.AmadeusWorkerException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:Amadeus.AmadeusWorkerConnectionException">
+            <summary>
+            AmadeusWorker connection specific exceptions class
+            </summary>
+        </member>
+        <member name="M:Amadeus.AmadeusWorkerConnectionException.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Amadeus.AmadeusWorkerConnectionException" /> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+            <param name="errorDetails">The error details.</param>
+        </member>
+        <member name="M:Amadeus.AmadeusWorkerConnectionException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Amadeus.AmadeusWorkerConnectionException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:Amadeus.Availability.IAvailability">
+            <summary>
+            Represent flight availability list
+            </summary>
+        </member>
+        <member name="P:Amadeus.Availability.IAvailability.Info">
+            <summary>
+            Gets the information about availability.
+            </summary>
+            <value>
+            The information about availability.
+            </value>
+        </member>
+        <member name="P:Amadeus.Availability.IAvailability.Routes">
+            <summary>
+            Gets the routes.
+            </summary>
+            <value>
+            The routes.
+            </value>
+        </member>
+        <member name="T:Amadeus.Availability.IAvailabilityInfo">
+            <summary>
+            Represent availability list main info
+            </summary>
+        </member>
+        <member name="P:Amadeus.Availability.IAvailabilityInfo.DepartureAirportCode">
+            <summary>
+            Gets the departure airport code.
+            </summary>
+            <value>
+            The departure airport code.
+            </value>
+        </member>
+        <member name="P:Amadeus.Availability.IAvailabilityInfo.ArrivalAirportCode">
+            <summary>
+            Gets the arrival airport code.
+            </summary>
+            <value>
+            The arrival airport code.
+            </value>
+        </member>
+        <member name="T:Amadeus.Availability.IBookingClassAvailability">
+            <summary>
+            Represent booking class availability
+            </summary>
+        </member>
+        <member name="P:Amadeus.Availability.IBookingClassAvailability.ClassCode">
+            <summary>
+            Gets the class code.
+            </summary>
+            <value>
+            The class code.
+            </value>
+        </member>
+        <member name="P:Amadeus.Availability.IBookingClassAvailability.AvailableSeatsNumber">
+            <summary>
+            Gets the available seats number.
+            </summary>
+            <value>
+            The available seats number.
+            </value>
+        </member>
+        <member name="P:Amadeus.Availability.IBookingClassAvailability.Status">
+            <summary>
+            Gets the status.
+            </summary>
+            <value>
+            The status.
+            </value>
+        </member>
+        <member name="T:Amadeus.Availability.IFlightAvailability">
+            <summary>
+            Represent flight info and classes availabilities
+            </summary>
+        </member>
+        <member name="P:Amadeus.Availability.IFlightAvailability.Flight">
+            <summary>
+            Gets the flight.
+            </summary>
+            <value>
+            The flight.
+            </value>
+        </member>
+        <member name="P:Amadeus.Availability.IFlightAvailability.Availabilities">
+            <summary>
+            Gets the availabilities.
+            </summary>
+            <value>
+            The availabilities.
+            </value>
+        </member>
+        <member name="T:Amadeus.Availability.IRouteAvailability">
+            <summary>
+            Represent route flights availabilities
+            </summary>
+        </member>
+        <member name="P:Amadeus.Availability.IRouteAvailability.Flights">
+            <summary>
+            Gets the flights.
+            </summary>
+            <value>
+            The flights.
+            </value>
+        </member>
+        <member name="P:Amadeus.Availability.IRouteAvailability.LineNumber">
+            <summary>
+            Gets the line number.
+            </summary>
+            <value>
+            The line number.
+            </value>
+        </member>
+        <member name="P:Amadeus.Availability.IRouteAvailability.FlightDuration">
+            <summary>
+            Gets the route duration time.
+            </summary>
+            <value>
+            The route duration time.
+            </value>
+        </member>
+        <member name="T:Amadeus.Availability.SeatAvailabilityStatus">
+            <summary>
+            Provides seat availability statuses
+            </summary>
+        </member>
+        <member name="F:Amadeus.Availability.SeatAvailabilityStatus.Undefined">
+            <summary>
+            The undefined status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Availability.SeatAvailabilityStatus.Available">
+            <summary>
+            The seat available status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Availability.SeatAvailabilityStatus.NightClassOnly">
+            <summary>
+            The night class only status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Availability.SeatAvailabilityStatus.NegotiatedSpace">
+            <summary>
+            The negotiated space status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Availability.SeatAvailabilityStatus.NightClassAndNegotiatedSpace">
+            <summary>
+            The night class and negotiated space status
+            </summary>
+        </member>
+        <member name="T:Amadeus.Availability.IAvailabilityOperations">
+            <summary>
+            Flights schedule and availability functions
+            </summary>
+        </member>
+        <member name="M:Amadeus.Availability.IAvailabilityOperations.RetrieveOneWayDirectFlightsAvailability(System.DateTime,System.String,System.String)">
+            <summary>
+            Retrieves the one way direct airport to airport flights availability list.
+            </summary>
+            <param name="flightDate">The flight date.</param>
+            <param name="departureAirportCode">The departure airport code.</param>
+            <param name="arrivalAirportCode">The arrival airport code.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Availability.IAvailabilityOperations.RetrieveFlightsAvailability(System.DateTime,System.String,System.String,System.Boolean)">
+            <summary>
+            Retrieves flights availability list.
+            </summary>
+            <param name="flightDate">The flight date.</param>
+            <param name="departureAirportCode">The departure airport code.</param>
+            <param name="arrivalAirportCode">The arrival airport code.</param>
+            <param name="onlyDirectFlights">if set to <c>true</c> then only one way direct airport to airport flights will be returned.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.Availability.IMultiAvailabilityOperations">
+            <summary>
+            Represent multiavailability operations
+            </summary>
+        </member>
+        <member name="M:Amadeus.Availability.IMultiAvailabilityOperations.Retrieve(System.DateTime,System.String,System.String,System.String)">
+            <summary>
+            Retrieves the flights availability list.
+            </summary>
+            <param name="flightDate">The flight date.</param>
+            <param name="departureAirportCode">The departure airport code.</param>
+            <param name="arrivalAirportCode">The arrival airport code.</param>
+            <param name="airlineCode">The airline code.</param>
+        </member>
+        <member name="T:Amadeus.AmadeusCommandErrorHandler">
+            <summary>
+            Describes amadeus command error delegate
+            </summary>
+            <param name="command">The command.</param>
+            <param name="commandResult">The command result.</param>
+        </member>
+        <member name="T:Amadeus.AmadeusCommandExecutedHandler">
+            <summary>
+            Describes amadeus command executed delegate
+            </summary>
+            <param name="command">The command.</param>
+            <param name="commandResult">The command result.</param>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.CouponStatus">
+            <summary>
+            Provides coupon status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.Undefined">
+            <summary>
+            The undefined status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.AirportControl">
+            <summary>
+            The airport control (AL) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.FlownUsed">
+            <summary>
+            The flown used (B) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.Boarded">
+            <summary>
+            The boarded (BD) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.CheckedIn">
+            <summary>
+            The checked in (CK) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.ExchangedReissued">
+            <summary>
+            The exchanged reissued (E) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.OriginalIssue">
+            <summary>
+            The original issue (I) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.IrregularOperations">
+            <summary>
+            The irregular operations (IO) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.NotAvailable">
+            <summary>
+            The not available (NAV) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.Confirmed">
+            <summary>
+            The confirmed (OK) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.PrintExchange">
+            <summary>
+            The print exchange (PE) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.Printed">
+            <summary>
+            The printed (PR) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.Refunded">
+            <summary>
+            The refunded (RF) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.Requested">
+            <summary>
+            The requested (RQ) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.CouponStatus.Void">
+            <summary>
+            The void (V) status
+            </summary>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.EDocTextInfoType">
+            <summary>
+            Provides EDoc text info type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.Undefined">
+            <summary>
+            The undefined text info type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.EndorsementInformation">
+            <summary>
+            The endorsement information (10)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.SpecialRemarks">
+            <summary>
+            The special remarks (13)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.FareQuotedAtTimeOfBooking">
+            <summary>
+            The fare quoted at time of booking (14)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.FareCalculationAtTimeOfTicketing">
+            <summary>
+            The fare calculation at time of ticketing (15)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.FormOfPaymentInformation">
+            <summary>
+            The form of payment information (16)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.TicketingInformation">
+            <summary>
+            The ticketing information (17)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.TicketingRemarks">
+            <summary>
+            The ticketing remarks (23)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.Issuing">
+            <summary>
+            The issuing agency/airline-name and place of issue (39)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.NameOfServiceProviderPresentTo">
+            <summary>
+            The name of service provider present to (40)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.LocationOfServiceProviderPresentAt">
+            <summary>
+            The location of service provider present at (42)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.OriginalIssueInformation">
+            <summary>
+            The original issue information (45)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.ReasonForIssuanceDescription">
+            <summary>
+            The reason for issuance description (47)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.TelephoneNatureNotKnown">
+            <summary>
+            The telephone nature not known (5)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.OfficeIdCodeAndConfidentialRemarks">
+            <summary>
+            The office identifier code and confidential remarks (56)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.EMailAddress">
+            <summary>
+            The e-mail address (61)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.Remarks">
+            <summary>
+            The remarks (7)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.VATText">
+            <summary>
+            The vat text (704)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.ITRIndicator">
+            <summary>
+            The itr indicator (710)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.FareCalculationReportingIndicator">
+            <summary>
+            The fare calculation reporting indicator(733)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.ControllingSystem">
+            <summary>
+            The controlling system (CSY)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.Certificate">
+            <summary>
+            The certificate (CT)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.DiscountCoupon">
+            <summary>
+            The discount coupon (DCP)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.FareFamilyCode">
+            <summary>
+            The fare family code (FFC)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.MilesFareCalculation">
+            <summary>
+            The miles fare calculation (MFC)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.PaymentOnDemandInformation">
+            <summary>
+            The payment on demand information (POD)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.RevenueAttribution">
+            <summary>
+            The revenue attribution (RA)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.AutomatedRefundDocumentNumber">
+            <summary>
+            The automated refund document number (RFD)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.ManualRemarks">
+            <summary>
+            The manual remarks (RMK)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocTextInfoType.ShareholderCoupon">
+            <summary>
+            The shareholder coupon (SHC)
+            </summary>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.EDocType">
+            <summary>
+            Represent electronic document types
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocType.EMDA">
+            <summary>
+            The printed (J) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocType.Ticket">
+            <summary>
+            The printed (T) type
+            </summary>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.FareType">
+            <summary>
+            Provides fare type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.Undefined">
+            <summary>
+            The undefined fare type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.BaseFare">
+            <summary>
+            The base fare (B) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.AdditionalCollectionTotal">
+            <summary>
+            The additional collection total (C) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.BankExchangeRate">
+            <summary>
+            The bank exchange rate (D) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.EquivalentFare">
+            <summary>
+            The equivalent fare (E) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.CommissionAmount">
+            <summary>
+            The commission amount (F) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.CommissionRate">
+            <summary>
+            The commission rate (G) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.NetFareAmount">
+            <summary>
+            The net fare amount (H) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.TransactionTotalAmount">
+            <summary>
+            The transaction total amount (I) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.TicketTotalAmount">
+            <summary>
+            The ticket total amount (M) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.RefundableValueFare">
+            <summary>
+            The refundable value fare (RF) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.TicketDocumentAmount">
+            <summary>
+            The ticket document amount (base,tax,fee) (T) type
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.FareType.ExchangeValueFare">
+            <summary>
+            The exchange value fare (XC) type
+            </summary>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.ICoupon">
+            <summary>
+            Represent coupon interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.ICoupon.Number">
+            <summary>
+            Gets the coupon number.
+            </summary>
+            <value>
+            The coupon number.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.ICoupon.Status">
+            <summary>
+            Gets the status.
+            </summary>
+            <value>
+            The status.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.ICoupon.StatusCode">
+            <summary>
+            Gets the coupon status code.
+            </summary>
+            <value>
+            Coupon status code.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.ICoupon.FlightTime">
+            <summary>
+            Gets the flight time.
+            </summary>
+            <value>
+            The flight time.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.ICoupon.DepartureAirportCode">
+            <summary>
+            Gets the departure airport code.
+            </summary>
+            <value>
+            The departure airport code.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.ICoupon.ArrivalAirportCode">
+            <summary>
+            Gets the arrival airport code.
+            </summary>
+            <value>
+            The arrival airport code.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.ICoupon.FlightNumber">
+            <summary>
+            Gets the flight number.
+            </summary>
+            <value>
+            The flight number.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.ICoupon.MarketingCompanyCode">
+            <summary>
+            Gets the marketing company code.
+            </summary>
+            <value>
+            The marketing company code.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.ICoupon.TextInfo">
+            <summary>
+            Gets the text information.
+            </summary>
+            <value>
+            The text information.
+            </value>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.IEDocDisplay">
+            <summary>
+            Represent electronic document display
+            </summary>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDocDisplay.EDocs">
+            <summary>
+            Gets the electronic documents.
+            </summary>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.IEDoc">
+            <summary>
+            Represent electronic document
+            </summary>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.Number">
+            <summary>
+            Gets the document number.
+            </summary>
+            <value>
+            Ticket number or EMD number
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.InConnectionWith">
+            <summary>
+            Gets the list in connection with ticket.
+            </summary>
+            <value>
+            The list in connection with ticket.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.Type">
+            <summary>
+            Gets the EDoc type.
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.ServiceType">
+            <summary>
+            Gets the type of the service.
+            </summary>
+            <value>
+            The type of the service.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.SpecialCondition">
+            <summary>
+            Gets the special condition.
+            </summary>
+            <value>
+            The special condition.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.SpecialConditionValue">
+            <summary>
+            Gets the special condition value.
+            </summary>
+            <value>
+            The special condition value.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.PNR">
+            <summary>
+            Gets the PNR.
+            </summary>
+            <value>
+            The PNR.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.Passenger">
+            <summary>
+            Gets the passenger.
+            </summary>
+            <value>
+            The passenger.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.Coupons">
+            <summary>
+            Gets the coupons.
+            </summary>
+            <value>
+            Coupons.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.Fares">
+            <summary>
+            Gets the fares.
+            </summary>
+            <value>
+            The fares.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDoc.TextInfo">
+            <summary>
+            Gets the text information.
+            </summary>
+            <value>
+            The text information.
+            </value>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.IEDocTextInfo">
+            <summary>
+            Represent electronic document text information
+            </summary>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDocTextInfo.Type">
+            <summary>
+            Gets the type.
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDocTextInfo.TypeCode">
+            <summary>
+            Gets the type code.
+            </summary>
+            <value>
+            The type code.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IEDocTextInfo.Text">
+            <summary>
+            Gets the text.
+            </summary>
+            <value>
+            The text.
+            </value>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.IFare">
+            <summary>
+            Represent Fare
+            </summary>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IFare.Type">
+            <summary>
+            Gets the type.
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IFare.TypeCode">
+            <summary>
+            Gets the type code.
+            </summary>
+            <value>
+            The type code.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IFare.Amount">
+            <summary>
+            Gets the amount.
+            </summary>
+            <value>
+            The amount.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicDocuments.IFare.Currency">
+            <summary>
+            Gets the currency.
+            </summary>
+            <value>
+            The currency.
+            </value>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.EDocServiceType">
+            <summary>
+            Represents service types of electronic documents
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.Undefined">
+            <summary>
+            The undefined
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.MySeat">
+            <summary>
+            My seat (A/0B5)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.MyUpgradeAtCheckIn">
+            <summary>
+            My upgrade at check in (A/060)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.Upgrade">
+            <summary>
+            The upgrade (A/0BJ)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.AnimalInHold">
+            <summary>
+            The animal in hold (C/0AY)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.Bicycle">
+            <summary>
+            The bicycle (C/0DM)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.PetInCabin">
+            <summary>
+            The pet in cabin (C/0AZ)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.SportEquipmentGolf">
+            <summary>
+            The sport equipment golf (C/0DC)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.SportEquipmentDiving">
+            <summary>
+            The sport equipment diving (C/0EE)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.SportEquipmentBicycle">
+            <summary>
+            The sport equipment bicycle (C/0EC)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.SportEquipmentSurfBoardOrKit">
+            <summary>
+            The sport equipment surf board or kit (C/0GT)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.SportEquipmentOther">
+            <summary>
+            The sport equipment other (C/0DD)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.SportEquipmentCanoe">
+            <summary>
+            The sport equipment canoe (C/0FT)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.BagggeUpTo32">
+            <summary>
+            The baggge up to32 (C/0AA)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.UnAccompaniedMinor">
+            <summary>
+            The un accompanied minor (D/0BZ)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.MyWifiLight">
+            <summary>
+            My wifi light (G/032)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.MyWifiBusiness">
+            <summary>
+            My wifi business (G/033)
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectronicDocuments.EDocServiceType.MyWifiSuper">
+            <summary>
+            My wifi super (G/034)
+            </summary>
+        </member>
+        <member name="T:Amadeus.ElectronicDocuments.IEDocOperationsAsync">
+            <summary>
+            Represent electronic documents functionality
+            </summary>
+        </member>
+        <member name="M:Amadeus.ElectronicDocuments.IEDocOperationsAsync.RetrieveElectronicDocument(System.String,Amadeus.ElectronicDocuments.EDocType)">
+            <summary>
+            Retrieve the electronic document from amadeus.
+            </summary>
+            <param name="ticketNumber">Ticket number.</param>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.ElectronicTickets.IETicketDisplay">
+            <summary>
+            Represent eticket container
+            </summary>
+        </member>
+        <member name="P:Amadeus.ElectronicTickets.IETicketDisplay.Tickets">
+            <summary>
+            Gets the electornic tickets information.
+            </summary>
+            <value>
+            The electronic tickets information.
+            </value>
+        </member>
+        <member name="T:Amadeus.ElectronicTickets.IETicket">
+            <summary>
+            Represent e-ticket
+            </summary>
+        </member>
+        <member name="P:Amadeus.ElectronicTickets.IETicket.Number">
+            <summary>
+            Gets the ticket number.
+            </summary>
+            <value>
+            Ticket number.
+            </value>
+        </member>
+        <member name="P:Amadeus.ElectronicTickets.IETicket.Coupons">
+            <summary>
+            Gets the coupons.
+            </summary>
+            <value>
+            Coupons.
+            </value>
+        </member>
+        <member name="T:Amadeus.ElectronicTickets.IEticketOperations">
+            <summary>
+            Eticket display functionality
+            </summary>
+        </member>
+        <member name="M:Amadeus.ElectronicTickets.IEticketOperations.RetrieveETicket(System.String)">
+            <summary>
+            Retrieve the e-ticket from amadeus.
+            </summary>
+            <param name="ticketNumber">Ticket number.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.Gender">
+            <summary>
+            Gender
+            </summary>
+        </member>
+        <member name="F:Amadeus.Gender.Undefined">
+            <summary>
+            The undefined gender (U)
+            </summary>
+        </member>
+        <member name="F:Amadeus.Gender.Male">
+            <summary>
+            The male gender (M)
+            </summary>
+        </member>
+        <member name="F:Amadeus.Gender.Female">
+            <summary>
+            The female gender (F)
+            </summary>
+        </member>
+        <member name="T:Amadeus.IAmadeusWorkerBase">
+            <summary>
+            Provides amadeus workers base functionality
+            </summary>
+            <seealso cref="T:System.IDisposable" />
+        </member>
+        <member name="E:Amadeus.IAmadeusWorkerBase.CommandError">
+            <summary>
+            Occurs when the amadeus command executed with error.
+            </summary>
+        </member>
+        <member name="E:Amadeus.IAmadeusWorkerBase.CommandExecuted">
+            <summary>
+            Occurs when the amadeus command executed.
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerBase.LastCommandResult">
+            <summary>
+            Gets the last command result (cryptic command result or XML retrieve result).
+            </summary>
+            <value>
+            The last command result.
+            </value>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerBase.LastCommand">
+            <summary>
+            Gets the last command.
+            </summary>
+            <value>
+            The last command.
+            </value>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerBase.Commands">
+            <summary>
+            Amadeus raw cryptic commands
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerBase.Operations">
+            <summary>
+            Amadeus general operations
+            </summary>
+        </member>
+        <member name="M:Amadeus.IAmadeusWorkerBase.ExecuteCrypticCommandClean(System.String)">
+            <summary>
+            Executes the cryptic get screen command
+            </summary>
+            <param name="commandText">The cryptic get screen command text.</param>
+            <returns>Result of cryptic get screen command</returns>
+        </member>
+        <member name="M:Amadeus.IAmadeusWorkerBase.ExecuteCrypticCommand(System.String)">
+            <summary>
+            Executes the cryptic get screen command with retrieving data from all pages (if exist)
+            </summary>
+            <param name="commandText">The cryptic get screen command text.</param>
+            <returns>Result of cryptic get screen command</returns>
+        </member>
+        <member name="M:Amadeus.IAmadeusWorkerBase.OnCommandError(System.String,System.String)">
+            <summary>
+            Called when amadeus command executed with error.
+            </summary>
+            <param name="command">The command.</param>
+            <param name="commandResult">The command result.</param>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IBookingOperationsBase">
+            <summary>
+            Represents PNR ralated base functionality
+            </summary>
+        </member>
+        <member name="M:Amadeus.PassengerNameRecords.IBookingOperationsBase.RetrievePNR(System.String)">
+            <summary>
+            Retrieves the PNR from amadeus.
+            </summary>
+            <param name="rLoc">Record Locator.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengerNameRecords.IBookingOperationsBase.RetrievePNR(Amadeus.IRecordLocator)">
+            <summary>
+            Retrieves the PNR from amadeus.
+            </summary>
+            <param name="rLoc">Record Locator.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengerNameRecords.IBookingOperationsBase.CreateBooking(System.Collections.Generic.IList{Amadeus.PassengerNameRecords.IPassenger},System.Collections.Generic.IList{Amadeus.PassengerNameRecords.IItinerary},System.String,System.String,System.String)">
+            <summary>
+            Creates the booking.
+            </summary>
+            <param name="passengers">The passengers.</param>
+            <param name="itineraries">The itineraries.</param>
+            <param name="eMail">The e mail.</param>
+            <param name="mobilePhone">The mobile phone.</param>
+            <param name="receivedFrom">The received from.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.ICommission">
+            <summary>
+            Represent commission interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.ICommission.Data">
+            <summary>
+            The commission data
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.ICommission.LineNumber">
+            <summary>
+            The commission line number in PNR
+            </summary>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IEmd">
+            <summary>
+            Represent EMD
+            </summary>
+            <seealso cref="T:Amadeus.PassengerNameRecords.IDataElement" />
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IEmd.Number">
+            <summary>
+            The ticket number
+            </summary>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IFormOfPayment">
+            <summary>
+            Represent form of payment interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFormOfPayment.Data">
+            <summary>
+            The form of payment data
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFormOfPayment.LineNumber">
+            <summary>
+            The line number of form of payment in PNR
+            </summary>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.ISplittedPnrInfo">
+            <summary>
+            Represent splitted PNR information
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.ISplittedPnrInfo.RecordLocator">
+            <summary>
+            Gets the record locator.
+            </summary>
+            <value>
+            The record locator.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.ISplittedPnrInfo.Date">
+            <summary>
+            Gets the date.
+            </summary>
+            <value>
+            The date.
+            </value>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IManualTicket">
+            <summary>
+            Manual ticket element
+            </summary>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IDataElement">
+            <summary>
+            Represent data element
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IDataElement.ID">
+            <summary>
+            Gets the identifier.
+            </summary>
+            <value>
+            The identifier.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IDataElement.LineNumber">
+            <summary>
+            The line number element
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IDataElement.Status">
+            <summary>
+            The status of the element
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IDataElement.Quantity">
+            <summary>
+            The quantity of a requests
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IDataElement.PassengersIDs">
+            <summary>
+            Passengers reference IDs
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IDataElement.ItinerariesIDs">
+            <summary>
+            Itineraries reference IDs
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IDataElement.DataElementsIDs">
+            <summary>
+            Data elements reference IDs
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IDataElement.FreeText">
+            <summary>
+            The free text
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IDataElement.CompanyID">
+            <summary>
+            The company ID
+            </summary>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IFlight">
+            <summary>
+            Represents Flight information
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFlight.FullFlightNumber">
+            <summary>
+            Gets the full flight number, for example: KC911
+            </summary>
+            <value>
+            The full flight number, for example: KC911
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFlight.FlightNumber">
+            <summary>
+            The flight number, for example: 911
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFlight.FlightOperator">
+            <summary>
+            The flight operator, for example: KC
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFlight.DepartureAirportCode">
+            <summary>
+            Departure IATA airport code
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFlight.ArrivalAirportCode">
+            <summary>
+            Arrival IATA airport code
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFlight.DepartureTime">
+            <summary>
+            Gets the flight departure time.
+            </summary>
+            <value>
+            The flight departure time.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFlight.ArrivalTime">
+            <summary>
+            Gets the flight arrival time.
+            </summary>
+            <value>
+            The flight arrival time.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFlight.FlightDuration">
+            <summary>
+            Gets the flight duration time.
+            </summary>
+            <value>
+            The flight duration time.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IFlight.AircraftIataCode">
+            <summary>
+            Gets the aircraft IATA code.
+            </summary>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IItinerary">
+            <summary>
+            Represents PNR itinerary information
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IItinerary.ID">
+            <summary>
+            Itinerary reference ID for referencing to other PNR elements
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IItinerary.LineNumber">
+            <summary>
+            The line number of itinerary in PNR
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IItinerary.IsOpenDate">
+            <summary>
+            Gets a value indicating whether this flight date is open date.
+            </summary>
+            <value>
+            <c>true</c> if flight date is open date; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IItinerary.ServiceClass">
+            <summary>
+            Gets the itinenrary service class.
+            </summary>
+            <value>
+            The itinerary service class
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IItinerary.Status">
+            <summary>
+            Gets the itinenrary status.
+            </summary>
+            <value>
+            The itinerary status
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IItinerary.CabinClass">
+            <summary>
+            Gets the aircraft cabin class.
+            </summary>
+            <value>
+            The aircraft cabin class
+            </value>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IPassenger">
+            <summary>
+            Represents a Passenger interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPassenger.Type">
+            <summary>
+            Passenger type
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPassenger.FirstName">
+            <summary>
+            Passenger first name
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPassenger.LastName">
+            <summary>
+            Passenger last name
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPassenger.Title">
+            <summary>
+            Passenger title
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPassenger.ID">
+            <summary>
+            Passenger reference ID for referencing to other PNR elements
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPassenger.LineNumber">
+            <summary>
+            Passenger line number in PNR
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPassenger.DateOfBirth">
+            <summary>
+            Passenger date of birth
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPassenger.InfantPassenger">
+            <summary>
+            Gets the infant passenger.
+            </summary>
+            <value>
+            The infant passenger.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPassenger.AlternativeDobField">
+            <summary>
+            Gets or sets a value indicating whether DOB info from/to alternative field
+            </summary>
+            <value>
+            <c>true</c> if true the DOB is from/to alternative field; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IPNR">
+            <summary>
+            Represents a passenger name record (booking) interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.RecordLocator">
+            <summary>
+            Gets the PNR record locator
+            </summary>
+            <value>
+            The Record Locator.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.CreationTime">
+            <summary>
+            Gets the PNR creation time.
+            </summary>
+            <value>
+            The PNR creation time.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.CreationOfficeID">
+            <summary>
+            Gets the PNR creation office ID.
+            </summary>
+            <value>
+            The PNR creation office ID.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.Passengers">
+            <summary>
+            The PNR passengers list
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.Itineraries">
+            <summary>
+            The PNR itineraries list
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.Tickets">
+            <summary>
+            The PNR tickets list
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.ManualTickets">
+            <summary>
+            The PNR manual tickets list
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.Ssr">
+            <summary>
+            The Special Sercvice Requests
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.KeywordElements">
+            <summary>
+            Gets the keyword elements.
+            </summary>
+            <value>
+            The keyword elements.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.AirFareElements">
+            <summary>
+            Gets the Air Fare Elements
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.Emd">
+            <summary>
+            Gets the EMD.
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.Remarks">
+            <summary>
+            The Remarks
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.EMail">
+            <summary>
+            E-mail
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.EMails">
+            <summary>
+            E-mails
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.MobilePhone">
+            <summary>
+            Mobile phone
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.MobilePhones">
+            <summary>
+            Mobile phones
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.FormOfPayment">
+            <summary>
+            Form of payment
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.Commission">
+            <summary>
+            Commission
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IPNR.SplittedPnrsInfo">
+            <summary>
+            Gets the splitted PNRs information.
+            </summary>
+            <value>
+            The splitted PNRs information.
+            </value>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IRemark">
+            <summary>
+            Represent PNR remark information
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IRemark.LineNumber">
+            <summary>
+            The line number of remark in PNR
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IRemark.Text">
+            <summary>
+            The text of the remark
+            </summary>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IRoute">
+            <summary>
+            Represents Route information
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IRoute.Flights">
+            <summary>
+            Gets the route flights list.
+            </summary>
+            <value>
+            The route flights list
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IRoute.FlightDuration">
+            <summary>
+            Gets the flight duration time.
+            </summary>
+            <value>
+            The flight duration time.
+            </value>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.ITicket">
+            <summary>
+            Ticket element
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.ITicket.Number">
+            <summary>
+            The ticket number
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.ITicket.LineNumber">
+            <summary>
+            The line number of ticket in PNR
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.ITicket.PassengersIDs">
+            <summary>
+            Passengers references IDs
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.ITicket.ItinerariesIDs">
+            <summary>
+            Itineraries references IDs
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.ITicket.DataElementsIDs">
+            <summary>
+            Data elements reference IDs
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.ITicket.FreeText">
+            <summary>
+            Gets the free text.
+            </summary>
+            <value>
+            The free text.
+            </value>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IBookingOperations">
+            <summary>
+            PNR related functionality
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IBookingOperations.Ssr">
+            <summary>
+            PNR special services requests related functionality.
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IBookingOperations.KeywordElements">
+            <summary>
+            Gets the keyword elements operations.
+            </summary>
+            <value>
+            The keyword elements operations.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IBookingOperations.FlightInformation">
+            <summary>
+            PNR itineraries flight information related functionality.
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IBookingOperations.Pricing">
+            <summary>
+            Gets the pricing operations.
+            </summary>
+            <value>
+            The pricing.
+            </value>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.PassengerTitle">
+            <summary>
+            Represents types of passengers titles
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerTitle.None">
+            <summary>
+            The titles is undefined
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerTitle.MR">
+            <summary>
+            The man (MR) title
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerTitle.MRS">
+            <summary>
+            The married woman title
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerTitle.MS">
+            <summary>
+            The woman title (married status is undefined)
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerTitle.MISS">
+            <summary>
+            The unmarried woman title
+            </summary>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.PassengerType">
+            <summary>
+            Represents types of passengers
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerType.Adult">
+            <summary>
+            The adult passeger (ADT)
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerType.Child">
+            <summary>
+            The child passenger (CHD)
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerType.Infant">
+            <summary>
+            The infant passenger (INF)
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerType.Umnr">
+            <summary>
+            The umnr passenger (UMNR)
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerType.Youth">
+            <summary>
+            The youth passenger (YTH)
+            </summary>
+        </member>
+        <member name="F:Amadeus.PassengerNameRecords.PassengerType.Senior">
+            <summary>
+            The senior passenger (YCD)
+            </summary>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IBookingItinerariesOperations">
+            <summary>
+            PNR itineraries related functionality.
+            </summary>
+        </member>
+        <member name="M:Amadeus.PassengerNameRecords.IBookingItinerariesOperations.ContainsTransitItinerary(System.Collections.Generic.IList{Amadeus.PassengerNameRecords.IItinerary})">
+            <summary>
+            Determines whether itineraries contains transit itinerary (1 or more stops except return route)
+            </summary>
+            <param name="itineraries">The itineraries.</param>
+        </member>
+        <member name="T:Amadeus.PassengerNameRecords.IBookingOperationsAsync">
+            <summary>
+            PNR related functionality
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IBookingOperationsAsync.Ssr">
+            <summary>
+            PNR special services requests related functionality.
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IBookingOperationsAsync.KeywordElements">
+            <summary>
+            Gets the keyword elements operations.
+            </summary>
+            <value>
+            The keyword elements operations.
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IBookingOperationsAsync.FlightInformation">
+            <summary>
+            PNR itineraries flight information related functionality.
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengerNameRecords.IBookingOperationsAsync.Pricing">
+            <summary>
+            Gets the pricing operations.
+            </summary>
+            <value>
+            The pricing.
+            </value>
+        </member>
+        <member name="M:Amadeus.PassengerNameRecords.IBookingOperationsAsync.RetrievePnrAsync(System.String)">
+            <summary>
+            Retrieves the PNR asynchronous.
+            </summary>
+            <param name="rLoc">Record Locator.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.PassengersList.IListPassenger">
+            <summary>
+            Represent passengers list passenger
+            </summary>
+            <seealso cref="T:Amadeus.PassengerNameRecords.IPassenger" />
+        </member>
+        <member name="P:Amadeus.PassengersList.IListPassenger.RecordLocator">
+            <summary>
+            Passenger PNR Record Locator
+            </summary>
+        </member>
+        <member name="P:Amadeus.PassengersList.IListPassenger.CabinClass">
+            <summary>
+            Gets the aircraft cabin class.
+            </summary>
+            <value>
+            The aircraft cabin class
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengersList.IListPassenger.ServiceClass">
+            <summary>
+            Gets the itienrary service class.
+            </summary>
+            <value>
+            The itinerary service class
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengersList.IListPassenger.Status">
+            <summary>
+            Gets the itinenrary status.
+            </summary>
+            <value>
+            The itinerary status
+            </value>
+        </member>
+        <member name="P:Amadeus.PassengersList.IListPassenger.SSR">
+            <summary>
+            Passenger special service requests
+            </summary>
+        </member>
+        <member name="T:Amadeus.PassengersList.IPassengersListOperations">
+            <summary>
+            Passengers list related functionality
+            </summary>
+        </member>
+        <member name="M:Amadeus.PassengersList.IPassengersListOperations.SearchPassengers(System.String,System.String,System.DateTime)">
+            <summary>
+            Searches a passengers with specified SSR by LP *S(SSRTYPE) command.
+            </summary>
+            <param name="ssrType">Type of the SSR.</param>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengersList.IPassengersListOperations.SearchPassengersWithInfantSSR(System.String,System.DateTime)">
+            <summary>
+            Searches a passengers with infants SSR by LP *S(INFT) command.
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengersList.IPassengersListOperations.SearchPassengersWithUmnrSSR(System.String,System.DateTime)">
+            <summary>
+            Searches a passengers with unaccompanied minor SSR by LP *S(UMNR) command.
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengersList.IPassengersListOperations.SearchPassengersWithBassinetsSSR(System.String,System.DateTime)">
+            <summary>
+            Searches a passengers with bassinets SSR by LP *S(BSCT) command.
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengersList.IPassengersListOperations.SearchPassengersWithSportEquipmentSSR(System.String,System.DateTime)">
+            <summary>
+            Searches a passengers with sport equipment SSR by LP *S(SPEQ) command.
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengersList.IPassengersListOperations.SearchPassengersWithWheelchairSSR(System.String,System.DateTime)">
+            <summary>
+            Searches a passengers with wheelchair SSR by LP *S(WCH*) command.
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengersList.IPassengersListOperations.SearchPassengersWithBlindSSR(System.String,System.DateTime)">
+            <summary>
+            Searches a passengers with blind SSR by LP *S(BLND) command.
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengersList.IPassengersListOperations.SearchPassengersWithDeafSSR(System.String,System.DateTime)">
+            <summary>
+            Searches a passengers with deaf SSR by LP *S(DEAF) command.
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengersList.IPassengersListOperations.SearchPassengersWithExtraSeatSSR(System.String,System.DateTime)">
+            <summary>
+            Searches a passengers with extra seat SSR by LP *S(EXST) command.
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.PassengersList.IPassengersListOperations.SearchPassengersWithCabinBaggageSSR(System.String,System.DateTime)">
+            <summary>
+            Searches a passengers with cabin baggage SSR by LP *S(CBBG) command.
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.Queues.IQueuesOperations">
+            <summary>
+            Queues functionality.
+            </summary>
+        </member>
+        <member name="M:Amadeus.Queues.IQueuesOperations.RetrieveQueuesList(System.String)">
+            <summary>
+            Retrieves the queues list from amadeus in format like 1C0, 1C6, 2D4 (Executing QT command)
+            </summary>
+            <param name="officeID">The office ID.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Queues.IQueuesOperations.RetrieveQueueRecordLocatorsList(System.String,System.String)">
+            <summary>
+            Retrieve queue record locators list
+            </summary>
+            <param name="officeID">The office ID.</param>
+            <param name="queueID">The queue ID.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Queues.IQueuesOperations.MovePnrToQueue(System.String,System.String)">
+            <summary>
+            Moves the PNR to specific queue.
+            </summary>
+            <param name="officeID">The office ID.</param>
+            <param name="queueID">The queue ID where to put PNR.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Queues.IQueuesOperations.MovePnrToQueue(System.String,System.String,System.String)">
+            <summary>
+            Moves the PNR to specific queue with received from information.
+            </summary>
+            <param name="officeID">The office ID.</param>
+            <param name="queueID">The queue ID where to put PNR.</param>
+            <param name="receivedFrom">The received from name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Queues.IQueuesOperations.RemovePnrFromSpecificQueue(System.String,System.String,System.String)">
+            <summary>
+            Removes the PNR from specific queue.
+            </summary>
+            <param name="officeID">The office identifier.</param>
+            <param name="queueID">The queue identifier.</param>
+            <param name="recordLocator">The record locator.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.TransitionalStoredTickets.IBookingPriceOperationsAsync">
+            <summary>
+            Represent booking price base operations
+            </summary>
+        </member>
+        <member name="M:Amadeus.TransitionalStoredTickets.IBookingPriceOperationsAsync.RetrieveTstAsync(Amadeus.IRecordLocator)">
+            <summary>
+            Retrieves the TST from amadeus (PNR should be retrieved first before retrieving TST) asynchronously
+            </summary>
+            <param name="rLoc">The PNR record locator.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.TransitionalStoredTickets.IBookingPriceOperationsAsync.RetrieveTstAsync(System.String)">
+            <summary>
+            Retrieves the TST from amadeus (PNR should be retrieved first before retrieving TST) asynchronously
+            </summary>
+            <param name="rLoc">The PNR record locator.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.TransitionalStoredTickets.IBookingPriceOperationsBase">
+            <summary>
+            Represent booking price base operations
+            </summary>
+        </member>
+        <member name="M:Amadeus.TransitionalStoredTickets.IBookingPriceOperationsBase.RetrieveTST(Amadeus.IRecordLocator)">
+            <summary>
+            Retrieves the TST from amadeus (PNR should be retrieved first before retrieving TST)
+            </summary>
+            <param name="rLoc">The PNR record locator.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.TransitionalStoredTickets.IBookingPriceOperationsBase.RetrieveTST(System.String)">
+            <summary>
+            Retrieves the TST from amadeus (PNR should be retrieved first before retrieving TST)
+            </summary>
+            <param name="rLoc">The PNR record locator.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.TransitionalStoredTickets.ITax">
+            <summary>
+            Provides tax interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITax.TaxID">
+            <summary>
+            Gets the tax identifier.
+            </summary>
+            <value>
+            The tax identifier.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITax.IsoCountry">
+            <summary>
+            Gets the iso country.
+            </summary>
+            <value>
+            The iso country.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITax.IsExempted">
+            <summary>
+            Gets a value indicating whether tax is exempted.
+            </summary>
+            <value>
+            <c>true</c> if tax is exempted; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Amadeus.TransitionalStoredTickets.ICurrency">
+            <summary>
+            Represents currency interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ICurrency.Code">
+            <summary>
+            The currency code, for example: USD
+            </summary>
+        </member>
+        <member name="T:Amadeus.TransitionalStoredTickets.IMoney">
+            <summary>
+            Represent money interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.IMoney.Amount">
+            <summary>
+            Gets the money amount.
+            </summary>
+            <value>
+            The money amount.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.IMoney.Currency">
+            <summary>
+            Gets the money currency.
+            </summary>
+            <value>
+            The money currency.
+            </value>
+        </member>
+        <member name="T:Amadeus.TransitionalStoredTickets.ISegmentInfo">
+            <summary>
+            Ticket segment information
+            </summary>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ISegmentInfo.ItineraryID">
+            <summary>
+            Itinerary reference ID
+            </summary>
+        </member>
+        <member name="T:Amadeus.TransitionalStoredTickets.ITST">
+            <summary>
+            Represent a transitional stored ticket interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITST.RecordLocator">
+            <summary>
+            Gets the record locator.
+            </summary>
+            <value>
+            The record locator.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITST.Items">
+            <summary>
+            Gets the TST items.
+            </summary>
+            <value>
+            The tst items.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITST.TotalAmount">
+            <summary>
+            Gets the total amount for all items in TST.
+            </summary>
+            <value>
+            The total amount for all items in TST.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITST.TotalCurrency">
+            <summary>
+            Gets the currency for all total amount items in TST.
+            </summary>
+            <value>
+            The currency for all total amount items in TST.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITST.IsManualTST">
+            <summary>
+            Gets a value indicating whether TST was created manually.
+            </summary>
+            <value>
+              <c>true</c> if TST was created manually; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITST.Item(System.Int32)">
+            <summary>
+            Gets the <see cref="T:Amadeus.TransitionalStoredTickets.ITstItem"/> with the specified index.
+            </summary>
+            <value>
+            The <see cref="T:Amadeus.TransitionalStoredTickets.ITstItem"/>.
+            </value>
+            <param name="i">The TstItem index.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.TransitionalStoredTickets.ITstItem">
+            <summary>
+            Represent TST item (fareList) interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.ID">
+            <summary>
+            Fare reference ID
+            </summary>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.FareAmount">
+            <summary>
+            Gets the fare amount.
+            </summary>
+            <value>
+            The fare amount.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.TotalFareAmount">
+            <summary>
+            Gets the fare total amount (fare amount + taxes).
+            </summary>
+            <value>
+            The fare total amount (fare amount + taxes).
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.AllPassengersTotalFareAmount">
+            <summary>
+            Gets all passengers total amount.
+            </summary>
+            <value>
+            All passengers total amount.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.ConvertedFareAmount">
+            <summary>
+            Gets the converted fare amount.
+            </summary>
+            <value>
+            The converted fare amount.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.FareCurrency">
+            <summary>
+            Gets the fare currency.
+            </summary>
+            <value>
+            The fare currency.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.TotalFareCurrency">
+            <summary>
+            Gets the total fare currency.
+            </summary>
+            <value>
+            The total fare currency.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.ConvertedFareCurrency">
+            <summary>
+            Gets the converted fare currency.
+            </summary>
+            <value>
+            The converted fare currency.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.Taxes">
+            <summary>
+            Gets the taxes.
+            </summary>
+            <value>
+            The taxes.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.PassengersIDs">
+            <summary>
+            Passengers reference IDs with infant indicator
+            </summary>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.SegmentsInfo">
+            <summary>;
+            Gets the segments information.
+            </summary>
+            <value>
+            The segments information.
+            </value>
+        </member>
+        <member name="P:Amadeus.TransitionalStoredTickets.ITstItem.IsManualTST">
+            <summary>
+            Gets a value indicating whether TST was created manually.
+            </summary>
+            <value>
+              <c>true</c> if TST was created manually; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Amadeus.TransitionalStoredTickets.IBookingPriceOperations">
+            <summary>
+            Represent booking price operations
+            </summary>
+        </member>
+        <member name="M:Amadeus.TransitionalStoredTickets.IBookingPriceOperations.PricePnrWithBookingClass(System.String,System.String,System.String,System.Collections.Generic.IList{System.Int32},System.Collections.Generic.IList{System.String},System.String)">
+            <summary>
+            Prices the PNR with booking class.
+            </summary>
+            <param name="farePrimaryCode">The fare primary code.</param>
+            <param name="fareBasisCode">The fare basis code.</param>
+            <param name="currency">The currency.</param>
+            <param name="fareSegmentsIDs">The fare segments identifiers.</param>
+            <param name="exemptTaxesIsoCountries">The exempt taxes iso countries.</param>
+            <param name="attributeType">Type of the attribute.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.TransitionalStoredTickets.IBookingPriceOperations.CreateTstFromPricing(System.Collections.Generic.ICollection{System.Int32})">
+            <summary>
+            Creates the TST from pricing.
+            </summary>
+            <param name="tstFaresReferenceNumbers">The TST fares reference numbers.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.Util.ItinerariesUtil">
+            <summary>
+            PNR itineraries related utility functions
+            </summary>
+        </member>
+        <member name="M:Amadeus.Util.ItinerariesUtil.ContainsTransitItinerary(System.Collections.Generic.IList{Amadeus.PassengerNameRecords.IItinerary})">
+            <summary>
+            Determines whether itiniraries contains transit itinerary (1 or more stops except return route)
+            </summary>
+            <param name="itineraries">The itineraries.</param>
+            <returns>
+              <c>true</c> if [contains transit itineraries] [the specified amadeus worker]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:Amadeus.Util.Converter">
+            <summary>
+            General convertion utility class for amadeus types
+            </summary>
+        </member>
+        <member name="M:Amadeus.Util.Converter.GenderToGenderCode(Amadeus.Gender)">
+            <summary>
+            Converts the gender to gender code.
+            </summary>
+            <param name="gender">The gender.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.ServiceClassCodeToCabinClass(System.String)">
+            <summary>
+            Converts the service class code to cabin class.
+            </summary>
+            <param name="serviceClassCode">The service class code.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">serviceClass</exception>
+            <exception cref="T:System.ArgumentException">serviceClass.Length != 1</exception>
+        </member>
+        <member name="M:Amadeus.Util.Converter.PassengerTypeCodeToPassengerType(System.String)">
+            <summary>
+            Converts the passenger type code to passenger type.
+            </summary>
+            <param name="passengerTypeCode">The passenger type code.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.PassengerTypeToString(Amadeus.PassengerNameRecords.PassengerType)">
+            <summary>
+            Converts the passenger type to passenger type code.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.PassengerTitleCodeToPassengerTitle(System.String)">
+            <summary>
+            Converts the passemger title code to passenger title.
+            </summary>
+            <param name="passengerTitleCode">The passenger title code.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.PassengerTitleToPassengerTitleCode(Amadeus.PassengerNameRecords.PassengerTitle)">
+            <summary>
+            Converts the passenger title to passenger title code.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.StatusCodeToStatus(System.String)">
+            <summary>
+            Converts the status code to status.
+            </summary>
+            <param name="statusCode">The status code.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.StatusToString(Amadeus.Status)">
+            <summary>
+            Converts status to status code
+            </summary>
+            <param name="status">The status.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.CouponStatusCodeToCouponStatus(System.String)">
+            <summary>
+            Converts coupon status code to coupon status.
+            </summary>
+            <param name="couponStatusCode">The coupon status code.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.ElectricCapacityUomCodeToElectricCapacityUom(System.String)">
+            <summary>
+            Converts eElectric capacity unit of measure code to electric capacity unit of measure.
+            </summary>
+            <param name="uomCode">The uom code.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.FareTypeCodeToFareType(System.String)">
+            <summary>
+            Converts the fare type code to fare type.
+            </summary>
+            /// <param name="fareTypeCode">The fare type code.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.TextInfoTypeCodeToTextInfoType(System.String)">
+            <summary>
+            Converts the text info type code to text info type
+            </summary>
+            <param name="textInfoCode">The text information code.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.Converter.SpecialConditionToServiceType(System.String,System.String)">
+            <summary>
+            Converts the special condition to electronic document service type.
+            </summary>
+            <param name="specialCondition">The special condition.</param>
+            <param name="specialConditionValue">The special condition value.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.Util.PassengerCalculator">
+            <summary>
+            Passenger helper functions
+            </summary>
+        </member>
+        <member name="M:Amadeus.Util.PassengerCalculator.GetPassengerAgeAtSpecificDate(System.DateTime,System.DateTime)">
+            <summary>
+            Gets the passenger age at specific date.
+            </summary>
+            <param name="dateOfBirth">The date of birth.</param>
+            <param name="specificDate">The specific date to check to.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.Util.SsrRelations">
+            <summary>
+            Provides different SSR relations dictionaries
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.SsrRelations.SsrRelation">
+            <summary>
+            The gender-gender code relation
+            </summary>
+        </member>
+        <member name="T:Amadeus.Util.Relations">
+            <summary>
+            Provides different relations dictionaries
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.BusinessCabinClassServiceClasses">
+            <summary>
+            The business cabin class service classes
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.GenderRelation">
+            <summary>
+            The gender-gender code relation
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.PassengerTypeRelation">
+            <summary>
+            The passenger type-passenger type code relation
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.PassengerTitleRelation">
+            <summary>
+            The passenger title-passenger title code relation
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.StatusRelation">
+            <summary>
+            The status-status code relation
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.CouponStatusRelation">
+            <summary>
+            The coupon status-coupon status code relation
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.ElectricCapacityUomRelation">
+            <summary>
+            The electric capacity uom-electric capacity uom code relation
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.EDocTypeRelation">
+            <summary>
+            The electronic document type relation
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.FareTypeRelation">
+            <summary>
+            The fare type relation
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.EDocTextInfoTypeRelation">
+            <summary>
+            The text information type relation
+            </summary>
+        </member>
+        <member name="F:Amadeus.Util.Relations.EDocServiceTypeRelation">
+            <summary>
+            The electronic document service type relation
+            </summary>
+        </member>
+        <member name="T:Amadeus.Util.SsrConverter">
+            <summary>
+            Ssr convertion class for amadeus SSR
+            </summary>
+        </member>
+        <member name="M:Amadeus.Util.SsrConverter.SsrToSsrType(Amadeus.SpecialServiceRequests.ISSR)">
+            <summary>
+            Converts the SSR to SSR type.
+            </summary>
+            <param name="ssr">The SSR.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.SsrConverter.SsrCodeToType(System.String)">
+            <summary>
+            Converts the SSR code to SSR type.
+            </summary>
+            <param name="ssrCode">The SSR code.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">ssrCode</exception>
+            <exception cref="T:System.ArgumentException">ssrCode.Length != 4</exception>
+        </member>
+        <member name="M:Amadeus.Util.SsrConverter.SsrToCode(Amadeus.SpecialServiceRequests.ISSR)">
+            <summary>
+            Converts the SSR to SSR code.
+            </summary>
+            <param name="ssr">The SSR.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.SsrConverter.SsrFoidCodeToSsrFoidType(System.String)">
+            <summary>
+            Parses the type of the SSR FOID element to SSR FOID type.
+            </summary>
+            <param name="ssrFreeText">The SSR FOID free text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.SsrConverter.SsrFoidTypeToSsrFoidCode(Amadeus.SpecialServiceRequests.IdentificationDocuments.SsrFoidType)">
+            <summary>
+            Converts SSR FOID type to SSR FOID type code
+            </summary>
+            <param name="type">The type.</param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Amadeus.Util.SsrConverter.ApisDocumentTypeToApisDocumentCode(Amadeus.SpecialServiceRequests.Apis.ApisDocumentType)">
+            <summary>
+            Converts APIS document type to APIS document code.
+            </summary>
+            <param name="documentType">Type of the document.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.Util.SsrConverter.SsrSpeqCodeToType(System.String)">
+            <summary>
+            Converrs the SSR Speq code to SSR Speq type.
+            </summary>
+            <param name="ssrSpeqType">Type of the SSR speq.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.IAmadeusWorkerAsync">
+            <summary>
+            Represent asynchronous Amadeus Worker
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerAsync.Settings">
+            <summary>
+            Gets the settings.
+            </summary>
+            <value>
+            The settings.
+            </value>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerAsync.Booking">
+            <summary>
+            PNR related functionality
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerAsync.Availability">
+            <summary>
+            Flights schedule and availability functions
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerAsync.MultiAvailability">
+            <summary>
+            Gets the multi availability.
+            </summary>
+            <value>
+            The multi availability.
+            </value>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerAsync.PassengersList">
+            <summary>
+            Passengers list related functionality
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerAsync.LoadingList">
+            <summary>
+            Loading list related functionality
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerAsync.Queues">
+            <summary>
+            Queues functionality.
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerAsync.EDoc">
+            <summary>
+            Electronic documents operations
+            </summary>
+        </member>
+        <member name="T:Amadeus.IBatteries">
+            <summary>
+            Represent batteries
+            </summary>
+        </member>
+        <member name="P:Amadeus.IBatteries.Type">
+            <summary>
+            Gets the type of the batteries.
+            </summary>
+        </member>
+        <member name="P:Amadeus.IBatteries.Amount">
+            <summary>
+            Gets the amount of batteries.
+            </summary>
+        </member>
+        <member name="P:Amadeus.IBatteries.Power">
+            <summary>
+            Gets the power of one battery.
+            </summary>
+        </member>
+        <member name="P:Amadeus.IBatteries.Uom">
+            <summary>
+            Gets the battety capaciry unit of measure.
+            </summary>
+        </member>
+        <member name="T:Amadeus.BatteryType">
+            <summary>
+            Provides battert types
+            </summary>
+        </member>
+        <member name="F:Amadeus.BatteryType.Undefined">
+            <summary>
+            The undefined type
+            </summary>
+        </member>
+        <member name="F:Amadeus.BatteryType.LithiumIon">
+            <summary>
+            The lithium-ion type
+            </summary>
+        </member>
+        <member name="T:Amadeus.ISizeAndWeight">
+            <summary>
+            Represents size and weight
+            </summary>
+        </member>
+        <member name="P:Amadeus.ISizeAndWeight.Weight">
+            <summary>
+            Gets the weight.
+            </summary>
+            <value>
+            The weight.
+            </value>
+        </member>
+        <member name="P:Amadeus.ISizeAndWeight.Length">
+            <summary>
+            Gets the Length.
+            </summary>
+            <value>
+            The Length.
+            </value>
+        </member>
+        <member name="P:Amadeus.ISizeAndWeight.Width">
+            <summary>
+            Gets the width.
+            </summary>
+            <value>
+            The width.
+            </value>
+        </member>
+        <member name="P:Amadeus.ISizeAndWeight.Height">
+            <summary>
+            Gets the height.
+            </summary>
+            <value>
+            The height.
+            </value>
+        </member>
+        <member name="T:Amadeus.KeywordElements.INomadClubUpgradeElement">
+            <summary>
+            Represent Nomad club upgrade special keyword element
+            </summary>
+            <seealso cref="T:Amadeus.SpecialServiceRequests.ISSR" />
+        </member>
+        <member name="T:Amadeus.KeywordElements.IBookingKeywordElementsOperations">
+            <summary>
+            Represent booking keyword elements operations
+            </summary>
+        </member>
+        <member name="M:Amadeus.KeywordElements.IBookingKeywordElementsOperations.AddNomadClubUpgradeKeywordElement(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Adds the nomad club upgrade keyword element.
+            </summary>
+            <param name="freeText">The free text.</param>
+            <param name="airlineCode">The airline code.</param>
+            <param name="passengerLineNumber">The passenger line number.</param>
+            <param name="segmentLineNumber">The segment line number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.KeywordElements.IBookingKeywordElementsOperations.AddNomadClubUpgradeKeywordElement(System.String,System.String,System.Int32,System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Adds the nomad club upgrade keyword element with multiple segments references.
+            </summary>
+            <param name="freeText">The free text.</param>
+            <param name="airlineCode">The airline code.</param>
+            <param name="passengerLineNumber">The passenger line number.</param>
+            <param name="segmentsLineNumbers">The segments line numbers.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.LoadingList.ICabinClassLoading">
+            <summary>
+            Represent cabin class loading
+            </summary>
+        </member>
+        <member name="P:Amadeus.LoadingList.ICabinClassLoading.Class">
+            <summary>
+            Gets the cabin class.
+            </summary>
+            <value>
+            The cabin class.
+            </value>
+        </member>
+        <member name="P:Amadeus.LoadingList.ICabinClassLoading.AircraftIataCode">
+            <summary>
+            Gets the aircraft iata code.
+            </summary>
+            <value>
+            The aircraft iata code.
+            </value>
+        </member>
+        <member name="P:Amadeus.LoadingList.ICabinClassLoading.Capacity">
+            <summary>
+            Gets the cabin class capacity.
+            </summary>
+            <value>
+            The cabin class capacity.
+            </value>
+        </member>
+        <member name="P:Amadeus.LoadingList.ICabinClassLoading.Unseated">
+            <summary>
+            Gets the number of unseated seats.
+            </summary>
+            <value>
+            The number of unseated seats.
+            </value>
+        </member>
+        <member name="T:Amadeus.LoadingList.ILoadingListOperations">
+            <summary>
+            Represent loading list operations
+            </summary>
+        </member>
+        <member name="M:Amadeus.LoadingList.ILoadingListOperations.RetrieveLoadingList(System.String,System.Nullable{System.DateTime})">
+            <summary>
+            Retrieves loading list from amadeus
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.Operations.EndTransactionResult">
+            <summary>
+            End transaction operation result types
+            </summary>
+        </member>
+        <member name="F:Amadeus.Operations.EndTransactionResult.Ok">
+            <summary>
+            The ok result
+            </summary>
+        </member>
+        <member name="F:Amadeus.Operations.EndTransactionResult.Error">
+            <summary>
+            The error result
+            </summary>
+        </member>
+        <member name="F:Amadeus.Operations.EndTransactionResult.SimultaneousChangesError">
+            <summary>
+            The simultaneous changes error result
+            </summary>
+        </member>
+        <member name="T:Amadeus.FlightsInformation.IFlightInformation">
+            <summary>
+            Represents the flight information interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.FlightsInformation.IFlightInformation.ScheduledFlight">
+            <summary>
+            Gets the scheduled flight.
+            </summary>
+            <value>
+            The scheduled flight.
+            </value>
+        </member>
+        <member name="T:Amadeus.FlightsInformation.IBookingFlightInformationOperations">
+            <summary>
+            PNR itineraries flight information related functionality.
+            </summary>
+        </member>
+        <member name="M:Amadeus.FlightsInformation.IBookingFlightInformationOperations.RetrieveFlightInformation(System.Int32)">
+            <summary>
+            Retrieves the flight information by executing DO command.
+            </summary>
+            <param name="lineNumber">The itinerary line number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.FlightsInformation.IBookingFlightInformationOperations.RetrieveFlightInformation(System.String,System.String,System.DateTime)">
+            <summary>
+            Retrieves the flight information by executing XML command.
+            </summary>
+            <param name="flightOperator">The flight operator.</param>
+            <param name="flightNumber">The flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.FlightsInformation.IBookingFlightInformationOperations.RetrieveFlightsInformation(Amadeus.PassengerNameRecords.IPNR)">
+            <summary>
+            Retrieves the flight information list about all flights for specified PNR.
+            </summary>
+            <param name="pnr">The PNR.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.ElectricCapacityUnitOfMeasure">
+            <summary>
+            Provides electric capacity unit of measure
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectricCapacityUnitOfMeasure.Undefined">
+            <summary>
+            The undefined electric capacity
+            </summary>
+        </member>
+        <member name="F:Amadeus.ElectricCapacityUnitOfMeasure.WattHour">
+            <summary>
+            The watt hour capacity
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Apis.ApisDocumentType">
+            <summary>
+            APIS indentification document
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.Apis.ApisDocumentType.Undefined">
+            <summary>
+            The undefined document type
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.Apis.ApisDocumentType.Passport">
+            <summary>
+            The passport (P) document type
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.Apis.ApisDocumentType.IdentityCard">
+            <summary>
+            The identity card (I) document type
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Apis.IDocsSSR">
+            <summary>
+            SSR element which represent identification document information
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Deportee.IUnaccompaniedDeporteeSSR">
+            <summary>
+            Represent unaccompanied deportee SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Deportee.IAccompaniedDeporteeSSR">
+            <summary>
+            Represent accompanied by escort deportee SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Deportee.IDeporteeSSR">
+            <summary>
+            Represent deportee SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IAirportPersonnelInformationSSR">
+            <summary>
+            Represent airport personnel information
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Animals.IAnimalInCabinSSR">
+            <summary>
+            SSR element which represent animal in cabin request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Animals.IAnimalInHoldSSR">
+            <summary>
+            SSR element which represent animal in hold request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IBassinetSSR">
+            <summary>
+            SSR element which represent bassinet request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.ICabinClassUpgradeSSR">
+            <summary>
+            SSR element which represent cabin class upgrade request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Baggage.ICabinSeatBaggageSSR">
+            <summary>
+            SSR element which represent cabin baggage requiring seat request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Baggage.IExcessBaggageSSR">
+            <summary>
+            Represent excess baggage SSR
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.Baggage.IExcessBaggageSSR.Weight">
+            <summary>
+            Gets the weight of baggage.
+            </summary>
+            <value>
+            The weight of baggage.
+            </value>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IExtraSeatSSR">
+            <summary>
+            SSR element which represent extra seat request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.ILanguagesSpokenSSR">
+            <summary>
+            Represent languages spoken information
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.Own.IOwnWheelchairSSR">
+            <summary>
+            Represent own wheelchair requests
+            </summary>
+            <seealso cref="T:Amadeus.SpecialServiceRequests.ISizeAndWeightSSR" />
+            <seealso cref="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.ICollapsibleWheelchairSSR" />
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.Own.ILithiumIonBatteryWheelchairSSR">
+            <summary>
+            SSR element which represent lithium ion battery operated wheelchair
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.Own.ILithiumIonBatteryWheelchairSSR.Batteries">
+            <summary>
+            Gets or sets the batteries.
+            </summary>
+            <value>
+            The batteries.
+            </value>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.Own.IWetBatteryWheelchairSSR">
+            <summary>
+            SSR element which represent wet battery operated wheelchair
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.Own.IDryBatteryWheelchairSSR">
+            <summary>
+            SSR element which represent dry battery operated wheelchair
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.Own.IManualPowerWheelchairSSR">
+            <summary>
+            SSR element which represent manual power wheelchair request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.ICollapsibleWheelchairSSR">
+            <summary>
+            Represents collapsible wheelchairs
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.ICollapsibleWheelchairSSR.IsCollapsible">
+            <summary>
+            Gets or sets a value indicating whether wheelchair is collapsible.
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.Provision.IProvisionWheelchairSSR">
+            <summary>
+            Incorporate all types of wheelchair SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.Provision.IWheelchairSsrS">
+            <summary>
+            SSR element which represent wheelchair up and down steps request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.Provision.IWheelchairSsrR">
+            <summary>
+            SSR element which represent wheelchair for ramp request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.Wheelchairs.Provision.IWheelchairSsrC">
+            <summary>
+            SSR element which represent wheelchair all the way to seat request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.IDeafPassengerSSR">
+            <summary>
+            SSR element which represent deaf passenger request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Invalid.IBlindPassengerSSR">
+            <summary>
+            SSR element which represent blind passenger request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.ISsrComposer`1">
+            <summary>
+            Represent SSR elements composer
+            </summary>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.ISsrComposer`1.Compose(`0)">
+            <summary>
+            Builds the SSR list.
+            </summary>
+            <param name="dataSource">The data source.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.ISsrBuilder`1">
+            <summary>
+            Represent SSR element builder
+            </summary>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.ISsrBuilder`1.Build(`0)">
+            <summary>
+            Builds the SSR.
+            </summary>
+            <param name="dataSource">The data source.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IdentificationDocuments.IFoidSSR">
+            <summary>
+            SSR element which represent passport number
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.IdentificationDocuments.IFoidSSR.DocumentType">
+            <summary>
+            SSR identification document type
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.IdentificationDocuments.IFoidSSR.DocumentNumber">
+            <summary>
+            SSR identification document number
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IdentificationDocuments.SsrFoidType">
+            <summary>
+            Document type of a FOID SSR element
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.IdentificationDocuments.SsrFoidType.Undefined">
+            <summary>
+            The undefined document type
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.IdentificationDocuments.SsrFoidType.Passport">
+            <summary>
+            The passport document
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.IdentificationDocuments.SsrFoidType.NationalIdentityCard">
+            <summary>
+            The national identity card document
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.IdentificationDocuments.SsrFoidType.IdNumber">
+            <summary>
+            Locally defined ID number
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IFravSSR">
+            <summary>
+            SSR element which represent name change request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IFrequentFlyerSSR">
+            <summary>
+            Represent frequent flyer SSR
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.IFrequentFlyerSSR.FrequentFlyerCompanyID">
+            <summary>
+            Frequent flyer company ID
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.IFrequentFlyerSSR.MembershipNumber">
+            <summary>
+            Frequent flyer number
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.IFrequentFlyerSSR.TierLevel">
+            <summary>
+            Tier level
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.ISeatRequestSSR">
+             <summary>
+            SSR element which represent seat request
+             </summary>
+             <seealso cref="T:Amadeus.SpecialServiceRequests.ISSR" />
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.ISeatRequestSSR.DepartureAirportCode">
+            <summary>
+            Departure IATA airport code
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.ISeatRequestSSR.ArrivalAirportCode">
+            <summary>
+            Arrival IATA airport code
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.ISeatRequestSSR.SeatLetter">
+            <summary>
+            Gets the seat letter.
+            </summary>
+            <value>
+            The seat letter.
+            </value>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.ISeatRequestSSR.SeatRow">
+            <summary>
+            Gets the seat row.
+            </summary>
+            <value>
+            The seat row.
+            </value>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.ISizeAndWeightSSR">
+            <summary>
+            Represents SSR which contains size and weight information
+            </summary>
+            <seealso cref="T:Amadeus.SpecialServiceRequests.ISSR" />
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.ISizeAndWeightSSR.SizeAndWeight">
+            <summary>
+            Gets the size and weight.
+            </summary>
+            <value>
+            The size and weight.
+            </value>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.ISsrFactory`1">
+            <summary>
+            Represent SSR elements factories interface
+            </summary>
+            <typeparam name="T">The type of the data source.</typeparam>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.ISsrFactory`1.Create(`0)">
+            <summary>
+            Creates the SSR element based on data source.
+            </summary>
+            <param name="dataSource">The data source.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.ISsrFactory`1.CanCreate(`0)">
+            <summary>
+            Determines whether SSR can be creeated by this factory based on the specified data source.
+            </summary>
+            <param name="dataSource">The data source.</param>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IBabyMealSSR">
+            <summary>
+            Represent baby meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IBlandMealSSR">
+            <summary>
+            Represent bland meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IChildMealSSR">
+            <summary>
+            Represent child meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IDiabeticMealSSR">
+            <summary>
+            Represent diabetic meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IFruitPlatterMealSSR">
+            <summary>
+            Represent fruit platter meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IGlutenIntolerantMealSSR">
+            <summary>
+            Represent gluten intolerant meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IHinduMealSSR">
+            <summary>
+            Represent hindu meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IKosherMealSSR">
+            <summary>
+            Represent kosher meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.ILowCalorieMealSSR">
+            <summary>
+            Represent low calorie meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.ILowFatMealSSR">
+            <summary>
+            Represent low fat meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.ILowLactoseMealSSR">
+            <summary>
+            Represent low lactose meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.ILowSaltMealSSR">
+            <summary>
+            Represent low salt meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IMealSSR">
+            <summary>
+            Represent meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.INoSpecialMealSSR">
+            <summary>
+            Represent no special meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IRawVegetarianMealSSR">
+            <summary>
+            Represent raw vegetarian meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.ISeaFoodMealSSR">
+            <summary>
+            Represent sea food meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IVegetarianHinduMealSSR">
+            <summary>
+            Represent vegetarian hindu meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IVegetarianLactoOvoMealSSR">
+            <summary>
+            Represent Vegetarian (lacto-ovo) meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.Meal.IVegetarianVeganMealSSR">
+            <summary>
+            Represent Vegetarian vegan meal SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IOtherServiceSSR">
+            <summary>
+            SSR element which represent other service request
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IInfantSSR">
+            <summary>
+            SSR element which represent passenger infant request
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.IInfantSSR.DateOfBirth">
+            <summary>
+            Passenger date of birth
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.ISportEquipmentSSR">
+            <summary>
+            SSR element which represent sport equipment request
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.ISportEquipmentSSR.SpeqType">
+            <summary>
+            The sport equipment type
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IUmnrSSR">
+            <summary>
+            SSR element which represent unaccompanied minor request
+            </summary>
+        </member>
+        <member name="P:Amadeus.SpecialServiceRequests.IUmnrSSR.DateOfBirth">
+            <summary>
+            UMNR Passenger date of birth
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.SsrSpeqType">
+            <summary>
+            Sport equipement type of a SPEQ SSR element
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrSpeqType.Undefined">
+            <summary>
+            The undefined sport equipement type
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrSpeqType.Bicycle">
+            <summary>
+            The bicycle sport equipement type
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.SsrType">
+            <summary>
+            Type of a SSR element
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.Undefined">
+            <summary>
+            The undefined SSR type
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.Infant">
+            <summary>
+            Infant (INFT) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.Umnr">
+            <summary>
+            Unaccompanied minor (UMNR) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.Bassinet">
+            <summary>
+            Bassinet (BSCT) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.SportEquipment">
+            <summary>
+            Sport equipment (SPEQ) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.OtherService">
+            <summary>
+            Other service (OTHS) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.IdentificationDocument">
+            <summary>
+            Identification document (FOID) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.IdentificationDocumentInfo">
+            <summary>
+            Identification document information (DOCS) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.NameChange">
+            <summary>
+            Name change (FRAV) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.WheelchairToSeat">
+            <summary>
+            The wheelchair all the way to seat (WCHC) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.WheelchairForRamp">
+            <summary>
+            The wheelchair for ramp (WCHR) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.WheelchairUpAndDownSteps">
+            <summary>
+            The wheelchair up and down steps (WCHS) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.BlindPassenger">
+            <summary>
+            The blind passenger (BLND) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.DeafPassenger">
+            <summary>
+            The deaf passenger (DEAF) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.ExtraSeat">
+            <summary>
+            The extra seat (EXST) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.CabinSeatBaggage">
+            <summary>
+            The cabin baggage requiring seat (CBBG) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.VegetarianHinduMeal">
+            <summary>
+            The vegetarian hindu (AVML) meal SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.BabyMeal">
+            <summary>
+            The baby meal (BBML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.BlandMeal">
+            <summary>
+            The bland meal (BLML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.ChildMeal">
+            <summary>
+            The child meal (CHML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.DiabeticMeal">
+            <summary>
+            The diabetic meal (DBML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.FruitPlatterMeal">
+            <summary>
+            The fruit platter meal (FPML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.GlutenIntolerantMeal">
+            <summary>
+            The gluten intolerant meal (GFML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.HinduMeal">
+            <summary>
+            The hindu meal (HNML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.KosherMeal">
+            <summary>
+            The kosher meal (KSML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.LowCalorieMeal">
+            <summary>
+            The low calorie meal (LCML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.LowFatMeal">
+            <summary>
+            The low fat meal (LFML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.LowSaltMeal">
+            <summary>
+            The low salt meal (LSML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.LowLactoseMeal">
+            <summary>
+            The low lactose meal (NLML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.RawVegetarianMeal">
+            <summary>
+            The raw vegetarian meal (RVML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.SeaFoodMeal">
+            <summary>
+            The sea food meal (SFML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.NoSpecialMeal">
+            <summary>
+            The no special meal (STRD) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.VegetarianVeganMeal">
+            <summary>
+            The vegetarian vegan meal (VGML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.VegetarianLactoOvoMeal">
+            <summary>
+            The vegetarian (lacto-ovo) meal (VLML) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.FrequentFlyer">
+            <summary>
+            The frequent flyer (FQTV) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.AccompaniedDeportee">
+            <summary>
+            The accompanied deportee (DEPA) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.UnaccompaniedDeportee">
+            <summary>
+            The unaccompanied deportee (DEPU) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.AnimalInHold">
+            <summary>
+            The animal in hold (AVIH) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.ExcessBaggage">
+            <summary>
+            The excess baggage (XBAG) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.CabinClassUpgrade">
+            <summary>
+            The cabin class upgrade (UPGP) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.AirportPersonnelInformation">
+            <summary>
+            The airport personnel information (CKIN) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.AnimalInCabin">
+            <summary>
+            The animal in cabin (PETC) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.SeatRequest">
+            <summary>
+            The seat request (RQST) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.ManualPowerWheelchair">
+            <summary>
+            The manual power wheelchair (WCMP) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.DryBatteryOperatedWheelchair">
+            <summary>
+            The dry battery operated wheelchair (WCBD) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.WetBatteryOperatedWheelchair">
+            <summary>
+            The wet battery operated wheelchair (WCBW) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.LithiumIonBatteryOperatedWheelchair">
+            <summary>
+            The lithium ion battery operated wheelchair (WCLB) SSR
+            </summary>
+        </member>
+        <member name="F:Amadeus.SpecialServiceRequests.SsrType.LanguagesSpoken">
+            <summary>
+            The languages spoken (LANG) SSR
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.ISSR">
+            <summary>
+            SSR (special service request) element base
+            </summary>
+        </member>
+        <member name="T:Amadeus.SpecialServiceRequests.IBookingSsrOperations">
+            <summary>
+            PNR special services requests related functionality.
+            </summary>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.IBookingSsrOperations.AddSsrFreeText(System.String,System.String)">
+            <summary>
+            Adds SSR with free text to PNR (executes SR command).
+            </summary>
+            <param name="freeText">The ssr text</param>
+            <param name="airlineCode">SSR Airline information</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.IBookingSsrOperations.AddSsr(Amadeus.SpecialServiceRequests.ISSR,System.Int32,System.Int32)">
+            <summary>
+            Adds the meal SSR to PNR.
+            </summary>
+            <param name="ssrType">The SSR.</param>
+            <param name="passengerID">The passenger identifier.</param>
+            <param name="itineraryID">The itinerary identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.IBookingSsrOperations.AddFrequentFlyerSsr(System.String,System.Int32,System.String)">
+            <summary>
+            Adds the frequent flyer SSR (executes FFN command) to PNR.
+            </summary>
+            <param name="frequentFlyerNumber">The frequent flyer number.</param>
+            <param name="passengerNumber">The passenger number.</param>
+            <param name="airlineCode">The airline code.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.IBookingSsrOperations.AddIdentificationData(System.String,System.String,System.String,System.DateTime,Amadeus.Gender,Amadeus.SpecialServiceRequests.Apis.ApisDocumentType,System.String,System.String,System.String,System.Nullable{System.DateTime},System.Collections.Generic.IList{System.Int32},System.String)">
+            <summary>
+            Adds the identification data.
+            </summary>
+            <param name="airlineCode">The airline code.</param>
+            <param name="firstName">The first name.</param>
+            <param name="lastName">The last name.</param>
+            <param name="birthDate">The birth date.</param>
+            <param name="gender">The gender.</param>
+            <param name="documentType">Type of the document.</param>
+            <param name="documentNumber">The document number.</param>
+            <param name="issueCountryCode">The issue country code.</param>
+            <param name="citizenshipCountryCode">The citizenship country code.</param>
+            <param name="documentExpirationDate">The document expiration date.</param>
+            <param name="passengersIDs">The passengers i ds.</param>
+            <param name="documentHolderIndicator">The document holder indicator.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.IBookingSsrOperations.AddAirportPersonnelInformation(System.String,System.Int32)">
+            <summary>
+            Adds the airport personnel information.
+            </summary>
+            <param name="text">The text.</param>
+            <param name="segmentLineNumber">The segment line number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.IBookingSsrOperations.AddLanguageSpokenSsr(System.String,System.Int32)">
+            <summary>
+            Adds the language spoken SSR.
+            </summary>
+            <param name="text">The text.</param>
+            <param name="segmentLineNumber">The segment line number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.IBookingSsrOperations.AddFormOfIdentification(Amadeus.SpecialServiceRequests.IdentificationDocuments.SsrFoidType,System.String,System.Int32)">
+            <summary>
+            Adds the form of identification.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="documentNumber">The document number.</param>
+            <param name="passengerID">The passenger identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.IBookingSsrOperations.AddFormOfIdentification(System.String,System.Int32)">
+            <summary>
+            Adds the form of identification.
+            </summary>
+            <param name="freeText">Form of identification free text</param>
+            <param name="passengerID">The passenger identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.SpecialServiceRequests.IBookingSsrOperations.AddFormOfIdentification(System.String,System.Collections.Generic.ICollection{System.Int32})">
+            <summary>
+            Adds the form of identification.
+            </summary>
+            <param name="freeText">Form of identification free text</param>
+            <param name="passengerIDs">The passengers identifiers.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.IAmadeusWorkerSettings">
+            <summary>
+            Represent AmadeusWorker settings
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerSettings.ShowQueries">
+            <summary>
+            If true, Amadeus API commands and results will be show in Trace window
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorkerSettings.CommandsRetryOnCommunicationError">
+            <summary>
+            Gets or sets a value indicating whether low level XML commands should be retried once each time on communication error.
+            </summary>
+            <value>
+              <c>true</c> if low level XML commands should be retried once each time on communication error; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Amadeus.IRecordLocator">
+            <summary>
+            Represents Record Locator interface
+            </summary>
+        </member>
+        <member name="P:Amadeus.IRecordLocator.Name">
+            <summary>
+            The Record Locator string, for example: ZT8C4O
+            </summary>
+        </member>
+        <member name="T:Amadeus.AirFareElements.IAirFareElementFactory">
+            <summary>
+            Represent Air Fare element factory
+            </summary>
+        </member>
+        <member name="M:Amadeus.AirFareElements.IAirFareElementFactory.Create(System.Xml.Linq.XNode)">
+            <summary>
+            Creates the Air Fare element.
+            </summary>
+            <param name="dataElementIndiv">The data element indiv.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.AirFareElements.IAirFareElementFactory.CanHandleElement(System.Xml.Linq.XNode)">
+            <summary>
+            Determines whether factory can create an Air Fare element from data element indiv.
+            </summary>
+            <param name="dataElementIndiv">The data element indiv.</param>
+        </member>
+        <member name="T:Amadeus.CabinClass">
+            <summary>
+            Represent type of an aircraft cabin class
+            </summary>
+        </member>
+        <member name="F:Amadeus.CabinClass.Undefined">
+            <summary>
+            The undefined cabin class
+            </summary>
+        </member>
+        <member name="F:Amadeus.CabinClass.Economy">
+            <summary>
+            The economy cabin class
+            </summary>
+        </member>
+        <member name="F:Amadeus.CabinClass.Business">
+            <summary>
+            The business cabin class
+            </summary>
+        </member>
+        <member name="T:Amadeus.Status">
+            <summary>
+            Element status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.Undefined">
+            <summary>
+            The undefined element status type
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.Requested">
+            <summary>
+            Holding need (HN) (requested) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.ConfirmingFromRequest">
+            <summary>
+            Confirming from request (KK) (from HN or HK) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.Confirmed">
+            <summary>
+            Holding confirmed (HK) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.Cancelled">
+            <summary>
+            Holding cancelled (HX) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.ConfirmingFromWaitlist">
+            <summary>
+            Confirming from waitlist (KL) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.Listed">
+            <summary>
+            Holding listed (HL) (waitlist) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.ConfirmedTimeChange">
+            <summary>
+            Time change on confirmed segment (TK)
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.WaitlistedTimeChange">
+            <summary>
+            Time change on waitlisted segment (TL)
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.RequestedTimeChange">
+            <summary>
+            Time change on requested segment (TN)
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.Sold">
+            <summary>
+            Sold (Non last sear availability) (SS) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.NoAction">
+            <summary>
+            No action taken (NO) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.UnableToConfirm">
+            <summary>
+            Unable to confirm (UC), flight closed status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.Unable">
+            <summary>
+            Unable (UN), does not operate status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.UnableToAcceptSales">
+            <summary>
+            Unable to accept sales (US), have waitlisted status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.HaveWaitlisted">
+            <summary>
+            Have waitlisted (UU) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.SeatAvailable">
+            <summary>
+            Seat available (SA) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.ReconfirmedByPassenger">
+            <summary>
+            Reconfirmed by passenger (RR) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.Ok">
+            <summary>
+            Ticketed and confirmed (OK) status
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.Need">
+            <summary>
+            Need (NN) status (request status)
+            </summary>
+        </member>
+        <member name="F:Amadeus.Status.InterlineWithReservation">
+            <summary>
+            The interline with reservation (ID) status
+            </summary>
+        </member>
+        <member name="T:Amadeus.IAmadeusWorker">
+            <summary>
+            Represent Amadeus Worker
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorker.Settings">
+            <summary>
+            Gets the settings.
+            </summary>
+            <value>
+            The settings.
+            </value>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorker.Booking">
+            <summary>
+            PNR related functionality
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorker.Availability">
+            <summary>
+            Flights schedule and availability functions
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorker.MultiAvailability">
+            <summary>
+            Gets the multi availability.
+            </summary>
+            <value>
+            The multi availability.
+            </value>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorker.PassengersList">
+            <summary>
+            Passengers list related functionality
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorker.LoadingList">
+            <summary>
+            Loading list related functionality
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorker.Queues">
+            <summary>
+            Queues functionality.
+            </summary>
+        </member>
+        <member name="P:Amadeus.IAmadeusWorker.ETickets">
+            <summary>
+            Gets the electornic tickets operations.
+            </summary>
+        </member>
+        <member name="T:Amadeus.ICommands">
+            <summary>
+            Represents Amadeus raw cryptic commands operations
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandIG">
+            <summary>
+            Execute the IG (ignore) command.
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandMD">
+            <summary>
+            Execute the MD (scroll to next page) command.
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandRT(System.String)">
+            <summary>
+            Execute the RT (retrieve PNR) command.
+            </summary>
+            <param name="recordLocator">The Record Locator.</param>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandQT(System.String)">
+            <summary>
+            Executes the QT (get queues list) command.
+            </summary>
+            <param name="officeID">The office ID.</param>
+            <returns>Queues cryptic screen data</returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandQS(System.String,System.String)">
+            <summary>
+            Executes the QS (open queue/show queue PNRs) command.
+            </summary>
+            <param name="officeID">The office ID.</param>
+            <param name="queueID">The queue ID.</param>
+            <returns>First PNR in the queue cryptic data</returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandQD">
+            <summary>
+            Executes QD command (go to next PNR in current opened queue (putting current opened PNR on the bottom of the queue))
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandQE(System.String,System.String)">
+            <summary>
+            Executes QE command (move current opened PNR in current opened queue to specific and open next PNR in the queue)
+            </summary>
+            <param name="officeID">The office ID.</param>
+            <param name="queueID">The queue ID.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandRfQE(System.String,System.String,System.String)">
+            <summary>
+            Executes RF{NAME};QE command (move current opened PNR in current opened queue to specific and open next PNR in the queue with received from information)
+            </summary>
+            <param name="officeID">The office identifier.</param>
+            <param name="queueID">The queue identifier.</param>
+            <param name="receivedFrom">The received from name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandQN">
+            <summary>
+            Executes QN command (remove current opened PNR from current opened queue and go to next PNR in queue)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandQI">
+            <summary>
+            Executes QI command (exit from current opened queue).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandDO(System.Int32)">
+            <summary>
+            Executes DO command (get flight information from PNR by PNR itinerary line number).
+            </summary>
+            <param name="lineNumber">The itinerary line number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandDO(System.String,System.String,System.DateTime)">
+            <summary>
+            Executes DO command (get flight information).
+            </summary>
+            <param name="flightOperator">The flight operator.</param>
+            <param name="flightNumber">The flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandLP(System.String)">
+            <summary>
+            Executes LP command (get list of passengers).
+            </summary>
+            <param name="commandParameters">The rest command parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandLineCommand(System.Int32,System.String)">
+            <summary>
+            Executes line command (do some action on specific PNR line)
+            </summary>
+            <param name="lineNumber">The line number.</param>
+            <param name="command">The action command (for example, if it is SSR element: 'KK' or, for example, if it is TK XL element: '1425/26JUL').</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandER">
+            <summary>
+            Execute the ER (end transaction) command.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandRfER(System.String)">
+            <summary>
+            Execute the RF{NAME};ER (end transaction with received from information) command.
+            </summary>
+            <param name="receivedFrom">The received from name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandRfErSkipWarnings(System.String)">
+            <summary>
+            Execute the RF{NAME};ER (end transaction with received from information) command skipping any warnings which may appear.
+            </summary>
+            <param name="receivedFrom">The received from name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandRfErSkipWarnings(System.String,System.Boolean@)">
+            <summary>
+            Execute the RF{NAME};ER (end transaction with received from information) command skipping any warnings which may appear.
+            </summary>
+            <param name="receivedFrom">The received from name.</param>
+            <param name="simultaneousChangesErrorFound">States if simultaneous changes error received after RF{NAME};ER command.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandErSkipWarnings">
+            <summary>
+            Execute the ER (end transaction) command skipping any warnings which may appear.
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandRM(System.String)">
+            <summary>
+            Executes the RM (add remark) command.
+            </summary>
+            <param name="remarkText">The remark text</param>
+            <returns>Queues cryptic screen data</returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandAN(System.DateTime,System.String,System.String)">
+            <summary>
+            Executes the AN (get flights availability/schedule) command.
+            </summary>
+            <param name="flightDate">The flight date.</param>
+            <param name="departureAirportCode">The departure airport code.</param>
+            <param name="arrivalAirportCode">The arrival airport code.</param>
+            <returns>
+            Flights availability cryptic screen data
+            </returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandSR(System.String)">
+            <summary>
+            Executes the SR (add SSR element) command.
+            </summary>
+            <param name="srCommandText">The SR command text.</param>
+            <returns>
+            Flights availability cryptic screen data
+            </returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandIR">
+            <summary>
+            Executes the IR (ignore and redisplay) command.
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandFP(System.String)">
+            <summary>
+            Executes the FP (add FP element) command.
+            </summary>
+            <param name="fpCommandText">The FP command text.</param>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandFM(System.Decimal)">
+            <summary>
+            Executes the FM (add FM element) command.
+            </summary>
+            <param name="comission">The comission.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandTTX">
+            <summary>
+            Executes the TTX (recalculate airline ticketing fees) command.
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandTtpTKT">
+            <summary>
+            Executes the TTP/TKT (ticket prevalidation) command.
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandFXP">
+            <summary>
+            Executes the FXP (price a PNR, create a TST) command.
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandFXP(Amadeus.TransitionalStoredTickets.ICurrency)">
+            <summary>
+            Executes the FP (add FP element) command.
+            </summary>
+            <param name="currency">The currency.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">currency</exception>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandTtpET(System.Boolean,System.String)">
+            <summary>
+            Executes the TTP/ET command (issue electronic tickets at current office)
+            </summary>
+            <param name="sendTicketsToEmails">if set to <c>true</c> then ITR-EMLA command will be added also.</param>
+            <param name="optionalParameters">The optional parameters (For example PCC/RT).</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandTtpEtSkipWarnings(System.Boolean,System.String)">
+            <summary>
+            Executes the TTP/ET command (issue electronic tickets at current office) skipping any warnings which may appear.
+            </summary>
+            <param name="sendTicketsToEmails">if set to <c>true</c> then ITR-EMLA command will be added.</param>
+            <param name="optionalParameters">The optional parameters (For example PCC/RT).</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandTtpEtST(System.String,System.Boolean,System.String)">
+            <summary>
+            Executes the TTP/ET/ST{OfficeID} command (issue electronic tickets at specified office)
+            </summary>
+            <param name="officeID">Issuing office ID</param>
+            <param name="sendTicketsToEmails">if set to <c>true</c> then ITR-EMLA command will be added.</param>
+            <param name="optionalParameters">The optional parameters (For example PCC/RT).</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandTtpEtStSkipWarnings(System.String,System.Boolean,System.String)">
+            <summary>
+            Executes the TTP/ET/ST{OfficeID} command (issue electronic tickets at specified office) skipping any warnings which may appear.
+            </summary>
+            <param name="officeID">Issuing office ID</param>
+            <param name="sendTicketsToEmails">if set to <c>true</c> then ITR-EMLA command will be added.</param>
+            <param name="optionalParameters">The optional parameters (For example PCC/RT).</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandXE(System.Int32)">
+            <summary>
+            Executes the XE command (cancel PNR element)
+            </summary>
+            <param name="lineNumber">The element line number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandSS(System.String,System.String,System.String,System.DateTime,System.String,System.String,System.Int32,Amadeus.Status)">
+            <summary>
+            Executes the SS command (segment sell)
+            </summary>
+            <param name="airlineCode">The airline code.</param>
+            <param name="flightNumber">The flight number.</param>
+            <param name="classOfService">The class of service.</param>
+            <param name="departureDate">The departure date.</param>
+            <param name="departureAirportCode">The departure airport code.</param>
+            <param name="arrivalAirportCode">The arrival airport code.</param>
+            <param name="numberOfPassengers">The number of passengers.</param>
+            <param name="segmentStatus">The segment status.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandNM(System.String,System.String,System.String,System.String,System.Nullable{System.DateTime},System.Boolean,System.String,System.String,System.String,System.String,System.Nullable{System.DateTime})">
+            <summary>
+            Executes the NM command (Create name element)
+            </summary>
+            <param name="firstName">The first name.</param>
+            <param name="lastName">The last name.</param>
+            <param name="type">Type of the passenger.</param>
+            <param name="title">The title.</param>
+            <param name="dateOfBirth">The date of birth.</param>
+            <param name="alternativeDobField">if set to <c>true</c> then DOB alternative field should be used.</param>
+            <param name="subPaxFirstName">First name of the sub pax.</param>
+            <param name="subPaxLastName">Last name of the sub pax.</param>
+            <param name="subPaxType">Type of the sub pax.</param>
+            <param name="subPaxTitle">The sub pax title.</param>
+            <param name="subPaxDateOfBirth">The sub pax date of birth.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandApm(System.String)">
+            <summary>
+            Executes the APM command (Add mobile phone number to PNR).
+            </summary>
+            <param name="mobilePhoneNumber">The mobile phone number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandApe(System.String)">
+            <summary>
+            Executes the APE command (Add e-mail to PNR).
+            </summary>
+            <param name="email">The email.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandTkXl(System.DateTime)">
+            <summary>
+            Executes the TKXL command (Automatic booking cancellation)
+            </summary>
+            <param name="cancellationTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandFfn(System.String,System.Int32,System.String)">
+            <summary>
+            Executes the FFN command (Adds frequent flyer SSR to PNR).
+            </summary>
+            <param name="frequentFlyerNumber">The frequent flyer number.</param>
+            <param name="passengerNumber">The passenger number.</param>
+            <param name="airlineCode">The airline code.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandXI">
+            <summary>
+            Executes the XI command (cancel all itineraries)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandSP(System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            Executes the SP command (Split PNR).
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandSB(System.String)">
+            <summary>
+            Executes the SB command (Change class).
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandEF">
+            <summary>
+            Executes the EF command (File associate PNR after split).
+            </summary>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandItrEmla">
+            <summary>
+            Executes the ITR-EMLA command (Send tickets to emails).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandItrEml(System.String)">
+            <summary>
+            Executes the ITR-EML-{email} command (Send tickets to specified email)
+            </summary>
+            <param name="email">The email.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.ICommands.CommandLL(System.String,System.Nullable{System.DateTime})">
+            <summary>
+            Executes the LL command (Passenger loading list).
+            </summary>
+            <param name="fullFlightNumber">The full flight number.</param>
+            <param name="flightDate">The flight date.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amadeus.IOperations">
+            <summary>
+            General operations
+            </summary>
+        </member>
+        <member name="M:Amadeus.IOperations.Ignore">
+            <summary>
+            Execute the IG (ignore) command.
+            </summary>
+        </member>
+        <member name="M:Amadeus.IOperations.PrevalidateTicket">
+            <summary>
+            Prevalidates the ticket (executes TTP/TKT command)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.Price">
+            <summary>
+            Price PNR, create TST (executes FXP command)
+            </summary>
+        </member>
+        <member name="M:Amadeus.IOperations.Price(Amadeus.TransitionalStoredTickets.ICurrency)">
+            <summary>
+            Price PNR, create TST using specified currency (executes FXP command)
+            </summary>
+            <param name="currency">The currency.</param>
+            <exception cref="T:System.ArgumentNullException">currency</exception>
+        </member>
+        <member name="M:Amadeus.IOperations.RecalculateTicketingFees">
+            <summary>
+            Recalculate ticketing fees (executes TTX command)
+            </summary>
+        </member>
+        <member name="M:Amadeus.IOperations.ApproveElement(System.Int32)">
+            <summary>
+            Approves the PNR element (executes {line}/KK command).
+            </summary>
+            <param name="elementLineNumber">The element line number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.DeclineElement(System.Int32)">
+            <summary>
+            Declines the PNR element (executes {line}/NO command).
+            </summary>
+            <param name="elementLineNumber">The element line number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.SetElementAsNeed(System.Int32)">
+            <summary>
+            Set the PNR element (executes {line}/NN command) as need.
+            </summary>
+            <param name="elementLineNumber">The element line number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.AddRemark(System.String)">
+            <summary>
+            Adds remark to the PNR (executes RM command).
+            </summary>
+            <param name="remarkText">The remark text</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.AddFormOfPayment(System.String)">
+            <summary>
+            Adds form of payment (FP element).
+            </summary>
+            <param name="formOfPaymentText">The form of payment text.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">formOfPaymentText</exception>
+        </member>
+        <member name="M:Amadeus.IOperations.AddCommission(System.Decimal)">
+            <summary>
+            Adds the commission (FM element).
+            </summary>
+            <param name="commission">The commission.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.IssueElectronicTickets(System.Boolean,System.String)">
+            <summary>
+            Issue electronic tickets (executes the TTP/ET command)
+            </summary>
+            <param name="sendTicketsToEmails">if set to <c>true</c> then ITR-EMLA command will be added</param>
+            <param name="optionalParameters">The optional parameters (For example PCC/RT).</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.IssueElectronicTickets(System.String,System.Boolean,System.String)">
+            <summary>
+            Issue electronic tickets (executes the TTP/ET/ST{OfficeID} command)
+            </summary>
+            <param name="officeID">Issuing office ID</param>
+            <param name="sendTicketsToEmails">if set to <c>true</c> then ITR-EMLA command will be added</param>
+            <param name="optionalParameters">The optional parameters (For example PCC/RT).</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.RemoveElement(System.Int32)">
+            <summary>
+            Removes the element from PNR. (executes XE{LineNumber} command)
+            </summary>
+            <param name="lineNumber">The element line number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.EndTransactionSkipWarning">
+            <summary>
+            End transaction (executes ER command) skipping any warnings which may appear
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.EndTransactionWithReceivedFromSkipWarning(System.String)">
+            <summary>
+            End transaction (executes ER command) skipping any warnings which may appear
+            </summary>
+            <param name="receivedFrom">The received from text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.AddPassenger(Amadeus.PassengerNameRecords.IPassenger)">
+            <summary>
+            Adds the new passenger to PNR.
+            </summary>
+            <param name="newPassenger">The new passenger.</param>
+        </member>
+        <member name="M:Amadeus.IOperations.AddSegment(System.String,System.String,System.String,System.DateTime,System.String,System.String,System.Int32,Amadeus.Status)">
+            <summary>
+            Adds segment to PNR (sExecutes the SS command)
+            </summary>
+            <param name="airlineCode">The airline code.</param>
+            <param name="flightNumber">The flight number.</param>
+            <param name="classOfService">The class of service.</param>
+            <param name="departureDate">The departure date.</param>
+            <param name="departureAirportCode">The departure airport code.</param>
+            <param name="arrivalAirportCode">The arrival airport code.</param>
+            <param name="numberOfPassengers">The number of passengers.</param>
+            <param name="segmentStatus">The segment status (Undefined = use default HK status).</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">airlineCode
+            or
+            flightNumber
+            or
+            classOfService
+            or
+            departureAirportCode
+            or
+            arrivalAirportCode</exception>
+        </member>
+        <member name="M:Amadeus.IOperations.AddEMail(System.String)">
+            <summary>
+            Adds the e mail.
+            </summary>
+            <param name="eMail">The e mail.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.AddMobilePhone(System.String)">
+            <summary>
+            Adds the mobile phone.
+            </summary>
+            <param name="mobilePhoneNumber">The mobile phone number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.AddBookingCancellation(System.DateTime)">
+            <summary>
+            Executes the TKXL command (Automatic booking cancellation)
+            </summary>
+            <param name="cancellationTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.CancelAllItineraries">
+            <summary>
+            Cancel all itineraries (Executes the XI comand)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.SendTicketsToEmails">
+            <summary>
+            Sends the tickets to emails (executes ITR-EMLA command)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amadeus.IOperations.SendTicketsToEmail(System.String)">
+            <summary>
+            Sends the tickets to specified email (executes ITR-EML-{email} command).
+            </summary>
+            <param name="email">The email.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
