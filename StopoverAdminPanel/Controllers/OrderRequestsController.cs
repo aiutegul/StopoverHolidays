@@ -145,13 +145,29 @@ namespace StopoverAdminPanel.Models.Controllers
                     createStopoverData(requestId);
                     break;
                 case 1:
+                    createActivityData(requestId);
                     break;
-                case 2:
+                default:
+                    createStopoverData(requestId);
+                    createActivityData(requestId);
                     break;
             }
 
-            
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, GetFullErrorMessage(ModelState));
+            }
+
             return Request.CreateResponse(HttpStatusCode.Created, "Records created!");
+        }
+
+        private void createActivityData(int requestId)
+        {
+            throw new NotImplementedException();
         }
 
         private void createStopoverData(int requestId)
@@ -194,9 +210,8 @@ namespace StopoverAdminPanel.Models.Controllers
                 };
                 
                 _context.Flight.Add(flight);
+
                 createBookingReference(requestId, flight, orderStopover);
-
-
             }
         }
 
