@@ -1,0 +1,180 @@
+﻿@{
+    ViewData["Title"] = "StopoverData";
+}
+
+<h2>StopoverData</h2>
+
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.StopoverData>()
+        .ID("stpvr_datagrid")
+        .DataSource(ds => ds.WebApi()
+            .RouteName("StopoverDataApi")
+            .LoadAction("Get")
+            .InsertAction("Post")
+            .UpdateAction("Put")
+            .DeleteAction("Delete")
+            .Key("Id")
+        )
+        .ShowBorders(true)
+        .Paging(p => p.PageSize(10))
+        .FilterRow(f => f.Visible(true))
+        .HeaderFilter(f => f.Visible(true))
+        .GroupPanel(p => p.Visible(true))
+        .Grouping(g => g.AutoExpandAll(false))
+        .Selection(s => s.Mode(SelectionMode.Single))
+        .HoverStateEnabled(true)
+        .RemoteOperations(true)
+        .Columns(columns => {
+
+            columns.AddFor(m => m.FirstName);
+
+            columns.AddFor(m => m.LastName);
+
+            columns.AddFor(m => m.isChild);
+
+            columns.AddFor(m => m.CityId).Lookup(lookup => lookup
+                .DataSource(ds => ds.WebApi().RouteName("HotelsApi").LoadAction("CityLookup").Key("Value"))
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+            );
+
+            columns.AddFor(m => m.BookingReference);
+
+            columns.AddFor(m => m.TicketNumber);
+
+            columns.AddFor(m => m.PromoUsed);
+
+            columns.AddFor(m => m.HotelId).Lookup(lookup => lookup
+                .DataSource(ds => ds.WebApi().RouteName("OrderStopoversApi").LoadAction("HotelLookup").Key("Value"))
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+            ).Width(150);
+
+            columns.AddFor(m => m.CheckIn).DataType(GridColumnDataType.DateTime);
+
+            columns.AddFor(m => m.CheckOut).DataType(GridColumnDataType.DateTime);
+
+            columns.AddFor(m => m.DayUse);
+
+            columns.AddFor(m => m.IsPromo);
+
+            columns.AddFor(m => m.Nights);
+
+            columns.AddFor(m => m.OrderStopoverPrice);
+
+            columns.AddFor(m => m.TransferId).Lookup(lookup => lookup
+                .DataSource(ds => ds.WebApi().RouteName("OrderStopoversApi").LoadAction("TransferLookup").Key("Value"))
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+            );
+
+            columns.AddFor(m => m.FromAirportTransferUsed);
+
+            columns.AddFor(m => m.FromHotelTransferUsed);
+
+            columns.AddFor(m => m.ArriveDate).DataType(GridColumnDataType.DateTime);
+
+            columns.AddFor(m => m.DepartureDate).DataType(GridColumnDataType.DateTime);
+
+            columns.AddFor(m => m.ArriveFlight);
+
+            columns.AddFor(m => m.DepartureFlight);
+
+            columns.AddFor(m => m.Routes);
+
+            columns.AddFor(m => m.IsTransit);
+
+            columns.AddFor(m => m.IsPointToPoint);
+
+            columns.AddFor(m => m.RoomTypeId).Lookup(lookup => lookup
+                .DataSource(ds => ds.WebApi().RouteName("RoomsApi").LoadAction("RoomTypeLookup").Key("Value"))
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+            ).Width(180);
+
+            columns.AddFor(m => m.RoomNum);
+        })
+        .OnInitNewRow("onInitNewRow")
+        .OnSelectionChanged("onSelectionChanged")
+        .OnToolbarPreparing("onToolbarPreparing")
+        .ColumnAutoWidth(true)
+        .Editing(e => e
+            .AllowAdding(true)
+            .AllowUpdating(true)
+            .AllowDeleting(true)
+            .Mode(GridEditMode.Row)
+            .UseIcons(true)
+    )
+)
+
+<button id="btn_loadStpvr" class="btn btn-success pull-right" style="margin-top: 20px;">Process Stopover</button>
+
+<script type="text/javascript">
+    $("#btn_loadStpvr").click(function () {
+        var gridItems = $("#stpvr_datagrid").dxDataGrid('instance')._controllers.data._dataSource._items;
+        if (gridItems.length == 0) {
+            alert("no data added!");
+            return;
+        }
+        for (var i = 0; i < gridItems.length; i++) {
+            gridItems[i].OrderId = @ViewBag.OrderId;
+        }
+        console.log(gridItems);
+        $.ajax({
+            url: '/api/StopoverData/ProcessStopover',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(gridItems),
+            success: function (response) {
+                alert("Data added!");
+                console.log(response);
+            }
+        })
+    })
+
+
+    // Clone function variables
+
+    var isClone = false;
+    var original = null;
+
+    // On creating new row event
+    function onInitNewRow(e) {
+        // implement "Clone"
+        if (isClone) {
+            e.data = Object.assign({}, original);
+            delete e.data.Id; // remove PK property
+            e.data.FirstName = null;
+            e.data.LastName = null;
+            isClone = false;
+        }
+    }
+    // on selection change event        
+    function onSelectionChanged(e) {
+        //get selected row data
+        original = e.selectedRowsData[0];
+    }
+
+    function onToolbarPreparing(e) {
+        var toolbarItems = e.toolbarOptions.items;
+
+        // add duplicate button to the toolbar
+        toolbarItems.unshift({
+            location: 'after',
+            widget: 'dxButton',
+            options: {
+                icon: "repeat",
+                type: 'normal',
+                hint: 'Duplicate a row',
+                onClick: function () {
+                    // set clone trigger to true
+                    isClone = true;
+                    // call add new row 
+                    $("#stpvr_datagrid").dxDataGrid("addRow");
+
+                }
+            }
+
+        });
+    }
+    
+</script>

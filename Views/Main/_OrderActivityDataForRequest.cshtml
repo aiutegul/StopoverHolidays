@@ -1,0 +1,66 @@
+﻿
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderActivityData>()
+    .ID("activity_datagrid")
+    .DataSource(ds => ds.WebApi()
+        .RouteName("OrderActivityDataApi")
+        .LoadAction("GetOrderActivityDataForRequest")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .LoadParams(new { requestId = new JS("data.Id") })
+        .Key("Id")
+    )
+    .DateSerializationFormat("yyyy-MM-ddTHH:mm:ss")
+    .ShowBorders(true)
+    .Paging(p => p.PageSize(10))
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Grouping(g => g.AutoExpandAll(false))
+    .Selection(s => s.Mode(SelectionMode.Single))
+    .HoverStateEnabled(true)
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.FirstName);
+
+        columns.AddFor(m => m.LastName);
+
+        columns.AddFor(m => m.IsChild).Width(100);
+
+        columns.AddFor(m => m.CityId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().RouteName("ActivitiesApi").LoadAction("CityLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+
+        columns.AddFor(m => m.ActivityId).Lookup(lookup => lookup
+                .DataSource(ds => ds.WebApi().RouteName("ActivityTimesApi").LoadAction("ActivityLookup").Key("Value"))
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+            ).SetCellValue("setActivityTimeIdValue").Width(180); 
+
+        columns.AddFor(m => m.ActivityTimeId).Lookup(lookup => lookup
+                .DataSource("getActivityTimeStore")
+                .ValueExpr("Id")
+                .DisplayExpr("Time")
+            ); 
+
+        columns.AddFor(m => m.ActivityDate).DataType(GridColumnDataType.Date).Format("dd.MM.yyyy");
+
+        columns.AddFor(m => m.TransferLocation);
+
+    })
+    .ColumnAutoWidth(true)
+    .OnInitNewRow("onInitNewRow")
+    .OnSelectionChanged("onSelectionChanged")
+    .OnToolbarPreparing("onActivityToolbarPreparing")
+    .OnRowInserting("function(e) {  e.data.OrderId = data.Id; }")
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .UseIcons(true)
+        .Mode(GridEditMode.Row)
+    )
+)

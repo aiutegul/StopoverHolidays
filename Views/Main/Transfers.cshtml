@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Transfers";
+}
+
+<h2>Transfers</h2>
+
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.Transfer>()
+    .DataSource(ds => ds.WebApi()
+		.RouteName("TransfersApi")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .ShowBorders(true)
+    .Paging(p => p.PageSize(10))
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Grouping(g => g.AutoExpandAll(false))
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.PassengerAmount);
+
+        columns.AddFor(m => m.Price);
+
+        columns.AddFor(m => m.Comments);
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .Mode(GridEditMode.Popup)
+        .UseIcons(true)
+    )
+)

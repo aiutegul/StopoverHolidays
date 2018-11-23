@@ -1,0 +1,117 @@
+﻿@{
+    /**/
+
+    ViewData["Title"] = "Orders";
+}
+
+<h2>Orders</h2>
+
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.Order>()
+                            .DataSource(ds => ds.WebApi()
+                                .RouteName("OrdersApi")
+                                .LoadAction("Get")
+                                .InsertAction("Post")
+                                .UpdateAction("Put")
+                                .DeleteAction("Delete")
+                                .Key("Id")
+                            )
+                            .ShowBorders(true)
+                            .Paging(p => p.PageSize(10))
+                            .FilterRow(f => f.Visible(true))
+                            .HeaderFilter(f => f.Visible(true))
+                            .GroupPanel(p => p.Visible(true))
+                            .Grouping(g => g.AutoExpandAll(false))
+                            .Sorting(s => s.Mode(GridSortingMode.Single))
+                            .RemoteOperations(true)
+                            .Columns(columns =>
+                            {
+
+                                columns.AddFor(m => m.CreatedDate).Visible(false).SortOrder(SortOrder.Desc).FormItem(f => f.Visible(false));
+
+                                columns.AddFor(m => m.RegistrationNumber);
+
+                                columns.AddFor(m => m.CityId).Lookup(lookup => lookup
+                                    .DataSource(ds => ds.WebApi().RouteName("OrdersApi").LoadAction("CityLookup").Key("Value"))
+                                    .ValueExpr("Value")
+                                    .DisplayExpr("Text")
+                                );
+
+                                columns.AddFor(m => m.PartnerId).Lookup(lookup => lookup
+                                    .DataSource(ds => ds.WebApi().RouteName("OrdersApi").LoadAction("PartnerLookup").Key("Value"))
+                                    .ValueExpr("Value")
+                                    .DisplayExpr("Text")
+                                );
+
+                                columns.AddFor(m => m.Email);
+
+                                columns.AddFor(m => m.Referral);
+
+                                columns.AddFor(m => m.Passengers);
+
+                                columns.AddFor(m => m.Language);
+
+                                columns.AddFor(m => m.MailSent);
+
+                                columns.AddFor(m => m.Comments);
+                            })
+                             .MasterDetail(md =>
+                                {
+                                    md.Enabled(true);
+                                    md.Template(@<text>
+                                        <div class="master-detail-caption"><h2>OrderStopovers for Order <%= data.RegistrationNumber%>:</h2></div>
+                                        @Html.Partial("_OrderStopoversForOrder")
+                                        <hr style="clear:both" />
+                                        <div class="master-detail-caption"><h2>OrderActivities for Order <%= data.RegistrationNumber%>:</h2></div>
+                                        @Html.Partial("_OrderActivitiesForOrder")
+                                        <hr style="clear:both" />
+                                        <div class="master-detail-caption"><h2>Payment Details for Order <%= data.RegistrationNumber%>:</h2></div>
+                                        @Html.Partial("_PaymentForOrder")
+                                    </text>);
+                                        }
+                                     )
+                                     .OnToolbarPreparing("ToolbarPreparing")
+                                     .Editing(e => e
+                                                 .AllowAdding(true)
+                                                 .AllowUpdating(true)
+                                                 .AllowDeleting(true)
+                                                 .Mode(GridEditMode.Popup)
+                                                 .UseIcons(true)
+                                      )
+)
+
+
+<script type="text/javascript">
+    function LoadStopover(orderId) {
+        window.applicationBaseUrl = @Html.Raw(HttpUtility.JavaScriptStringEncode(
+        new Uri(
+                   new Uri(this.Context.Request.Url.GetLeftPart(UriPartial.Authority)),
+                   Url.Content("~/")
+               ).ToString(), true));
+        window.location.href = window.applicationBaseUrl + "PassengerRecords/StopoverData/" + orderId;
+    }
+
+    function LoadActivity(orderId) {
+        window.applicationBaseUrl = @Html.Raw(HttpUtility.JavaScriptStringEncode(
+        new Uri(
+                   new Uri(this.Context.Request.Url.GetLeftPart(UriPartial.Authority)),
+                   Url.Content("~/")
+               ).ToString(), true));
+        window.location.href = window.applicationBaseUrl + "PassengerRecords/ActivityData/" + orderId;
+    }
+
+    function ToolbarPreparing (e) {
+        var toolbarItems = e.toolbarOptions.items;
+        $.each(toolbarItems, function (_, item) {
+            if (item.name === "addRowButton") {
+                item.options.onClick = function (args) {
+                    window.applicationBaseUrl = @Html.Raw(HttpUtility.JavaScriptStringEncode(
+                        new Uri(
+                                new Uri(this.Context.Request.Url.GetLeftPart(UriPartial.Authority)),
+                                     Url.Content("~/")
+                                        ).ToString(), true));
+                 window.location.href = window.applicationBaseUrl + "Main/OrderRequests";
+                };
+            }
+        });
+    }
+</script>

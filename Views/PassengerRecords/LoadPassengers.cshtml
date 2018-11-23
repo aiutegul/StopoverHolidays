@@ -1,0 +1,36 @@
+﻿
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.FlightPassenger>()
+            .DataSource(ds => ds.WebApi()
+                .RouteName("FlightPassengersApi")
+                .LoadAction("Get")
+                .InsertAction("Post")
+                .UpdateAction("Put")
+                .DeleteAction("Delete")
+                .Key("Id")
+            )
+            .ShowBorders(true)
+            .Paging(p => p.PageSize(10))
+            .FilterRow(f => f.Visible(true))
+            .HeaderFilter(f => f.Visible(true))
+            .GroupPanel(p => p.Visible(true))
+            .Grouping(g => g.AutoExpandAll(false))
+            .RemoteOperations(true)
+            .Columns(columns =>
+            {
+
+                columns.AddFor(m => m.BookingReferenceId).Lookup(lookup => lookup
+                    .DataSource(ds => ds.WebApi().RouteName("FlightPassengersApi").LoadAction("BookingReferenceLookup").Key("Value"))
+                    .ValueExpr("Value")
+                    .DisplayExpr("Text")
+                );
+
+                columns.AddFor(m => m.FirstName);
+
+                columns.AddFor(m => m.LastName);
+
+                columns.AddFor(m => m.Type);
+
+                columns.AddFor(m => m.TicketNumber);
+            })
+            
+)

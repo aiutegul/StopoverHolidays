@@ -1,0 +1,57 @@
+﻿
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.StopoverPassenger>()
+    .DataSource(ds => ds.WebApi()
+        .RouteName("StopoverPassengersApi")
+        .LoadAction("GetStopoverPassengersForOrderStopover")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .LoadParams(new { OrderStopoverId = new JS("data.Id") })
+        .Key("Id")
+    )
+    .ShowBorders(true)
+    .Paging(p => p.PageSize(10))
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Grouping(g => g.AutoExpandAll(false))
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.OrderStopoverId);
+
+        columns.AddFor(m => m.RoomId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().RouteName("StopoverPassengersApi").LoadAction("RoomLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+
+        columns.AddFor(m => m.RoomNum);
+
+        columns.AddFor(m => m.PassengerId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().RouteName("StopoverPassengersApi").LoadAction("PassengerLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+
+        columns.AddFor(m => m.BookingReferenceId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().RouteName("StopoverPassengersApi").LoadAction("BookingRefLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+
+        columns.AddFor(m => m.TicketNumber);
+
+        columns.AddFor(m => m.PromoUsed);
+
+        columns.AddFor(m => m.Comments);
+    })
+    .OnRowInserting("function(e) {  e.data.OrderStopoverId = data.Id; }")
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .Mode(GridEditMode.Popup)
+        .UseIcons(true)
+    )
+)

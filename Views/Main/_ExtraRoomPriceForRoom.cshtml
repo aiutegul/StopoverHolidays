@@ -1,0 +1,39 @@
+﻿
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.ExtraRoomPrice>()
+    .DataSource(ds => ds.WebApi()
+        .RouteName("ExtraRoomPricesApi")
+        .LoadAction("GetExtraPricesForRoom")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .LoadParams(new { roomId = new JS("data.Id") })
+        .Key("Id")
+    )
+    .ShowBorders(true)
+    .Paging(p => p.PageSize(10))
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Grouping(g => g.AutoExpandAll(false))
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.StartDate).Format("dd.MM.yyyy");
+
+        columns.AddFor(m => m.EndDate).Format("dd.MM.yyyy");
+
+        columns.AddFor(m => m.FirstNightPrice);
+
+        columns.AddFor(m => m.SecondNightPrice);
+
+        columns.AddFor(m => m.Comments);
+    })
+    .OnRowInserting("function(e) {  e.data.RoomId = data.Id; }")
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .Mode(GridEditMode.Popup)
+        .UseIcons(true)
+    )
+)

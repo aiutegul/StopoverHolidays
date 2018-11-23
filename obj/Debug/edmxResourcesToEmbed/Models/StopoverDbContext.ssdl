@@ -1,0 +1,1018 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StopoverHolidaysDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="NameCode" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Enabled" Type="bit" Nullable="false" />
+    <Property Name="TransferEnabled" Type="bit" Nullable="false" />
+    <Property Name="MinPassengers" Type="int" Nullable="false" />
+    <Property Name="PreviewImage" Type="nvarchar(max)" />
+    <Property Name="PreviewTextCode" Type="nvarchar" MaxLength="128" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ActivityBlockedDay">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="ActivityId" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ActivityPassenger">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="OrderActivityId" Type="int" Nullable="false" />
+    <Property Name="PassengerId" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ActivityPrice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="ActivityId" Type="int" Nullable="false" />
+    <Property Name="ActivityPriceTypeId" Type="int" Nullable="false" />
+    <Property Name="PassengerAmount" Type="int" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="PriceNet" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ActivityPriceType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="NameCode" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ActivityTime">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="Time" Type="time" Precision="7" Nullable="false" />
+    <Property Name="ActivityId" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="BookingReference">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="FlightId" Type="int" Nullable="false" />
+    <Property Name="PNR" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="IataCode" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="NameCode" Type="nvarchar" MaxLength="256" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Config">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ExtraRoomPrice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="RoomId" Type="int" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="FirstNightPrice" Type="int" Nullable="false" />
+    <Property Name="SecondNightPrice" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Flight">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="OrderStopoverId" Type="int" Nullable="false" />
+    <Property Name="ArriveDate" Type="datetime" Nullable="false" />
+    <Property Name="DepartureDate" Type="datetime" Nullable="false" />
+    <Property Name="ArriveFlight" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="DepartureFlight" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="Routes" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsTransit" Type="bit" Nullable="false" />
+    <Property Name="IsPointToPoint" Type="bit" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="FlightPassenger">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="BookingReferenceId" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TicketNumber" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hotel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="NameCode" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="IsPromo" Type="bit" Nullable="false" />
+    <Property Name="Enabled" Type="bit" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="HotelBlockedDay">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="HotelId" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="HotelPromoDisable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="HotelId" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="RegistrationNumber" Type="nvarchar" MaxLength="32" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="PartnerId" Type="int" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Referral" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Passengers" Type="int" Nullable="false" />
+    <Property Name="Language" Type="nvarchar" MaxLength="8" Nullable="false" />
+    <Property Name="MailSent" Type="bit" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="OrderActivity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ActivityTimeId" Type="int" Nullable="false" />
+    <Property Name="ActivityId" Type="int" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="TransferLocation" Type="nvarchar(max)" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="OrderActivityData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="ActivityId" Type="int" />
+    <Property Name="ActivityTimeId" Type="int" />
+    <Property Name="ActivityDate" Type="date" />
+    <Property Name="TransferLocation" Type="nvarchar(max)" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="256" />
+    <Property Name="IsChild" Type="bit" />
+  </EntityType>
+  <EntityType Name="OrderCost">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="AirfareTaxes" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="FirstNightPackageCost" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="RestNightGross" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="ToursGross" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="TotalExpenseFirstNight" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="TotalExpenseTransfer" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="RestNightNet" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="TursNet" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="OneDollarExpense" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="SalesCommission" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="ORCCommission" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Profit" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="KCRevenue" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="PercentFromTicketPrice" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Content" Type="nvarchar(max)" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="OrderRequests">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RequestDate" Type="date" />
+    <Property Name="PartnerId" Type="int" />
+    <Property Name="RequestType" Type="int" />
+    <Property Name="RequestStatus" Type="int" />
+  </EntityType>
+  <EntityType Name="OrderStopover">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="HotelId" Type="int" Nullable="false" />
+    <Property Name="TransferId" Type="int" Nullable="false" />
+    <Property Name="FromAirportTransferUsed" Type="bit" Nullable="false" />
+    <Property Name="FromHotelTransferUsed" Type="bit" Nullable="false" />
+    <Property Name="IsPromo" Type="bit" Nullable="false" />
+    <Property Name="CheckIn" Type="datetime" Nullable="false" />
+    <Property Name="CheckOut" Type="datetime" Nullable="false" />
+    <Property Name="DayUse" Type="bit" Nullable="false" />
+    <Property Name="Nights" Type="int" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="OrderStopoverData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="HotelId" Type="int" />
+    <Property Name="RoomTypeId" Type="int" />
+    <Property Name="TransferId" Type="int" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="256" />
+    <Property Name="IsChild" Type="bit" />
+    <Property Name="BookingReference" Type="nvarchar" MaxLength="32" />
+    <Property Name="TicketNumber" Type="nvarchar" MaxLength="256" />
+    <Property Name="RoomNum" Type="int" />
+    <Property Name="PromoUsed" Type="bit" />
+    <Property Name="CheckIn" Type="datetime" />
+    <Property Name="CheckOut" Type="datetime" />
+    <Property Name="FromAirportTransferUsed" Type="bit" />
+    <Property Name="FromHotelTransferUsed" Type="bit" />
+    <Property Name="DayUse" Type="bit" />
+    <Property Name="IsPromo" Type="bit" />
+    <Property Name="Nights" Type="int" />
+    <Property Name="OrderStopoverPrice" Type="int" />
+    <Property Name="ArriveDate" Type="datetime" />
+    <Property Name="DepartureDate" Type="datetime" />
+    <Property Name="ArriveFlight" Type="nvarchar" MaxLength="32" />
+    <Property Name="DepartureFlight" Type="nvarchar" MaxLength="32" />
+    <Property Name="Routes" Type="nvarchar(max)" />
+    <Property Name="IsTransit" Type="bit" />
+    <Property Name="IsPointToPoint" Type="bit" />
+  </EntityType>
+  <EntityType Name="Partner">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="Code" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="Enabled" Type="bit" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Passenger">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="isChild" Type="bit" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="Reference" Type="nvarchar" MaxLength="128" />
+    <Property Name="TotalPrice" Type="int" Nullable="false" />
+    <Property Name="IsPaid" Type="bit" />
+    <Property Name="PayTime" Type="datetime" />
+    <Property Name="ReferralPayment" Type="nvarchar(max)" />
+    <Property Name="EMD" Type="nvarchar(max)" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PromoUsedBookingReference">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="BookingReference" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="HotelId" Type="int" Nullable="false" />
+    <Property Name="RoomTypeId" Type="int" Nullable="false" />
+    <Property Name="FirstNightPrice" Type="int" Nullable="false" />
+    <Property Name="SecondNightPrice" Type="int" Nullable="false" />
+    <Property Name="FirstNightPriceNet" Type="int" Nullable="false" />
+    <Property Name="SecondNightPriceNet" Type="int" Nullable="false" />
+    <Property Name="PromoNetPrice" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="RoomType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="NameCode" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Capacity" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Session">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="Ip" Type="nvarchar" MaxLength="64" Nullable="false" />
+    <Property Name="DraftOrder" Type="nvarchar(max)" />
+    <Property Name="CurrentStep" Type="int" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="StopoverPassenger">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="RoomId" Type="int" Nullable="false" />
+    <Property Name="RoomNum" Type="int" Nullable="false" />
+    <Property Name="OrderStopoverId" Type="int" Nullable="false" />
+    <Property Name="PassengerId" Type="int" Nullable="false" />
+    <Property Name="BookingReferenceId" Type="int" Nullable="false" />
+    <Property Name="TicketNumber" Type="nvarchar" MaxLength="256" />
+    <Property Name="PromoUsed" Type="bit" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Transfer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="PassengerAmount" Type="int" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Translation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="NameCode" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" />
+    <Property Name="LangCode" Type="nvarchar" MaxLength="128" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK_Activity_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActivityBlockedDay_Activity">
+    <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+    <End Role="ActivityBlockedDay" Type="Self.ActivityBlockedDay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActivityBlockedDay">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActivityPassenger_OrderActivity">
+    <End Role="OrderActivity" Type="Self.OrderActivity" Multiplicity="1" />
+    <End Role="ActivityPassenger" Type="Self.ActivityPassenger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderActivity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActivityPassenger">
+        <PropertyRef Name="OrderActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActivityPassenger_Passenger">
+    <End Role="Passenger" Type="Self.Passenger" Multiplicity="1" />
+    <End Role="ActivityPassenger" Type="Self.ActivityPassenger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Passenger">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActivityPassenger">
+        <PropertyRef Name="PassengerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActivityPrice_Activity">
+    <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+    <End Role="ActivityPrice" Type="Self.ActivityPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActivityPrice">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActivityPrice_ActivityPriceType">
+    <End Role="ActivityPriceType" Type="Self.ActivityPriceType" Multiplicity="1" />
+    <End Role="ActivityPrice" Type="Self.ActivityPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActivityPriceType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActivityPrice">
+        <PropertyRef Name="ActivityPriceTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActivityTime_Activity">
+    <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+    <End Role="ActivityTime" Type="Self.ActivityTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActivityTime">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingReference_Flight">
+    <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+    <End Role="BookingReference" Type="Self.BookingReference" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Flight">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BookingReference">
+        <PropertyRef Name="FlightId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExtraRoomPrice_Room">
+    <End Role="Room" Type="Self.Room" Multiplicity="1" />
+    <End Role="ExtraRoomPrice" Type="Self.ExtraRoomPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExtraRoomPrice">
+        <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Flight_OrderStopover">
+    <End Role="OrderStopover" Type="Self.OrderStopover" Multiplicity="1" />
+    <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderStopover">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Flight">
+        <PropertyRef Name="OrderStopoverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Hotel_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Hotel" Type="Self.Hotel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Hotel">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HotelBlockedDay_Hotel">
+    <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+    <End Role="HotelBlockedDay" Type="Self.HotelBlockedDay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HotelBlockedDay">
+        <PropertyRef Name="HotelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HotelPromoDisable_Hotel">
+    <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+    <End Role="HotelPromoDisable" Type="Self.HotelPromoDisable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HotelPromoDisable">
+        <PropertyRef Name="HotelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Partner">
+    <End Role="Partner" Type="Self.Partner" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Partner">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="PartnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderActivity_Activity">
+    <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+    <End Role="OrderActivity" Type="Self.OrderActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderActivity">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderActivity_ActivityTime">
+    <End Role="ActivityTime" Type="Self.ActivityTime" Multiplicity="1" />
+    <End Role="OrderActivity" Type="Self.OrderActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActivityTime">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderActivity">
+        <PropertyRef Name="ActivityTimeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderActivity_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderActivity" Type="Self.OrderActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderActivity">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderActivityData_OrderRequests">
+    <End Role="OrderRequests" Type="Self.OrderRequests" Multiplicity="0..1" />
+    <End Role="OrderActivityData" Type="Self.OrderActivityData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderRequests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderActivityData">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderCost_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderCost" Type="Self.OrderCost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderCost">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderStopover_Hotel">
+    <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+    <End Role="OrderStopover" Type="Self.OrderStopover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderStopover">
+        <PropertyRef Name="HotelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderStopover_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderStopover" Type="Self.OrderStopover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderStopover">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderStopover_Transfer">
+    <End Role="Transfer" Type="Self.Transfer" Multiplicity="1" />
+    <End Role="OrderStopover" Type="Self.OrderStopover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transfer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderStopover">
+        <PropertyRef Name="TransferId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderStopoverData_OrderRequests">
+    <End Role="OrderRequests" Type="Self.OrderRequests" Multiplicity="0..1" />
+    <End Role="OrderStopoverData" Type="Self.OrderStopoverData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderRequests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderStopoverData">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Room_Hotel">
+    <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+    <End Role="Room" Type="Self.Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="HotelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Room_RoomType">
+    <End Role="RoomType" Type="Self.RoomType" Multiplicity="1" />
+    <End Role="Room" Type="Self.Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoomType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="RoomTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StopoverPassenger_BookingReference">
+    <End Role="BookingReference" Type="Self.BookingReference" Multiplicity="1" />
+    <End Role="StopoverPassenger" Type="Self.StopoverPassenger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookingReference">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StopoverPassenger">
+        <PropertyRef Name="BookingReferenceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StopoverPassenger_OrderStopover">
+    <End Role="OrderStopover" Type="Self.OrderStopover" Multiplicity="1" />
+    <End Role="StopoverPassenger" Type="Self.StopoverPassenger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderStopover">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StopoverPassenger">
+        <PropertyRef Name="OrderStopoverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StopoverPassenger_Passenger">
+    <End Role="Passenger" Type="Self.Passenger" Multiplicity="1" />
+    <End Role="StopoverPassenger" Type="Self.StopoverPassenger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Passenger">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StopoverPassenger">
+        <PropertyRef Name="PassengerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StopoverPassenger_Room">
+    <End Role="Room" Type="Self.Room" Multiplicity="1" />
+    <End Role="StopoverPassenger" Type="Self.StopoverPassenger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StopoverPassenger">
+        <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StopoverHolidaysDBModelStoreContainer">
+    <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActivityBlockedDay" EntityType="Self.ActivityBlockedDay" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActivityPassenger" EntityType="Self.ActivityPassenger" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActivityPrice" EntityType="Self.ActivityPrice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActivityPriceType" EntityType="Self.ActivityPriceType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActivityTime" EntityType="Self.ActivityTime" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BookingReference" EntityType="Self.BookingReference" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Config" EntityType="Self.Config" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExtraRoomPrice" EntityType="Self.ExtraRoomPrice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Flight" EntityType="Self.Flight" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FlightPassenger" EntityType="Self.FlightPassenger" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hotel" EntityType="Self.Hotel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HotelBlockedDay" EntityType="Self.HotelBlockedDay" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HotelPromoDisable" EntityType="Self.HotelPromoDisable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderActivity" EntityType="Self.OrderActivity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderActivityData" EntityType="Self.OrderActivityData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderCost" EntityType="Self.OrderCost" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderRequests" EntityType="Self.OrderRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderStopover" EntityType="Self.OrderStopover" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderStopoverData" EntityType="Self.OrderStopoverData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Partner" EntityType="Self.Partner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Passenger" EntityType="Self.Passenger" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PromoUsedBookingReference" EntityType="Self.PromoUsedBookingReference" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomType" EntityType="Self.RoomType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StopoverPassenger" EntityType="Self.StopoverPassenger" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transfer" EntityType="Self.Transfer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Translation" EntityType="Self.Translation" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Activity_City" Association="Self.FK_Activity_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="Activity" EntitySet="Activity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActivityBlockedDay_Activity" Association="Self.FK_ActivityBlockedDay_Activity">
+      <End Role="Activity" EntitySet="Activity" />
+      <End Role="ActivityBlockedDay" EntitySet="ActivityBlockedDay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActivityPassenger_OrderActivity" Association="Self.FK_ActivityPassenger_OrderActivity">
+      <End Role="OrderActivity" EntitySet="OrderActivity" />
+      <End Role="ActivityPassenger" EntitySet="ActivityPassenger" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActivityPassenger_Passenger" Association="Self.FK_ActivityPassenger_Passenger">
+      <End Role="Passenger" EntitySet="Passenger" />
+      <End Role="ActivityPassenger" EntitySet="ActivityPassenger" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActivityPrice_Activity" Association="Self.FK_ActivityPrice_Activity">
+      <End Role="Activity" EntitySet="Activity" />
+      <End Role="ActivityPrice" EntitySet="ActivityPrice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActivityPrice_ActivityPriceType" Association="Self.FK_ActivityPrice_ActivityPriceType">
+      <End Role="ActivityPriceType" EntitySet="ActivityPriceType" />
+      <End Role="ActivityPrice" EntitySet="ActivityPrice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActivityTime_Activity" Association="Self.FK_ActivityTime_Activity">
+      <End Role="Activity" EntitySet="Activity" />
+      <End Role="ActivityTime" EntitySet="ActivityTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingReference_Flight" Association="Self.FK_BookingReference_Flight">
+      <End Role="Flight" EntitySet="Flight" />
+      <End Role="BookingReference" EntitySet="BookingReference" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExtraRoomPrice_Room" Association="Self.FK_ExtraRoomPrice_Room">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="ExtraRoomPrice" EntitySet="ExtraRoomPrice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Flight_OrderStopover" Association="Self.FK_Flight_OrderStopover">
+      <End Role="OrderStopover" EntitySet="OrderStopover" />
+      <End Role="Flight" EntitySet="Flight" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Hotel_City" Association="Self.FK_Hotel_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="Hotel" EntitySet="Hotel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HotelBlockedDay_Hotel" Association="Self.FK_HotelBlockedDay_Hotel">
+      <End Role="Hotel" EntitySet="Hotel" />
+      <End Role="HotelBlockedDay" EntitySet="HotelBlockedDay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HotelPromoDisable_Hotel" Association="Self.FK_HotelPromoDisable_Hotel">
+      <End Role="Hotel" EntitySet="Hotel" />
+      <End Role="HotelPromoDisable" EntitySet="HotelPromoDisable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_City" Association="Self.FK_Order_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Partner" Association="Self.FK_Order_Partner">
+      <End Role="Partner" EntitySet="Partner" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderActivity_Activity" Association="Self.FK_OrderActivity_Activity">
+      <End Role="Activity" EntitySet="Activity" />
+      <End Role="OrderActivity" EntitySet="OrderActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderActivity_ActivityTime" Association="Self.FK_OrderActivity_ActivityTime">
+      <End Role="ActivityTime" EntitySet="ActivityTime" />
+      <End Role="OrderActivity" EntitySet="OrderActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderActivity_Order" Association="Self.FK_OrderActivity_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderActivity" EntitySet="OrderActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderActivityData_OrderRequests" Association="Self.FK_OrderActivityData_OrderRequests">
+      <End Role="OrderRequests" EntitySet="OrderRequests" />
+      <End Role="OrderActivityData" EntitySet="OrderActivityData" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderCost_Order" Association="Self.FK_OrderCost_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderCost" EntitySet="OrderCost" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderStopover_Hotel" Association="Self.FK_OrderStopover_Hotel">
+      <End Role="Hotel" EntitySet="Hotel" />
+      <End Role="OrderStopover" EntitySet="OrderStopover" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderStopover_Order" Association="Self.FK_OrderStopover_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderStopover" EntitySet="OrderStopover" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderStopover_Transfer" Association="Self.FK_OrderStopover_Transfer">
+      <End Role="Transfer" EntitySet="Transfer" />
+      <End Role="OrderStopover" EntitySet="OrderStopover" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderStopoverData_OrderRequests" Association="Self.FK_OrderStopoverData_OrderRequests">
+      <End Role="OrderRequests" EntitySet="OrderRequests" />
+      <End Role="OrderStopoverData" EntitySet="OrderStopoverData" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_Order" Association="Self.FK_Payment_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="Payment" EntitySet="Payment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Room_Hotel" Association="Self.FK_Room_Hotel">
+      <End Role="Hotel" EntitySet="Hotel" />
+      <End Role="Room" EntitySet="Room" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Room_RoomType" Association="Self.FK_Room_RoomType">
+      <End Role="RoomType" EntitySet="RoomType" />
+      <End Role="Room" EntitySet="Room" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StopoverPassenger_BookingReference" Association="Self.FK_StopoverPassenger_BookingReference">
+      <End Role="BookingReference" EntitySet="BookingReference" />
+      <End Role="StopoverPassenger" EntitySet="StopoverPassenger" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StopoverPassenger_OrderStopover" Association="Self.FK_StopoverPassenger_OrderStopover">
+      <End Role="OrderStopover" EntitySet="OrderStopover" />
+      <End Role="StopoverPassenger" EntitySet="StopoverPassenger" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StopoverPassenger_Passenger" Association="Self.FK_StopoverPassenger_Passenger">
+      <End Role="Passenger" EntitySet="Passenger" />
+      <End Role="StopoverPassenger" EntitySet="StopoverPassenger" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StopoverPassenger_Room" Association="Self.FK_StopoverPassenger_Room">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="StopoverPassenger" EntitySet="StopoverPassenger" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

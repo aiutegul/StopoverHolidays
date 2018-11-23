@@ -1,0 +1,201 @@
+﻿@{
+    ViewData["Title"] = "OrderRequests";
+}
+
+<h2>OrderRequests</h2>
+
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderRequests>()
+                        .DataSource(ds => ds.WebApi()
+                            .RouteName("OrderRequestsApi")
+                            .LoadAction("Get")
+                            .InsertAction("Post")
+                            .UpdateAction("Put")
+                            .DeleteAction("Delete")
+                            .Key("Id")
+                        )
+                        .DateSerializationFormat("yyyy-MM-ddTHH:mm:ss")
+                        .ShowBorders(true)
+                        .Paging(p => p.PageSize(10))
+                        .FilterRow(f => f.Visible(true))
+                        .HeaderFilter(f => f.Visible(true))
+                        .GroupPanel(p => p.Visible(true))
+                        .Grouping(g => g.AutoExpandAll(false))
+                        .RemoteOperations(true)
+                        .Columns(columns =>
+                        {
+
+                            columns.AddFor(m => m.RequestDate).DataType(GridColumnDataType.Date).Format("dd.MM.yyyy");
+
+                            columns.AddFor(m => m.PartnerId);
+
+                            columns.AddFor(m => m.RequestType);
+
+                            columns.AddFor(m => m.RequestStatus).FormItem(f => f.Visible(false));
+                        })
+                        .MasterDetail(md =>
+                        {
+                            md.Enabled(true);
+                            md.Template(@<text>
+                                <div class="master-detail-caption"><h2>Order Stopover Data for Order Request with id <%= data.Id %>:</h2></div>
+                                @Html.Partial("_OrderStopoverDataForRequest")
+                                <hr style="clear:both;" />
+                                <div class="master-detail-caption"><h2>Order Activity Data for Order Request with id <%= data.Id %>:</h2></div>
+                                @Html.Partial("_OrderActivityDataForRequest")
+                                <button class="btn btn-primary pull-right" style="margin-top:20px; margin-left: 20px;" onclick="submit_request(<%= data.Id %>)">Submit Request</button>
+                                <button class="btn btn-success pull-right" style="margin-top:20px;" onclick="confirm_request(<%= data.Id %>)">Confirm Request</button>
+                                <button class="btn btn-danger pull-left" style="margin-top:20px;" onclick="reject_request(<%= data.Id %>)">Reject Request</button>
+                            </text>);
+
+                        })
+                        .Editing(e => e
+                                  .AllowAdding(true)
+                                  .AllowUpdating(true)
+                                  .AllowDeleting(true)
+                                  .UseIcons(true)
+                                  .Mode(GridEditMode.Popup)
+                        )
+)
+
+
+<script type="text/javascript">
+    // Clone function variables
+
+    var isClone = false;
+    var original = null;
+
+    // On creating new row event
+    function onInitNewRow(e) {
+        // implement "Clone"
+        if (isClone) {
+            e.data = Object.assign({}, original);
+            delete e.data.Id; // remove PK property
+            e.data.FirstName = null;
+            e.data.LastName = null;
+            isClone = false;
+        }
+    }
+    // on selection change event
+    function onSelectionChanged(e) {
+        //get selected row data
+        original = e.selectedRowsData[0];
+    }
+
+    function onStopoverToolbarPreparing(e) {
+        var toolbarItems = e.toolbarOptions.items;
+
+        // add duplicate button to the toolbar
+        toolbarItems.unshift({
+            location: 'after',
+            widget: 'dxButton',
+            options: {
+                icon: "repeat",
+                type: 'normal',
+                hint: 'Duplicate a row',
+                onClick: function () {
+                    // set clone trigger to true
+                    isClone = true;
+                    // call add new row
+                    $("#stpvr_datagrid").dxDataGrid("addRow");
+
+                }
+            }
+
+        });
+    }
+
+    function onActivityToolbarPreparing(e) {
+        var toolbarItems = e.toolbarOptions.items;
+
+        // add duplicate button to the toolbar
+        toolbarItems.unshift({
+            location: 'after',
+            widget: 'dxButton',
+            options: {
+                icon: "repeat",
+                type: 'normal',
+                hint: 'Duplicate a row',
+                onClick: function () {
+                    // set clone trigger to true
+                    isClone = true;
+                    // call add new row
+                    $("#activity_datagrid").dxDataGrid("addRow");
+
+                }
+            }
+
+        });
+    }
+
+    function getActivityTimeStore(options) {
+        var dataSourceConfiguration = {
+            store: DevExpress.data.AspNet.createStore({
+                key: "Id",
+                loadUrl: '/api/ActivityTime/Get',
+            })
+        };
+        if (options.data) {
+            dataSourceConfiguration.filter = ['ActivityId', '=', options.data.ActivityId];
+        }
+        return dataSourceConfiguration;
+    }
+
+    function setActivityTimeIdValue(rowData, value) {
+        rowData.ActivityTimeId = null;
+        this.defaultSetCellValue(rowData, value);
+    }
+
+     function getHotelStore(options) {
+        var dataSourceConfiguration = {
+            store: DevExpress.data.AspNet.createStore({
+                key: "Id",
+                loadUrl: '/api/Hotel/Get',
+            })
+        };
+        if (options.data) {
+            dataSourceConfiguration.filter = ['CityId', '=', options.data.CityId];
+        }
+        return dataSourceConfiguration;
+    }
+
+    function setHotelIdValue(rowData, value) {
+        rowData.HotelId = null;
+        this.defaultSetCellValue(rowData, value);
+    }
+
+    function submit_request(requestId) {
+        $.ajax({
+            url: '/api/OrderRequests/PutRequest',
+            type: 'PUT',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(requestId),
+            success: function (response) {
+                window.location.href = '/Main/OrderRequests'
+            }
+        }); 
+    }
+
+    function reject_request(requestId) {
+        $.ajax({
+            url: '/api/OrderRequests/DeleteRequest',
+            type: 'DELETE',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(requestId),
+            success: function (response) {
+                window.location.href = '/Main/OrderRequests'
+            }
+        }); 
+    }
+
+    function confirm_request(requestId) {
+        $.ajax({
+            url: '/api/OrderRequests/ConfirmRequest',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(requestId),
+            success: function (response) {
+                window.location.href = '/Main/OrderRequests'
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,57 @@
+﻿
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.Room>()
+        .DataSource(ds => ds.WebApi()
+            .RouteName("RoomsApi")
+            .LoadAction("GetRoomsForHotel")
+            .InsertAction("Post")
+            .UpdateAction("Put")
+            .DeleteAction("Delete")
+            .LoadParams(new { hotelId = new JS("data.Id") })
+            .Key("Id")
+        )
+        .ShowBorders(true)
+        .Paging(p => p.PageSize(10))
+        .FilterRow(f => f.Visible(true))
+        .HeaderFilter(f => f.Visible(true))
+        .GroupPanel(p => p.Visible(true))
+        .Grouping(g => g.AutoExpandAll(false))
+        .RemoteOperations(true)
+        .Columns(columns =>
+        {
+
+            columns.AddFor(m => m.RoomTypeId).Lookup(lookup => lookup
+                .DataSource(ds => ds.WebApi().RouteName("RoomsApi").LoadAction("RoomTypeLookup").Key("Value"))
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+            );
+
+            columns.AddFor(m => m.FirstNightPrice);
+
+            columns.AddFor(m => m.SecondNightPrice);
+
+            columns.AddFor(m => m.FirstNightPriceNet);
+
+            columns.AddFor(m => m.SecondNightPriceNet);
+
+            columns.AddFor(m => m.PromoNetPrice);
+
+            columns.AddFor(m => m.Comments);
+        })
+        .MasterDetail(md =>
+        {
+            md.Enabled(true);
+            md.Template(@<text>
+                <div class="master-detail-caption"><h4>Extra prices for Room with id: <%= data.Id %></h4></div>
+                @Html.Partial("_ExtraRoomPriceForRoom")
+            </text>);
+
+        })
+        .OnRowInserting("function(e) {  e.data.HotelId = data.Id; }")
+        .Editing(e => e
+            .AllowAdding(true)
+            .AllowUpdating(true)
+            .AllowDeleting(true)
+            .Mode(GridEditMode.Popup)
+            .UseIcons(true)
+        )
+)

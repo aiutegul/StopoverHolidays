@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="margin-bottom: 20px;">Flight Information</h2>
+
+
+
+<div>
+    @using (Ajax.BeginForm("FlightInfo", new AjaxOptions
+    {
+        UpdateTargetId = "results",
+        LoadingElementId = "loading",
+        LoadingElementDuration = 1000,
+        InsertionMode = InsertionMode.InsertAfter,
+        OnFailure = "OnFailure",
+        OnBegin = "OnBegin"
+    }))
+    {
+        <div class="form-group" style="width: 40%;">
+            <label>Booking Reference:</label>
+            <input type="text" class="form-control" name="bookingRef" style="margin-bottom: 20px;" />
+            <input type="submit" class="btn btn-success" value="Find PNR" />
+        </div>
+    }
+
+    <div id="loading" style="display:none; color:mediumblue; font-weight:bold;">
+        <p>Retrieving Passenger Records...</p>
+    </div>
+    <div id="failureResp" style="color:red; font-weight:bold;"></div>
+    <table id="tblFlightInfo" class="table" cellpadding="0" cellspacing="0" border="1" style="margin-top: 35px;">
+        <thead>
+            <tr>
+                <th width="30px">Select</th>
+                <th>Booking Reference</th>
+                <th>Route</th>
+            </tr>
+        </thead>
+        <tbody id="results"></tbody>
+    </table>
+</div>
+
+<button id="btn_remove" class="btn btn-danger pull-right" style="margin-right: 20px; margin-left: 20px;">Remove Selected</button>
+<button id="btn_loadPassengers" class="btn btn-success pull-right">Load Passengers</button>
+<button id="btn_validatePnr" class="btn btn-warning pull-right" style="margin-right: 20px;">Validate PNRs</button>
+
+<div id="passengerTable" style="clear: both"></div>
+
+<script type="text/javascript">
+
+    function OnBegin() {
+        $("#failureResp").html("");
+    }
+
+    function OnFailure(request, error) {
+        $("#failureResp").html("PNR corresponding to booking reference not found!");
+    }
+
+    $("#btn_loadPassengers").click(function () {
+        var selectedPnrs = getBookingRefList();
+        $.ajax({
+            url: '/PassengerRecords/LoadPassengers',
+            type: 'POST',
+            dataType: "html",
+            data: { data: selectedPnrs },
+            success: function (response) {
+                console.log(response);
+                $("#passengerTable").html(response);
+            }
+        })
+    });
+
+    $("#btn_validatePnr").click(function () {
+        var selectedPnrs = getBookingRefList();
+        $.ajax({
+            url: '/PassengerRecords/ValidatePNRs',
+            type: 'POST',
+            dataType: "html",
+            data: { data: selectedPnrs, osId: @ViewBag.OrderStopoverId },
+            success: function (response) {
+                console.log(response);
+            }
+        })
+    });
+
+    $("#btn_remove").click(function deleteRow() {
+        var table = document.getElementById("tblFlightInfo").tBodies[0];
+        var rowCount = table.rows.length;
+        var selectedPnrs = getBookingRefList();
+
+        for (var i = 0; i < rowCount; i++) {
+            var row = table.rows[i];
+            // index of td contain checkbox is 0
+            var chkbox = row.cells[0].getElementsByTagName('input')[0];
+            var bookingRef = row.cells[1].innerHTML;
+            if ('checkbox' == chkbox.type && true == chkbox.checked) {
+                table.deleteRow(i);
+            }
+        }
+
+        $.ajax({
+            url: '/PassengerRecords/RemovePnr',
+            type: 'POST',
+            dataType: "html",
+            data: { data: selectedPnrs },
+            success: function () {
+            }
+        })
+    });
+
+    function getBookingRefList() {
+        var bRefs = new Array();
+        var table = document.getElementById("tblFlightInfo").tBodies[0];
+        var rowCount = table.rows.length;
+
+        for (var i = 0; i < rowCount; i++) {
+            var row = table.rows[i];
+            // index of td contain checkbox is 0
+            var chkbox = row.cells[0].getElementsByTagName('input')[0];
+            var bookingRef = row.cells[1].innerHTML;
+            if ('checkbox' == chkbox.type && true == chkbox.checked) {
+                bRefs.push(bookingRef)
+            }
+        }
+        var json = { "key": bRefs };
+        var result = JSON.stringify(json);
+        return result;
+    }
+
+    var checkBoxes = $('#results .myCheckBox');
+    checkBoxes.change(function () {
+        $('#btn_loadPassengers').prop('disabled', checkBoxes.filter(':checked').length < 1);
+    });
+
+</script>
+
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+
+
+
+

@@ -1,0 +1,106 @@
+﻿
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderStopoverData>()
+            .ID("stpvr_datagrid")
+            .DataSource(ds => ds.WebApi()
+                .RouteName("OrderStopoverDataApi")
+                .LoadAction("GetOrderStopoverDataForRequest")
+                .InsertAction("Post")
+                .UpdateAction("Put")
+                .DeleteAction("Delete")
+                .LoadParams(new { requestId = new JS("data.Id") })
+                .Key("Id")
+            )
+            .DateSerializationFormat("yyyy-MM-ddTHH:mm:ss")
+            .ShowBorders(true)
+            .Paging(p => p.PageSize(10))
+            .FilterRow(f => f.Visible(true))
+            .HeaderFilter(f => f.Visible(true))
+            .GroupPanel(p => p.Visible(true))
+            .Grouping(g => g.AutoExpandAll(false))
+            .Selection(s => s.Mode(SelectionMode.Single))
+            .HoverStateEnabled(true)
+            .RemoteOperations(true)
+            .Columns(columns =>
+            {
+
+                columns.AddFor(m => m.FirstName);
+
+                columns.AddFor(m => m.LastName);
+
+                columns.AddFor(m => m.IsChild);
+
+                columns.AddFor(m => m.CityId).Lookup(lookup => lookup
+                        .DataSource(ds => ds.WebApi().RouteName("HotelsApi").LoadAction("CityLookup").Key("Value"))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                    ).SetCellValue("setHotelIdValue");
+
+                columns.AddFor(m => m.HotelId).Lookup(lookup => lookup
+                        .DataSource("getHotelStore")
+                        .ValueExpr("Id")
+                        .DisplayExpr("NameCode")
+                    ).Width(200);
+
+                columns.AddFor(m => m.RoomTypeId).Lookup(lookup => lookup
+                        .DataSource(ds => ds.WebApi().RouteName("RoomsApi").LoadAction("RoomTypeLookup").Key("Value"))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                    ).Width(180);
+
+                columns.AddFor(m => m.RoomNum);
+
+                columns.AddFor(m => m.TransferId).Lookup(lookup => lookup
+                        .DataSource(ds => ds.WebApi().RouteName("OrderStopoversApi").LoadAction("TransferLookup").Key("Value"))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                    );
+
+                columns.AddFor(m => m.PromoUsed);
+
+                columns.AddFor(m => m.CheckIn).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm");
+
+                columns.AddFor(m => m.CheckOut).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm");
+
+                columns.AddFor(m => m.FromAirportTransferUsed);
+
+                columns.AddFor(m => m.FromHotelTransferUsed);
+
+                columns.AddFor(m => m.DayUse);
+
+                columns.AddFor(m => m.IsPromo);
+
+                columns.AddFor(m => m.Nights);
+
+                columns.AddFor(m => m.BookingReference);
+
+                columns.AddFor(m => m.TicketNumber);
+
+                columns.AddFor(m => m.OrderStopoverPrice);
+
+                columns.AddFor(m => m.ArriveDate).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm"); ;
+
+                columns.AddFor(m => m.DepartureDate).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm"); ;
+
+                columns.AddFor(m => m.ArriveFlight);
+
+                columns.AddFor(m => m.DepartureFlight);
+
+                columns.AddFor(m => m.Routes);
+
+                columns.AddFor(m => m.IsTransit);
+
+                columns.AddFor(m => m.IsPointToPoint);
+            })
+            .ColumnAutoWidth(true)
+            .OnInitNewRow("onInitNewRow")
+            .OnSelectionChanged("onSelectionChanged")
+            .OnToolbarPreparing("onStopoverToolbarPreparing")
+            .OnRowInserting("function(e) {  e.data.OrderId = data.Id; }")
+            .Editing(e => e
+                .AllowAdding(true)
+                .AllowUpdating(true)
+                .AllowDeleting(true)
+                .UseIcons(true)
+                .Mode(GridEditMode.Row)
+            )
+)

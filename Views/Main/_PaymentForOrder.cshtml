@@ -1,0 +1,43 @@
+﻿
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.Payment>()
+    .DataSource(ds => ds.WebApi()
+        .RouteName("PaymentsApi")
+        .LoadAction("GetPaymentForOrder")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .LoadParams(new { orderId = new JS("data.Id") })
+        .Key("Id")
+    )
+    .ShowBorders(true)
+    .Paging(p => p.PageSize(10))
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Grouping(g => g.AutoExpandAll(false))
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Reference);
+
+        columns.AddFor(m => m.TotalPrice);
+
+        columns.AddFor(m => m.IsPaid);
+
+        columns.AddFor(m => m.PayTime);
+
+        columns.AddFor(m => m.ReferralPayment);
+
+        columns.AddFor(m => m.EMD);
+
+        columns.AddFor(m => m.Comments);
+    })
+    .OnRowInserting("function(e) {  e.data.OrderId = data.Id; }")
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .Mode(GridEditMode.Popup)
+        .UseIcons(true)
+    )
+)

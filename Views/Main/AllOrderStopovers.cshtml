@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "AllOrderStopovers";
+}
+
+<h2>AllOrderStopovers</h2>
+
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderStopover>()
+                                            .DataSource(ds => ds.WebApi()
+                                                .RouteName("OrderStopoversApi")
+                                                .LoadAction("Get")
+                                                .InsertAction("Post")
+                                                .UpdateAction("Put")
+                                                .DeleteAction("Delete")
+                                                .Key("Id")
+                                            )
+                                            .ShowBorders(true)
+                                            .Paging(p => p.PageSize(10))
+                                            .FilterRow(f => f.Visible(true))
+                                            .HeaderFilter(f => f.Visible(true))
+                                            .GroupPanel(p => p.Visible(true))
+                                            .Grouping(g => g.AutoExpandAll(false))
+                                            .RemoteOperations(true)
+                                            .Columns(columns =>
+                                            {
+                                                columns.AddFor(m => m.TransferId).Lookup(lookup => lookup
+                                                    .DataSource(ds => ds.WebApi().RouteName("OrderStopoversApi").LoadAction("TransferLookup").Key("Value"))
+                                                    .ValueExpr("Value")
+                                                    .DisplayExpr("Text")
+                                                );
+
+                                                columns.AddFor(m => m.OrderId).Lookup(lookup => lookup
+                                                    .DataSource(ds => ds.WebApi().RouteName("OrderStopoversApi").LoadAction("OrderLookup").Key("Value"))
+                                                    .ValueExpr("Value")
+                                                    .DisplayExpr("Text")
+                                                );
+
+                                                columns.AddFor(m => m.HotelId).Lookup(lookup => lookup
+                                                    .DataSource(ds => ds.WebApi().RouteName("OrderStopoversApi").LoadAction("HotelLookup").Key("Value"))
+                                                    .ValueExpr("Value")
+                                                    .DisplayExpr("Text")
+                                                );
+
+                                                columns.AddFor(m => m.IsPromo);
+
+                                                columns.AddFor(m => m.CheckIn).Format("dd.MM.yyyy");
+
+                                                columns.AddFor(m => m.CheckOut).Format("dd.MM.yyyy");
+
+                                                columns.AddFor(m => m.DayUse);
+
+                                                columns.AddFor(m => m.Nights);
+
+                                                columns.AddFor(m => m.Price);
+
+                                                columns.AddFor(m => m.Comments);
+                                            })
+                                            .MasterDetail(md =>
+                                            {
+                                            md.Enabled(true);
+                                            md.Template(@<text>
+                                                    <div class="master-detail-caption"><h3>Flights for the OrderStopover with id: <%= data.Id %></h3></div>
+                                                    <div id="flight" style="display:none;"><%= data.Id %></div>
+                                                    @Html.Partial("_FlightsForOrderStopover")
+                                                    <button id="loadFlights" class="btn btn-success pull-right" style="margin-top: 20px; margin-bottom: 10px" onclick="LoadData(<%= data.Id %>)">Load Flights</button>
+                                                    <div class="master-detail-caption" style="clear:both"><h3>Stopover Passengers For OrderStopover with id: <%= data.Id %></h3></div>
+                                                    @Html.Partial("_StopoverPassengersForOrderStopover")
+                                                </text>);
+                                                    })
+                                            .Editing(e => e
+                                                        .AllowAdding(true)
+                                                        .AllowUpdating(true)
+                                                        .AllowDeleting(true)
+                                                        .Mode(GridEditMode.Form)
+                                                        .UseIcons(true)
+                                            )
+
+
+
+
+)
+
+<script type="text/javascript">
+    function LoadData(orderStopoverId) {
+        window.applicationBaseUrl = @Html.Raw(HttpUtility.JavaScriptStringEncode(
+        new Uri(
+                   new Uri(this.Context.Request.Url.GetLeftPart(UriPartial.Authority)),
+                   Url.Content("~/")
+               ).ToString(), true));
+        window.location.href = window.applicationBaseUrl + "/PassengerRecords/Index/" + orderStopoverId;
+    }
+</script>
+
