@@ -23,32 +23,12 @@ namespace StopoverAdminPanel.Models.Controllers
             var orderstopoverdata = _context.OrderStopoverData.Select(i => new {
                 i.Id,
                 i.OrderId,
-                i.CityId,
-                i.HotelId,
-                i.RoomTypeId,
-                i.TransferId,
                 i.FirstName,
                 i.LastName,
                 i.IsChild,
                 i.BookingReference,
                 i.TicketNumber,
-                i.RoomNum,
-                i.PromoUsed,
-                i.CheckIn,
-                i.CheckOut,
-                i.FromAirportTransferUsed,
-                i.FromHotelTransferUsed,
-                i.DayUse,
-                i.IsPromo,
-                i.Nights,
-                i.OrderStopoverPrice,
-                i.ArriveDate,
-                i.DepartureDate,
-                i.ArriveFlight,
-                i.DepartureFlight,
-                i.Routes,
-                i.IsTransit,
-                i.IsPointToPoint
+                i.RoomNum
             });
             return Request.CreateResponse(DataSourceLoader.Load(orderstopoverdata, loadOptions));
         }
@@ -115,32 +95,13 @@ namespace StopoverAdminPanel.Models.Controllers
             var orderstopoverdata = _context.OrderStopoverData.Select(i => new {
                 i.Id,
                 i.OrderId,
-                i.CityId,
-                i.HotelId,
-                i.RoomTypeId,
-                i.TransferId,
                 i.FirstName,
                 i.LastName,
                 i.IsChild,
                 i.BookingReference,
                 i.TicketNumber,
-                i.RoomNum,
-                i.PromoUsed,
-                i.CheckIn,
-                i.CheckOut,
-                i.FromAirportTransferUsed,
-                i.FromHotelTransferUsed,
-                i.DayUse,
-                i.IsPromo,
-                i.Nights,
-                i.OrderStopoverPrice,
-                i.ArriveDate,
-                i.DepartureDate,
-                i.ArriveFlight,
-                i.DepartureFlight,
-                i.Routes,
-                i.IsTransit,
-                i.IsPointToPoint
+                i.RoomTypeId,
+                i.RoomNum
             }).Where(i => i.OrderId == requestId);
             return Request.CreateResponse(DataSourceLoader.Load(orderstopoverdata, loadOptions));
         }

@@ -294,6 +294,22 @@
           <Property Name="PartnerId" Type="int" />
           <Property Name="RequestType" Type="int" />
           <Property Name="RequestStatus" Type="int" />
+          <Property Name="RegistrationNumber" Type="nvarchar" MaxLength="32" />
+          <Property Name="HotelId" Type="int" />
+          <Property Name="NumberOfPassengers" Type="int" />
+          <Property Name="CheckIn" Type="datetime" />
+          <Property Name="CheckOut" Type="datetime" />
+          <Property Name="FromAirportTransferUsed" Type="bit" />
+          <Property Name="FromHotelTransferUsed" Type="bit" />
+          <Property Name="DayUse" Type="bit" />
+          <Property Name="Nights" Type="int" />
+          <Property Name="ArriveDate" Type="datetime" />
+          <Property Name="DepartureDate" Type="datetime" />
+          <Property Name="ArriveFlight" Type="nvarchar" MaxLength="32" />
+          <Property Name="DepartureFlight" Type="nvarchar" MaxLength="32" />
+          <Property Name="Routes" Type="nvarchar(max)" />
+          <Property Name="Comments" Type="nvarchar(max)" />
+          <Property Name="CityId" Type="int" />
         </EntityType>
         <EntityType Name="OrderStopover">
           <Key>
@@ -322,32 +338,13 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderId" Type="int" />
-          <Property Name="CityId" Type="int" />
-          <Property Name="HotelId" Type="int" />
           <Property Name="RoomTypeId" Type="int" />
-          <Property Name="TransferId" Type="int" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
           <Property Name="LastName" Type="nvarchar" MaxLength="256" />
           <Property Name="IsChild" Type="bit" />
           <Property Name="BookingReference" Type="nvarchar" MaxLength="32" />
           <Property Name="TicketNumber" Type="nvarchar" MaxLength="256" />
           <Property Name="RoomNum" Type="int" />
-          <Property Name="PromoUsed" Type="bit" />
-          <Property Name="CheckIn" Type="datetime" />
-          <Property Name="CheckOut" Type="datetime" />
-          <Property Name="FromAirportTransferUsed" Type="bit" />
-          <Property Name="FromHotelTransferUsed" Type="bit" />
-          <Property Name="DayUse" Type="bit" />
-          <Property Name="IsPromo" Type="bit" />
-          <Property Name="Nights" Type="int" />
-          <Property Name="OrderStopoverPrice" Type="int" />
-          <Property Name="ArriveDate" Type="datetime" />
-          <Property Name="DepartureDate" Type="datetime" />
-          <Property Name="ArriveFlight" Type="nvarchar" MaxLength="32" />
-          <Property Name="DepartureFlight" Type="nvarchar" MaxLength="32" />
-          <Property Name="Routes" Type="nvarchar(max)" />
-          <Property Name="IsTransit" Type="bit" />
-          <Property Name="IsPointToPoint" Type="bit" />
         </EntityType>
         <EntityType Name="Partner">
           <Key>
@@ -474,6 +471,7 @@
           <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="DeletedDate" Type="datetime" />
           <Property Name="PassengerAmount" Type="int" Nullable="false" />
+          <Property Name="CityId" Type="int" Nullable="false" />
           <Property Name="Price" Type="int" Nullable="false" />
           <Property Name="Comments" Type="nvarchar(max)" />
         </EntityType>
@@ -766,18 +764,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderStopoverData_OrderRequests">
-          <End Role="OrderRequests" Type="Self.OrderRequests" Multiplicity="0..1" />
-          <End Role="OrderStopoverData" Type="Self.OrderStopoverData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderRequests">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderStopoverData">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Payment_Order">
           <End Role="Order" Type="Self.Order" Multiplicity="1" />
           <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
@@ -859,6 +845,18 @@
             </Principal>
             <Dependent Role="StopoverPassenger">
               <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transfer_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Transfer" Type="Self.Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transfer">
+              <PropertyRef Name="CityId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -987,10 +985,6 @@
             <End Role="Transfer" EntitySet="Transfer" />
             <End Role="OrderStopover" EntitySet="OrderStopover" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderStopoverData_OrderRequests" Association="Self.FK_OrderStopoverData_OrderRequests">
-            <End Role="OrderRequests" EntitySet="OrderRequests" />
-            <End Role="OrderStopoverData" EntitySet="OrderStopoverData" />
-          </AssociationSet>
           <AssociationSet Name="FK_Payment_Order" Association="Self.FK_Payment_Order">
             <End Role="Order" EntitySet="Order" />
             <End Role="Payment" EntitySet="Payment" />
@@ -1018,6 +1012,10 @@
           <AssociationSet Name="FK_StopoverPassenger_Room" Association="Self.FK_StopoverPassenger_Room">
             <End Role="Room" EntitySet="Room" />
             <End Role="StopoverPassenger" EntitySet="StopoverPassenger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfer_City" Association="Self.FK_Transfer_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Transfer" EntitySet="Transfer" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1092,6 +1090,7 @@
           <NavigationProperty Name="Hotel" Relationship="Self.FK_Hotel_City" FromRole="City" ToRole="Hotel" />
           <NavigationProperty Name="Activity" Relationship="StopoverHolidaysDBModel.FK_Activity_City" FromRole="City" ToRole="Activity" />
           <NavigationProperty Name="Order" Relationship="StopoverHolidaysDBModel.FK_Order_City" FromRole="City" ToRole="Order" />
+          <NavigationProperty Name="Transfer" Relationship="StopoverHolidaysDBModel.FK_Transfer_City" FromRole="City" ToRole="Transfer" />
         </EntityType>
         <EntityType Name="ExtraRoomPrice">
           <Key>
@@ -1431,8 +1430,6 @@
           </AssociationSet>
           <EntitySet Name="ActivityPrice" EntityType="StopoverHolidaysDBModel.ActivityPrice" />
           <EntitySet Name="OrderActivityData" EntityType="StopoverHolidaysDBModel.OrderActivityData" />
-          <EntitySet Name="OrderRequests" EntityType="StopoverHolidaysDBModel.OrderRequests" />
-          <EntitySet Name="OrderStopoverData" EntityType="StopoverHolidaysDBModel.OrderStopoverData" />
           <AssociationSet Name="FK_ActivityPrice_Activity" Association="StopoverHolidaysDBModel.FK_ActivityPrice_Activity">
             <End Role="Activity" EntitySet="Activity" />
             <End Role="ActivityPrice" EntitySet="ActivityPrice" />
@@ -1440,14 +1437,6 @@
           <AssociationSet Name="FK_ActivityPrice_ActivityPriceType" Association="StopoverHolidaysDBModel.FK_ActivityPrice_ActivityPriceType">
             <End Role="ActivityPriceType" EntitySet="ActivityPriceType" />
             <End Role="ActivityPrice" EntitySet="ActivityPrice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderActivityData_OrderRequests" Association="StopoverHolidaysDBModel.FK_OrderActivityData_OrderRequests">
-            <End Role="OrderRequests" EntitySet="OrderRequests" />
-            <End Role="OrderActivityData" EntitySet="OrderActivityData" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderStopoverData_OrderRequests" Association="StopoverHolidaysDBModel.FK_OrderStopoverData_OrderRequests">
-            <End Role="OrderRequests" EntitySet="OrderRequests" />
-            <End Role="OrderStopoverData" EntitySet="OrderStopoverData" />
           </AssociationSet>
           <EntitySet Name="OrderCost" EntityType="StopoverHolidaysDBModel.OrderCost" />
           <EntitySet Name="Payment" EntityType="StopoverHolidaysDBModel.Payment" />
@@ -1458,6 +1447,16 @@
           <AssociationSet Name="FK_Payment_Order" Association="StopoverHolidaysDBModel.FK_Payment_Order">
             <End Role="Order" EntitySet="Order" />
             <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <EntitySet Name="OrderStopoverData" EntityType="StopoverHolidaysDBModel.OrderStopoverData" />
+          <AssociationSet Name="FK_Transfer_City" Association="StopoverHolidaysDBModel.FK_Transfer_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Transfer" EntitySet="Transfer" />
+          </AssociationSet>
+          <EntitySet Name="OrderRequests" EntityType="StopoverHolidaysDBModel.OrderRequests" />
+          <AssociationSet Name="FK_OrderActivityData_OrderRequests" Association="StopoverHolidaysDBModel.FK_OrderActivityData_OrderRequests">
+            <End Role="OrderRequests" EntitySet="OrderRequests" />
+            <End Role="OrderActivityData" EntitySet="OrderActivityData" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ActivityBlockedDay">
@@ -1713,6 +1712,8 @@
           <Property Name="Price" Type="Int32" Nullable="false" />
           <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="OrderStopover" Relationship="StopoverHolidaysDBModel.FK_OrderStopover_Transfer" FromRole="Transfer" ToRole="OrderStopover" />
+          <Property Name="CityId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="StopoverHolidaysDBModel.FK_Transfer_City" FromRole="Transfer" ToRole="City" />
         </EntityType>
         <Association Name="FK_StopoverPassenger_BookingReference">
           <End Type="StopoverHolidaysDBModel.BookingReference" Role="BookingReference" Multiplicity="1" />
@@ -1938,52 +1939,6 @@
           <Property Name="IsChild" Type="Boolean" />
           <NavigationProperty Name="OrderRequests" Relationship="StopoverHolidaysDBModel.FK_OrderActivityData_OrderRequests" FromRole="OrderActivityData" ToRole="OrderRequests" />
         </EntityType>
-        <EntityType Name="OrderRequests">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RequestDate" Type="DateTime" Precision="0" />
-          <Property Name="PartnerId" Type="Int32" />
-          <Property Name="RequestType" Type="Int32" />
-          <Property Name="RequestStatus" Type="Int32" />
-          <NavigationProperty Name="OrderActivityData" Relationship="StopoverHolidaysDBModel.FK_OrderActivityData_OrderRequests" FromRole="OrderRequests" ToRole="OrderActivityData" />
-          <NavigationProperty Name="OrderStopoverData" Relationship="StopoverHolidaysDBModel.FK_OrderStopoverData_OrderRequests" FromRole="OrderRequests" ToRole="OrderStopoverData" />
-        </EntityType>
-        <EntityType Name="OrderStopoverData">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderId" Type="Int32" />
-          <Property Name="CityId" Type="Int32" />
-          <Property Name="HotelId" Type="Int32" />
-          <Property Name="RoomTypeId" Type="Int32" />
-          <Property Name="TransferId" Type="Int32" />
-          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IsChild" Type="Boolean" />
-          <Property Name="BookingReference" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="TicketNumber" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="RoomNum" Type="Int32" />
-          <Property Name="PromoUsed" Type="Boolean" />
-          <Property Name="CheckIn" Type="DateTime" Precision="3" />
-          <Property Name="CheckOut" Type="DateTime" Precision="3" />
-          <Property Name="FromAirportTransferUsed" Type="Boolean" />
-          <Property Name="FromHotelTransferUsed" Type="Boolean" />
-          <Property Name="DayUse" Type="Boolean" />
-          <Property Name="IsPromo" Type="Boolean" />
-          <Property Name="Nights" Type="Int32" />
-          <Property Name="OrderStopoverPrice" Type="Int32" />
-          <Property Name="ArriveDate" Type="DateTime" Precision="3" />
-          <Property Name="DepartureDate" Type="DateTime" Precision="3" />
-          <Property Name="ArriveFlight" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="DepartureFlight" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="Routes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsTransit" Type="Boolean" />
-          <Property Name="IsPointToPoint" Type="Boolean" />
-          <NavigationProperty Name="OrderRequests" Relationship="StopoverHolidaysDBModel.FK_OrderStopoverData_OrderRequests" FromRole="OrderStopoverData" ToRole="OrderRequests" />
-        </EntityType>
         <Association Name="FK_ActivityPrice_Activity">
           <End Type="StopoverHolidaysDBModel.Activity" Role="Activity" Multiplicity="1" />
           <End Type="StopoverHolidaysDBModel.ActivityPrice" Role="ActivityPrice" Multiplicity="*" />
@@ -2005,30 +1960,6 @@
             </Principal>
             <Dependent Role="ActivityPrice">
               <PropertyRef Name="ActivityPriceTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderActivityData_OrderRequests">
-          <End Type="StopoverHolidaysDBModel.OrderRequests" Role="OrderRequests" Multiplicity="0..1" />
-          <End Type="StopoverHolidaysDBModel.OrderActivityData" Role="OrderActivityData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderRequests">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderActivityData">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderStopoverData_OrderRequests">
-          <End Type="StopoverHolidaysDBModel.OrderRequests" Role="OrderRequests" Multiplicity="0..1" />
-          <End Type="StopoverHolidaysDBModel.OrderStopoverData" Role="OrderStopoverData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderRequests">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderStopoverData">
-              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2097,6 +2028,71 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Payment">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderStopoverData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="RoomTypeId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsChild" Type="Boolean" />
+          <Property Name="BookingReference" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="TicketNumber" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="RoomNum" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_Transfer_City">
+          <End Type="StopoverHolidaysDBModel.City" Role="City" Multiplicity="1" />
+          <End Type="StopoverHolidaysDBModel.Transfer" Role="Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transfer">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderRequests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestDate" Type="DateTime" Precision="0" />
+          <Property Name="PartnerId" Type="Int32" />
+          <Property Name="RequestType" Type="Int32" />
+          <Property Name="RequestStatus" Type="Int32" />
+          <Property Name="RegistrationNumber" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="HotelId" Type="Int32" />
+          <Property Name="NumberOfPassengers" Type="Int32" />
+          <Property Name="CheckIn" Type="DateTime" Precision="3" />
+          <Property Name="CheckOut" Type="DateTime" Precision="3" />
+          <Property Name="FromAirportTransferUsed" Type="Boolean" />
+          <Property Name="FromHotelTransferUsed" Type="Boolean" />
+          <Property Name="DayUse" Type="Boolean" />
+          <Property Name="Nights" Type="Int32" />
+          <Property Name="ArriveDate" Type="DateTime" Precision="3" />
+          <Property Name="DepartureDate" Type="DateTime" Precision="3" />
+          <Property Name="ArriveFlight" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="DepartureFlight" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Routes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int32" />
+          <NavigationProperty Name="OrderActivityData" Relationship="StopoverHolidaysDBModel.FK_OrderActivityData_OrderRequests" FromRole="OrderRequests" ToRole="OrderActivityData" />
+        </EntityType>
+        <Association Name="FK_OrderActivityData_OrderRequests">
+          <End Type="StopoverHolidaysDBModel.OrderRequests" Role="OrderRequests" Multiplicity="0..1" />
+          <End Type="StopoverHolidaysDBModel.OrderActivityData" Role="OrderActivityData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderRequests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderActivityData">
               <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2439,6 +2435,7 @@
           <EntitySetMapping Name="Transfer">
             <EntityTypeMapping TypeName="StopoverHolidaysDBModel.Transfer">
               <MappingFragment StoreEntitySet="Transfer">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="PassengerAmount" ColumnName="PassengerAmount" />
@@ -2534,51 +2531,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrderRequests">
-            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.OrderRequests">
-              <MappingFragment StoreEntitySet="OrderRequests">
-                <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
-                <ScalarProperty Name="RequestType" ColumnName="RequestType" />
-                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
-                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderStopoverData">
-            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.OrderStopoverData">
-              <MappingFragment StoreEntitySet="OrderStopoverData">
-                <ScalarProperty Name="IsPointToPoint" ColumnName="IsPointToPoint" />
-                <ScalarProperty Name="IsTransit" ColumnName="IsTransit" />
-                <ScalarProperty Name="Routes" ColumnName="Routes" />
-                <ScalarProperty Name="DepartureFlight" ColumnName="DepartureFlight" />
-                <ScalarProperty Name="ArriveFlight" ColumnName="ArriveFlight" />
-                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
-                <ScalarProperty Name="ArriveDate" ColumnName="ArriveDate" />
-                <ScalarProperty Name="OrderStopoverPrice" ColumnName="OrderStopoverPrice" />
-                <ScalarProperty Name="Nights" ColumnName="Nights" />
-                <ScalarProperty Name="IsPromo" ColumnName="IsPromo" />
-                <ScalarProperty Name="DayUse" ColumnName="DayUse" />
-                <ScalarProperty Name="FromHotelTransferUsed" ColumnName="FromHotelTransferUsed" />
-                <ScalarProperty Name="FromAirportTransferUsed" ColumnName="FromAirportTransferUsed" />
-                <ScalarProperty Name="CheckOut" ColumnName="CheckOut" />
-                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
-                <ScalarProperty Name="PromoUsed" ColumnName="PromoUsed" />
-                <ScalarProperty Name="RoomNum" ColumnName="RoomNum" />
-                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
-                <ScalarProperty Name="BookingReference" ColumnName="BookingReference" />
-                <ScalarProperty Name="IsChild" ColumnName="IsChild" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="TransferId" ColumnName="TransferId" />
-                <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
-                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OrderCost">
             <EntityTypeMapping TypeName="StopoverHolidaysDBModel.OrderCost">
               <MappingFragment StoreEntitySet="OrderCost">
@@ -2620,6 +2572,48 @@
                 <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStopoverData">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.OrderStopoverData">
+              <MappingFragment StoreEntitySet="OrderStopoverData">
+                <ScalarProperty Name="RoomNum" ColumnName="RoomNum" />
+                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+                <ScalarProperty Name="BookingReference" ColumnName="BookingReference" />
+                <ScalarProperty Name="IsChild" ColumnName="IsChild" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderRequests">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.OrderRequests">
+              <MappingFragment StoreEntitySet="OrderRequests">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Routes" ColumnName="Routes" />
+                <ScalarProperty Name="DepartureFlight" ColumnName="DepartureFlight" />
+                <ScalarProperty Name="ArriveFlight" ColumnName="ArriveFlight" />
+                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+                <ScalarProperty Name="ArriveDate" ColumnName="ArriveDate" />
+                <ScalarProperty Name="Nights" ColumnName="Nights" />
+                <ScalarProperty Name="DayUse" ColumnName="DayUse" />
+                <ScalarProperty Name="FromHotelTransferUsed" ColumnName="FromHotelTransferUsed" />
+                <ScalarProperty Name="FromAirportTransferUsed" ColumnName="FromAirportTransferUsed" />
+                <ScalarProperty Name="CheckOut" ColumnName="CheckOut" />
+                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
+                <ScalarProperty Name="NumberOfPassengers" ColumnName="NumberOfPassengers" />
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+                <ScalarProperty Name="RegistrationNumber" ColumnName="RegistrationNumber" />
+                <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+                <ScalarProperty Name="RequestType" ColumnName="RequestType" />
+                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

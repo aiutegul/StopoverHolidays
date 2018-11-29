@@ -23,7 +23,11 @@
                 .Columns(columns =>
                 {
 
-                    columns.AddFor(m => m.NameCode);
+                    columns.AddFor(m => m.NameCode).Lookup(lookup => lookup
+                        .DataSource(ds => ds.WebApi().RouteName("HotelsApi").LoadAction("NameCodeLookup").Key("Value"))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                    );
 
                     columns.AddFor(m => m.CityId).Lookup(lookup => lookup
                         .DataSource(ds => ds.WebApi().RouteName("HotelsApi").LoadAction("CityLookup").Key("Value"))

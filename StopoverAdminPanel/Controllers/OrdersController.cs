@@ -17,7 +17,6 @@ namespace StopoverAdminPanel.Models.Controllers
     public class OrdersController : ApiController
     {
         private StopoverDbContext _context = new StopoverDbContext();
-
         [HttpGet]
         public HttpResponseMessage Get(DataSourceLoadOptions loadOptions) {
             var order = _context.Order.Select(i => new {

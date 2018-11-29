@@ -32,6 +32,7 @@ namespace StopoverAdminPanel.Models.Controllers
                 i.Enabled,
                 i.Comments
             }).Where(i => i.DeletedDate == null);
+
             return Request.CreateResponse(DataSourceLoader.Load(hotel, loadOptions));
         }
 
@@ -86,6 +87,20 @@ namespace StopoverAdminPanel.Models.Controllers
 
             model.DeletedDate = DateTime.UtcNow;
             _context.SaveChanges();
+        }
+
+        [HttpGet]
+        public HttpResponseMessage NameCodeLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Translation
+                         orderby i.NameCode
+                         where i.DeletedDate == null && i.LangCode == "EN"
+                         select new
+                         {
+                             Value = i.NameCode,
+                             Text = i.Text
+                         };
+            return Request.CreateResponse(DataSourceLoader.Load(lookup, loadOptions));
         }
 
 

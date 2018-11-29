@@ -171,7 +171,9 @@ namespace StopoverAdminPanel.Models.Controllers
                          where i.DeletedDate == null
                          select new {
                              Value = i.Id,
-                             Text = i.NameCode
+                             Text = (from t in _context.Translation
+                                     where i.NameCode == t.NameCode && t.DeletedDate == null && t.LangCode == "EN"
+                                     select t.Text)
                          };
             return Request.CreateResponse(DataSourceLoader.Load(lookup, loadOptions));
         }

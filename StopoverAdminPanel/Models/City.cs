@@ -20,6 +20,7 @@ namespace StopoverAdminPanel.Models
             this.Hotel = new HashSet<Hotel>();
             this.Activity = new HashSet<Activity>();
             this.Order = new HashSet<Order>();
+            this.Transfer = new HashSet<Transfer>();
         }
     
         public int Id { get; set; }
@@ -36,5 +37,7 @@ namespace StopoverAdminPanel.Models
         public virtual ICollection<Activity> Activity { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Transfer> Transfer { get; set; }
     }
 }

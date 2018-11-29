@@ -11,17 +11,13 @@ namespace StopoverAdminPanel.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class OrderActivityData
     {
         public int Id { get; set; }
         public Nullable<int> OrderId { get; set; }
-        [Display(Name = "City")]
         public Nullable<int> CityId { get; set; }
-        [Display(Name = "Activity")]
         public Nullable<int> ActivityId { get; set; }
-        [Display(Name = "Activity Time")]
         public Nullable<int> ActivityTimeId { get; set; }
         public Nullable<System.DateTime> ActivityDate { get; set; }
         public string TransferLocation { get; set; }

@@ -18,6 +18,61 @@ namespace StopoverAdminPanel.Models.Controllers
     {
         private StopoverDbContext _context = new StopoverDbContext();
 
+        private List<RequestType> requestTypes = new List<RequestType>
+        {
+            new RequestType
+            {
+                Id = 0,
+                Name = "Stopover"
+            },
+            new RequestType
+            {
+                Id = 1,
+                Name = "Activity"
+            },
+            new RequestType
+            {
+                Id = 2,
+                Name = "Both"
+            }
+        };
+
+        private List<RequestStatus> requestStatuses = new List<RequestStatus>
+        {
+            new RequestStatus
+            {
+                StatusId = 0,
+                Name = "New"
+            },
+            new RequestStatus
+            {
+                StatusId = 1,
+                Name = "Submitted"
+            },
+            new RequestStatus
+            {
+                StatusId = 2,
+                Name = "Confirmed"
+            },
+            new RequestStatus
+            {
+                StatusId = 3,
+                Name = "Rejected"
+            }
+        };
+
+        [HttpGet]
+        public HttpResponseMessage RequestTypeLookup(DataSourceLoadOptions loadOptions)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(requestTypes, loadOptions));
+        }
+
+        [HttpGet]
+        public HttpResponseMessage RequestStatusLookup(DataSourceLoadOptions loadOptions)
+        {
+            return Request.CreateResponse(DataSourceLoader.Load(requestStatuses, loadOptions));
+        }
+
         [HttpGet]
         public HttpResponseMessage Get(DataSourceLoadOptions loadOptions) {
             var orderrequests = _context.OrderRequests.Select(i => new {
@@ -25,7 +80,24 @@ namespace StopoverAdminPanel.Models.Controllers
                 i.RequestDate,
                 i.PartnerId,
                 i.RequestType,
-                i.RequestStatus
+                i.RequestStatus,
+                i.RegistrationNumber,
+                i.CityId,
+                i.HotelId,
+                i.NumberOfPassengers,
+                i.CheckIn,
+                i.CheckOut,
+                i.FromAirportTransferUsed,
+                i.FromHotelTransferUsed,
+                i.DayUse,
+                i.Nights,
+                i.ArriveDate,
+                i.DepartureDate,
+                i.ArriveFlight,
+                i.DepartureFlight,
+                i.Routes,
+                i.Comments
+
             });
             return Request.CreateResponse(DataSourceLoader.Load(orderrequests, loadOptions));
         }
@@ -35,7 +107,20 @@ namespace StopoverAdminPanel.Models.Controllers
             var model = new OrderRequests();
             var values = form.Get("values");
             JsonConvert.PopulateObject(values, model);
+            model.RequestDate = DateTime.UtcNow;
             model.RequestStatus = 0;
+            if (model.DayUse.GetValueOrDefault())
+            {
+                TimeSpan checkInTime = new TimeSpan(7, 0, 0);
+                TimeSpan checkOutTime = new TimeSpan(19, 0, 0);
+                model.CheckIn = model.CheckIn.GetValueOrDefault().Date + checkInTime;
+                model.CheckOut = model.CheckOut.GetValueOrDefault().Date + checkOutTime;
+                model.Nights = 1;
+            }
+
+            var span = model.CheckOut - model.CheckIn;
+            model.Nights = span.GetValueOrDefault().Days;
+            model.PartnerId = 2;
 
             Validate(model);
             if (!ModelState.IsValid)
@@ -44,6 +129,8 @@ namespace StopoverAdminPanel.Models.Controllers
             var result = _context.OrderRequests.Add(model);
             _context.SaveChanges();
 
+            model.RegistrationNumber = "SP" + result.Id; // should be a switch from model.type
+            _context.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.Created, result.Id);
         }
 
@@ -69,25 +156,25 @@ namespace StopoverAdminPanel.Models.Controllers
         [HttpDelete]
         public void Delete(FormDataCollection form) {
             var key = Convert.ToInt32(form.Get("key"));
-            var model = _context.OrderRequests.FirstOrDefault(item => item.Id == key);
-            
-            // This should be a list really, depending on how they want to implement orders and orderstopovers
-            var stopoverRequest = _context.OrderStopoverData.FirstOrDefault(item => item.OrderId == key);
-            var activityRequest = _context.OrderActivityData.FirstOrDefault(item => item.OrderId == key);
+            deleteEntireRequest(key);
+        }
 
-            // I really don't like following if's, but oh well...
-            if(stopoverRequest != null)
-            {
-                _context.OrderStopoverData.Remove(stopoverRequest);
-            }
-            
-            if(activityRequest != null)
-            {
-                _context.OrderActivityData.Remove(activityRequest);
-            }
+        [HttpGet]
+        public HttpResponseMessage HotelLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Hotel
+                         orderby i.NameCode
+                         where i.DeletedDate == null
+                         select new
+                         {
+                             CityId = i.CityId,
+                             Value = i.Id,
+                             Text = (from t in _context.Translation
+                                     where i.NameCode == t.NameCode && t.DeletedDate == null && t.LangCode == "EN"
+                                     select t.Text)
 
-            _context.OrderRequests.Remove(model);
-            _context.SaveChanges();
+                         };
+            return Request.CreateResponse(DataSourceLoader.Load(lookup, loadOptions));
         }
 
         [HttpPut]
@@ -101,19 +188,32 @@ namespace StopoverAdminPanel.Models.Controllers
         [HttpDelete]
         public void DeleteRequest([FromBody]int requestId)
         {
+            _context.OrderRequests.FirstOrDefault(r => r.Id == requestId).RequestStatus = 3;
+            _context.SaveChanges();
+        }
+
+        private void deleteEntireRequest(int requestId)
+        {
             var model = _context.OrderRequests.FirstOrDefault(item => item.Id == requestId);
             // This should be a list really, depending on how they want to implement orders and orderstopovers
-            var stopoverRequest = _context.OrderStopoverData.FirstOrDefault(item => item.OrderId == requestId);
-            var activityRequest = _context.OrderActivityData.FirstOrDefault(item => item.OrderId == requestId);
+            var stopoverRequests = _context.OrderStopoverData.Where(item => item.OrderId == requestId);
+            var activityRequests = _context.OrderActivityData.Where(item => item.OrderId == requestId);
 
-            if (stopoverRequest != null)
+            if (stopoverRequests.Any())
             {
-                _context.OrderStopoverData.Remove(stopoverRequest);
+                foreach (var stopoverRequest in stopoverRequests)
+                {
+                    _context.OrderStopoverData.Remove(stopoverRequest);
+                }
+
             }
 
-            if (activityRequest != null)
+            if (activityRequests.Any())
             {
-                _context.OrderActivityData.Remove(activityRequest);
+                foreach (var activityRequest in activityRequests)
+                {
+                    _context.OrderActivityData.Remove(activityRequest);
+                }
             }
 
             _context.OrderRequests.Remove(model);
@@ -124,7 +224,6 @@ namespace StopoverAdminPanel.Models.Controllers
         public HttpResponseMessage ConfirmRequest([FromBody]int requestId)
         {
             var orderRequest = _context.OrderRequests.FirstOrDefault(item => item.Id == requestId);
-            //var stopoverData = _context.OrderStopoverData.FirstOrDefault(item => item.OrderId == requestId);
             var activityData = _context.OrderActivityData.Select(i => new
             {
                 i.OrderId,
@@ -138,31 +237,25 @@ namespace StopoverAdminPanel.Models.Controllers
                 i.TransferLocation
             })
             .Where(i => i.OrderId == requestId);
+            HttpResponseMessage confirmation_message = null;
 
             switch (orderRequest.RequestType)
             {
                 case 0:
-                    createStopoverData(requestId);
+                    confirmation_message = createStopoverData(requestId, orderRequest);
                     break;
                 case 1:
                     createActivityData(requestId);
                     break;
                 default:
-                    createStopoverData(requestId);
+                    createStopoverData(requestId, orderRequest);
                     createActivityData(requestId);
                     break;
             }
 
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, GetFullErrorMessage(ModelState));
-            }
 
-            return Request.CreateResponse(HttpStatusCode.Created, "Records created!");
+
+            return confirmation_message;
         }
 
         private void createActivityData(int requestId)
@@ -170,49 +263,58 @@ namespace StopoverAdminPanel.Models.Controllers
             throw new NotImplementedException();
         }
 
-        private void createStopoverData(int requestId)
+        private HttpResponseMessage createStopoverData(int requestId, OrderRequests orderRequest)
         {
             var order = createStubOrder(requestId);
             _context.Order.Add(order);
-            var orderStopover = createOrderStopover(requestId, order);
+            var orderStopover = createOrderStopover(orderRequest, order);
+            //Need logic over here to check if flight is transit or it's point to point
+            //Then update OrderStopover by checking if Promo is available for it (setting isPromo to true or false)
+            var flight = new Flight
+            {
+                CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow,
+                DeletedDate = null,
+                OrderStopover = orderStopover,
+                ArriveDate = orderRequest.ArriveDate.GetValueOrDefault(),
+                DepartureDate = orderRequest.DepartureDate.GetValueOrDefault(),
+                ArriveFlight = orderRequest.ArriveFlight,
+                DepartureFlight = orderRequest.DepartureFlight,
+                Routes = orderRequest.Routes,
+                IsPointToPoint = false, //change this
+                IsTransit = true, //change this
+                Comments = null
+            };
+
+            _context.Flight.Add(flight);
+
+            createBookingReference(requestId, flight, orderStopover);
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, GetFullErrorMessage(ModelState));
+            }
+
             order.RegistrationNumber = "SP" + orderStopover.Id;
             order.Email = "Sayat.Amanbayev@airastana.com";
-            orderStopover.Order = order;
-            _context.OrderStopover.Add(orderStopover);
-            var flightData = _context.OrderStopoverData.Select(f => new
-            {
-                f.OrderId,
-                f.ArriveDate,
-                f.DepartureDate,
-                f.ArriveFlight,
-                f.DepartureFlight,
-                f.Routes,
-                f.IsTransit,
-                f.IsPointToPoint
-            }).Where(f => f.OrderId == requestId).Distinct();
+            order.Referral = "Undefined";
 
-            foreach(var flightDatum in flightData)
-            {
-                var flight = new Flight
-                {
-                    CreatedDate = DateTime.UtcNow,
-                    UpdatedDate = DateTime.UtcNow,
-                    DeletedDate = null,
-                    OrderStopover = orderStopover,
-                    ArriveDate = flightDatum.ArriveDate.GetValueOrDefault(),
-                    DepartureDate = flightDatum.DepartureDate.GetValueOrDefault(),
-                    ArriveFlight = flightDatum.ArriveFlight,
-                    DepartureFlight = flightDatum.DepartureFlight,
-                    Routes = flightDatum.Routes,
-                    IsTransit = flightDatum.IsTransit.GetValueOrDefault(),
-                    IsPointToPoint = flightDatum.IsPointToPoint.GetValueOrDefault(),
-                    Comments = null
-                };
-                
-                _context.Flight.Add(flight);
+            orderRequest.RequestStatus = 2;
 
-                createBookingReference(requestId, flight, orderStopover);
+            try
+            {
+                _context.SaveChanges();
             }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, GetFullErrorMessage(ModelState));
+            }
+
+            return Request.CreateResponse(HttpStatusCode.Created, "Records Created!");
         }
 
         private Order createStubOrder(int requestId)
@@ -227,7 +329,7 @@ namespace StopoverAdminPanel.Models.Controllers
                 PartnerId = orderRequest.PartnerId.GetValueOrDefault(),
                 Email = "",
                 Referral = "",
-                Passengers = 0,
+                Passengers = orderRequest.NumberOfPassengers.GetValueOrDefault(),
                 Language = "EN",
                 MailSent = false,
                 Comments = null
@@ -235,20 +337,75 @@ namespace StopoverAdminPanel.Models.Controllers
             return order;
         }
 
+        private OrderStopover createOrderStopover(OrderRequests orderRequest, Order order)
+        {
+            var transferIdForPassengerAmount = _context.Transfer.Select(t => new
+            {
+                t.Id,
+                t.CityId,
+                t.PassengerAmount
+            }).Where(t => t.CityId == orderRequest.CityId).Where(t => t.PassengerAmount == orderRequest.NumberOfPassengers).First();
+
+            var orderStopover = new OrderStopover
+            {
+                CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow,
+                DeletedDate = null,
+                Order = order,
+                HotelId = orderRequest.HotelId.GetValueOrDefault(),
+                TransferId = transferIdForPassengerAmount.Id,
+                FromAirportTransferUsed = orderRequest.FromAirportTransferUsed.GetValueOrDefault(),
+                FromHotelTransferUsed = orderRequest.FromHotelTransferUsed.GetValueOrDefault(),
+                IsPromo = true, //change this once you clarify with Janna
+                CheckIn = orderRequest.CheckIn.GetValueOrDefault(),
+                CheckOut = orderRequest.CheckOut.GetValueOrDefault(),
+                DayUse = orderRequest.DayUse.GetValueOrDefault(),
+                Nights = orderRequest.Nights.GetValueOrDefault(),
+                Price = 0,
+                Comments = null
+            };
+
+            return orderStopover;
+        }
+
+        private void createBookingReference(int requestId, Flight flight, OrderStopover orderStopover)
+        {
+            var bookingRefsToAdd = _context.OrderStopoverData.Select(b => new
+            {
+                b.OrderId,
+                b.BookingReference,
+            }).Where(b => b.OrderId == requestId).Distinct();
+
+            foreach (var bookingRefToAdd in bookingRefsToAdd)
+            {
+                var bookingReference = new BookingReference
+                {
+                    CreatedDate = DateTime.UtcNow,
+                    UpdatedDate = DateTime.UtcNow,
+                    DeletedDate = null,
+                    Flight = flight,
+                    PNR = bookingRefToAdd.BookingReference,
+                    Comments = null
+                };
+
+                _context.BookingReference.Add(bookingReference);
+                createStopoverPassenger(requestId, bookingReference, orderStopover);
+            }
+        }
+
         private void createStopoverPassenger(int requestId, BookingReference bookingReference, OrderStopover orderStopover)
         {
             var passengersInRoomsToAdd = _context.OrderStopoverData.Select(p => new
             {
+                p.OrderId,
                 p.BookingReference,
                 p.FirstName,
                 p.LastName,
                 p.IsChild,
                 p.RoomNum,
                 p.TicketNumber,
-                p.PromoUsed,
-                p.RoomTypeId,
-                p.HotelId
-            }).Where(p => p.BookingReference == bookingReference.PNR);
+                p.RoomTypeId
+            }).Where(p => p.OrderId == requestId).Where(p => p.BookingReference == bookingReference.PNR);
 
             foreach (var passenger in passengersInRoomsToAdd)
             {
@@ -266,7 +423,7 @@ namespace StopoverAdminPanel.Models.Controllers
                 _context.Passenger.Add(passengerToAdd);
 
                 var room = _context.Room.Select(r => new { r.Id, r.HotelId, r.RoomTypeId })
-                    .Where(r => r.HotelId == passenger.HotelId && r.RoomTypeId == passenger.RoomTypeId).First();
+                    .Where(r => r.HotelId == orderStopover.HotelId && r.RoomTypeId == passenger.RoomTypeId).First();
 
                 var stopoverPassenger = new StopoverPassenger
                 {
@@ -279,93 +436,14 @@ namespace StopoverAdminPanel.Models.Controllers
                     BookingReference = bookingReference,
                     RoomNum = passenger.RoomNum.GetValueOrDefault(),
                     TicketNumber = passenger.TicketNumber,
-                    PromoUsed = passenger.PromoUsed
+                    PromoUsed = true //change this once you clarify with Janna
                 };
 
 
                 _context.StopoverPassenger.Add(stopoverPassenger);
             }
         }
-
-        private void createBookingReference(int requestId, Flight flight, OrderStopover orderStopover)
-        {
-            var bookingRefsForFlights = _context.OrderStopoverData.Select(b => new
-            {
-                b.OrderId,
-                b.BookingReference,
-                b.ArriveDate,
-                b.DepartureDate,
-                b.ArriveFlight,
-                b.DepartureFlight,
-                b.Routes,
-                b.IsTransit,
-                b.IsPointToPoint
-            }).Where(b => b.OrderId == requestId).Where(b => b.ArriveDate == flight.ArriveDate && b.ArriveFlight == flight.ArriveFlight &&
-            b.DepartureFlight == flight.DepartureFlight && b.DepartureDate == flight.DepartureDate
-            && b.Routes == flight.Routes && b.IsTransit == flight.IsTransit && b.IsPointToPoint == flight.IsPointToPoint);
-
-            // booking refs for each flight
-            var bookingRefsToAdd = bookingRefsForFlights.Select(b => b.BookingReference).Distinct();
-            foreach (var bookingRefToAdd in bookingRefsToAdd)
-            {
-                var bookingReference = new BookingReference
-                {
-                    CreatedDate = DateTime.UtcNow,
-                    UpdatedDate = DateTime.UtcNow,
-                    DeletedDate = null,
-                    Flight = flight,
-                    PNR = bookingRefToAdd,
-                    Comments = null
-                };
-
-                _context.BookingReference.Add(bookingReference);
-                createStopoverPassenger(requestId, bookingReference, orderStopover);
-            }
-        }
-
-
-        private OrderStopover createOrderStopover(int requestId, Order order)
-        {
-            var orderStopoverData = _context.OrderStopoverData.Select(o => new
-            {
-                o.CityId,
-                o.OrderId,
-                o.HotelId,
-                o.TransferId,
-                o.FromAirportTransferUsed,
-                o.FromHotelTransferUsed,
-                o.IsPromo,
-                o.CheckIn,
-                o.CheckOut,
-                o.DayUse,
-                o.OrderStopoverPrice
-            }).FirstOrDefault(o => o.OrderId == requestId);
-
-            order.CityId = orderStopoverData.CityId.GetValueOrDefault();
-
-            var span = orderStopoverData.CheckOut - orderStopoverData.CheckIn;
-
-            var orderStopover = new OrderStopover
-            {
-                CreatedDate = DateTime.UtcNow,
-                UpdatedDate = DateTime.UtcNow,
-                DeletedDate = null,
-                Order = order,
-                HotelId = orderStopoverData.HotelId.GetValueOrDefault(),
-                TransferId = orderStopoverData.TransferId.GetValueOrDefault(),
-                FromAirportTransferUsed = orderStopoverData.FromAirportTransferUsed.GetValueOrDefault(),
-                FromHotelTransferUsed = orderStopoverData.FromHotelTransferUsed.GetValueOrDefault(),
-                IsPromo = orderStopoverData.IsPromo.GetValueOrDefault(),
-                CheckIn = orderStopoverData.CheckIn.GetValueOrDefault(),
-                CheckOut = orderStopoverData.CheckOut.GetValueOrDefault(),
-                DayUse = orderStopoverData.DayUse.GetValueOrDefault(),
-                Nights = (int)span.GetValueOrDefault().TotalDays,
-                Price = orderStopoverData.OrderStopoverPrice.GetValueOrDefault(),
-                Comments = null
-            };
-
-            return orderStopover;
-        }
+      
 
         private string GetFullErrorMessage(ModelStateDictionary modelState) {
             var messages = new List<string>();

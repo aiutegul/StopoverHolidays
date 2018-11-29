@@ -17,37 +17,14 @@ namespace StopoverAdminPanel.Models
     {
         public int Id { get; set; }
         public Nullable<int> OrderId { get; set; }
-        [Display(Name = "City")]
-        public Nullable<int> CityId { get; set; }
-        [Display(Name = "Hotel")]
-        public Nullable<int> HotelId { get; set; }
         [Display(Name = "Room Type")]
         public Nullable<int> RoomTypeId { get; set; }
-        [Display(Name = "Transfer")]
-        public Nullable<int> TransferId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [Display(Name = "Child")]
         public Nullable<bool> IsChild { get; set; }
         public string BookingReference { get; set; }
         public string TicketNumber { get; set; }
         public Nullable<int> RoomNum { get; set; }
-        public Nullable<bool> PromoUsed { get; set; }
-        public Nullable<System.DateTime> CheckIn { get; set; }
-        public Nullable<System.DateTime> CheckOut { get; set; }
-        public Nullable<bool> FromAirportTransferUsed { get; set; }
-        public Nullable<bool> FromHotelTransferUsed { get; set; }
-        public Nullable<bool> DayUse { get; set; }
-        public Nullable<bool> IsPromo { get; set; }
-        public Nullable<int> Nights { get; set; }
-        public Nullable<int> OrderStopoverPrice { get; set; }
-        public Nullable<System.DateTime> ArriveDate { get; set; }
-        public Nullable<System.DateTime> DepartureDate { get; set; }
-        public string ArriveFlight { get; set; }
-        public string DepartureFlight { get; set; }
-        public string Routes { get; set; }
-        public Nullable<bool> IsTransit { get; set; }
-        public Nullable<bool> IsPointToPoint { get; set; }
-    
-        public virtual OrderRequests OrderRequests { get; set; }
     }
 }

@@ -29,69 +29,19 @@
 
                 columns.AddFor(m => m.IsChild);
 
-                columns.AddFor(m => m.CityId).Lookup(lookup => lookup
-                        .DataSource(ds => ds.WebApi().RouteName("HotelsApi").LoadAction("CityLookup").Key("Value"))
-                        .ValueExpr("Value")
-                        .DisplayExpr("Text")
-                    ).SetCellValue("setHotelIdValue");
-
-                columns.AddFor(m => m.HotelId).Lookup(lookup => lookup
-                        .DataSource("getHotelStore")
-                        .ValueExpr("Id")
-                        .DisplayExpr("NameCode")
-                    ).Width(200);
-
                 columns.AddFor(m => m.RoomTypeId).Lookup(lookup => lookup
                         .DataSource(ds => ds.WebApi().RouteName("RoomsApi").LoadAction("RoomTypeLookup").Key("Value"))
                         .ValueExpr("Value")
                         .DisplayExpr("Text")
-                    ).Width(180);
+                    );
 
                 columns.AddFor(m => m.RoomNum);
 
-                columns.AddFor(m => m.TransferId).Lookup(lookup => lookup
-                        .DataSource(ds => ds.WebApi().RouteName("OrderStopoversApi").LoadAction("TransferLookup").Key("Value"))
-                        .ValueExpr("Value")
-                        .DisplayExpr("Text")
-                    );
-
-                columns.AddFor(m => m.PromoUsed);
-
-                columns.AddFor(m => m.CheckIn).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm");
-
-                columns.AddFor(m => m.CheckOut).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm");
-
-                columns.AddFor(m => m.FromAirportTransferUsed);
-
-                columns.AddFor(m => m.FromHotelTransferUsed);
-
-                columns.AddFor(m => m.DayUse);
-
-                columns.AddFor(m => m.IsPromo);
-
-                columns.AddFor(m => m.Nights);
-
                 columns.AddFor(m => m.BookingReference);
 
-                columns.AddFor(m => m.TicketNumber);
-
-                columns.AddFor(m => m.OrderStopoverPrice);
-
-                columns.AddFor(m => m.ArriveDate).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm"); ;
-
-                columns.AddFor(m => m.DepartureDate).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm"); ;
-
-                columns.AddFor(m => m.ArriveFlight);
-
-                columns.AddFor(m => m.DepartureFlight);
-
-                columns.AddFor(m => m.Routes);
-
-                columns.AddFor(m => m.IsTransit);
-
-                columns.AddFor(m => m.IsPointToPoint);
+                columns.AddFor(m => m.TicketNumber);                
             })
-            .ColumnAutoWidth(true)
+            .ColumnAutoWidth(false)
             .OnInitNewRow("onInitNewRow")
             .OnSelectionChanged("onSelectionChanged")
             .OnToolbarPreparing("onStopoverToolbarPreparing")

@@ -58,16 +58,16 @@
         <AssociationConnector Association="StopoverHolidaysDBModel.FK_StopoverPassenger_OrderStopover" />
         <EntityTypeShape EntityType="StopoverHolidaysDBModel.ActivityPrice" Width="1.5" PointX="10.25" PointY="8.75" />
         <EntityTypeShape EntityType="StopoverHolidaysDBModel.OrderActivityData" Width="1.5" PointX="17.625" PointY="1.375" />
-        <EntityTypeShape EntityType="StopoverHolidaysDBModel.OrderRequests" Width="1.5" PointX="15.375" PointY="5.375" />
-        <EntityTypeShape EntityType="StopoverHolidaysDBModel.OrderStopoverData" Width="1.5" PointX="17.625" PointY="5.25" />
         <AssociationConnector Association="StopoverHolidaysDBModel.FK_ActivityPrice_Activity" />
         <AssociationConnector Association="StopoverHolidaysDBModel.FK_ActivityPrice_ActivityPriceType" />
-        <AssociationConnector Association="StopoverHolidaysDBModel.FK_OrderActivityData_OrderRequests" />
-        <AssociationConnector Association="StopoverHolidaysDBModel.FK_OrderStopoverData_OrderRequests" />
         <EntityTypeShape EntityType="StopoverHolidaysDBModel.OrderCost" Width="1.5" PointX="5.25" PointY="37.5" />
         <EntityTypeShape EntityType="StopoverHolidaysDBModel.Payment" Width="1.5" PointX="5.25" PointY="25.25" />
         <AssociationConnector Association="StopoverHolidaysDBModel.FK_OrderCost_Order" />
         <AssociationConnector Association="StopoverHolidaysDBModel.FK_Payment_Order" />
+        <EntityTypeShape EntityType="StopoverHolidaysDBModel.OrderStopoverData" Width="1.5" PointX="3.375" PointY="8.75" />
+        <AssociationConnector Association="StopoverHolidaysDBModel.FK_Transfer_City" />
+        <EntityTypeShape EntityType="StopoverHolidaysDBModel.OrderRequests" Width="1.5" PointX="15.375" PointY="9" />
+        <AssociationConnector Association="StopoverHolidaysDBModel.FK_OrderActivityData_OrderRequests" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

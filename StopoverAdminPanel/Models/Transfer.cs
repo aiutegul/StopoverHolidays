@@ -27,8 +27,10 @@ namespace StopoverAdminPanel.Models
         public int PassengerAmount { get; set; }
         public int Price { get; set; }
         public string Comments { get; set; }
+        public int CityId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderStopover> OrderStopover { get; set; }
+        public virtual City City { get; set; }
     }
 }
