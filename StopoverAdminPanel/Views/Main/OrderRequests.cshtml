@@ -5,107 +5,114 @@
 <h2>OrderRequests</h2>
 
 @(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderRequests>()
-                            .DataSource(ds => ds.WebApi()
-                                .RouteName("OrderRequestsApi")
-                                .LoadAction("Get")
-                                .InsertAction("Post")
-                                .UpdateAction("Put")
-                                .DeleteAction("Delete")
-                                .Key("Id")
-                            )
-                            .ColumnAutoWidth(true)
-                            .DateSerializationFormat("yyyy-MM-ddTHH:mm:ss")
-                            .ShowBorders(true)
-                            .Paging(p => p.PageSize(10))
-                            .FilterRow(f => f.Visible(true))
-                            .HeaderFilter(f => f.Visible(true))
-                            .GroupPanel(p => p.Visible(true))
-                            .Grouping(g => g.AutoExpandAll(false))
-                            .RemoteOperations(true)
-                            .Columns(columns =>
-                            {
+                                    .DataSource(ds => ds.WebApi()
+                                        .RouteName("OrderRequestsApi")
+                                        .LoadAction("Get")
+                                        .InsertAction("Post")
+                                        .UpdateAction("Put")
+                                        .DeleteAction("Delete")
+                                        .Key("Id")
+                                    )
+                                    .ColumnAutoWidth(false)
+                                    .DateSerializationFormat("yyyy-MM-ddTHH:mm:ss")
+                                    .ShowBorders(true)
+                                    .Paging(p => p.PageSize(10))
+                                    .FilterRow(f => f.Visible(true))
+                                    .HeaderFilter(f => f.Visible(true))
+                                    .GroupPanel(p => p.Visible(true))
+                                    .Grouping(g => g.AutoExpandAll(false))
+                                    .RemoteOperations(true)
+                                    .Columns(columns =>
+                                    {
 
-                                columns.AddFor(m => m.RegistrationNumber).FormItem(f => f.Visible(false));
+                                        columns.AddFor(m => m.RegistrationNumber).FormItem(f => f.Visible(false));
 
-                                columns.AddFor(m => m.RequestType).Lookup(lookup => lookup
-                                .DataSource(ds => ds.WebApi().RouteName("OrderRequestsApi")
-                                .LoadAction("RequestTypeLookup").Key("Id")).DisplayExpr("Name").ValueExpr("Id"));
+                                        columns.AddFor(m => m.RequestType).Lookup(lookup => lookup
+                                        .DataSource(ds => ds.WebApi().RouteName("OrderRequestsApi")
+                                        .LoadAction("RequestTypeLookup").Key("Id")).DisplayExpr("Name").ValueExpr("Id")).Visible(false);
 
-                                columns.AddFor(m => m.RequestDate).DataType(GridColumnDataType.Date).Format("dd.MM.yyyy")
-                                .FormItem(f => f.Visible(false));
+                                        columns.AddFor(m => m.RequestDate).DataType(GridColumnDataType.Date).Format("dd.MM.yyyy")
+                                        .FormItem(f => f.Visible(false));
 
-                                columns.AddFor(m => m.RequestStatus).Lookup(lookup => lookup
-                                .DataSource(ds => ds.WebApi().RouteName("OrderRequestsApi")
-                                .LoadAction("RequestStatusLookup").Key("StatusId")).DisplayExpr("Name").ValueExpr("StatusId"))
-                                .FormItem(f => f.Visible(false));
+                                        columns.AddFor(m => m.RequestStatus).Lookup(lookup => lookup
+                                        .DataSource(ds => ds.WebApi().RouteName("OrderRequestsApi")
+                                        .LoadAction("RequestStatusLookup").Key("StatusId")).DisplayExpr("Name").ValueExpr("StatusId"))
+                                        .FormItem(f => f.Visible(false));
 
-                                columns.AddFor(m => m.PartnerId).Lookup(lookup => lookup
-                                       .DataSource(ds => ds.WebApi().RouteName("OrdersApi").LoadAction("PartnerLookup")
-                                       .Key("Value"))
-                                       .ValueExpr("Value")
-                                       .DisplayExpr("Text")
-                                   ).FormItem(f => f.Visible(false));
+                                        columns.AddFor(m => m.PartnerId).Lookup(lookup => lookup
+                                               .DataSource(ds => ds.WebApi().RouteName("OrdersApi").LoadAction("PartnerLookup")
+                                               .Key("Value"))
+                                               .ValueExpr("Value")
+                                               .DisplayExpr("Text")
+                                           ).FormItem(f => f.Visible(false));
 
-                                columns.AddFor(m => m.CityId).Lookup(lookup => lookup
-                                        .DataSource(ds => ds.WebApi().RouteName("HotelsApi").LoadAction("CityLookup").Key("Value"))
-                                        .ValueExpr("Value")
-                                        .DisplayExpr("Text")
-                                        ).SetCellValue("setHotelIdValue");
+                                        columns.AddFor(m => m.CityId).Lookup(lookup => lookup
+                                                .DataSource(ds => ds.WebApi().RouteName("HotelsApi").LoadAction("CityLookup").Key("Value"))
+                                                .ValueExpr("Value")
+                                                .DisplayExpr("Text")
+                                                ).SetCellValue("setHotelIdValue");
 
-                                columns.AddFor(m => m.CheckIn).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm");
+                                        columns.AddFor(m => m.CheckIn).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm");
 
-                                columns.AddFor(m => m.CheckOut).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm");
+                                        columns.AddFor(m => m.CheckOut).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm");
 
-                                columns.AddFor(m => m.ArriveDate).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm");
+                                        columns.AddFor(m => m.ArriveDate).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm").Visible(false);
 
-                                columns.AddFor(m => m.DepartureDate).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm");                             
+                                        columns.AddFor(m => m.DepartureDate).DataType(GridColumnDataType.DateTime).Format("dd.MM.yyyy HH:mm").Visible(false);
 
-                                columns.AddFor(m => m.HotelId).Lookup(lookup => lookup
-                                        .DataSource("getHotelStore")
-                                        .ValueExpr("Value")
-                                        .DisplayExpr("Text")
-                                    );
+                                        columns.AddFor(m => m.HotelId).Lookup(lookup => lookup
+                                                .DataSource("getHotelStore")
+                                                .ValueExpr("Value")
+                                                .DisplayExpr("Text")
+                                            );
 
 
-                                columns.AddFor(m => m.ArriveFlight);
+                                        columns.AddFor(m => m.ArriveFlight).Visible(false);
 
-                                columns.AddFor(m => m.DepartureFlight);
+                                        columns.AddFor(m => m.DepartureFlight).Visible(false);
 
-                                columns.AddFor(m => m.NumberOfPassengers);
+                                        columns.AddFor(m => m.NumberOfPassengers).Visible(false);
 
-                                columns.AddFor(m => m.FromAirportTransferUsed);
+                                        columns.AddFor(m => m.FromAirportTransferUsed).Visible(false);
 
-                                columns.AddFor(m => m.FromHotelTransferUsed);
+                                        columns.AddFor(m => m.FromHotelTransferUsed).Visible(false);
 
-                                columns.AddFor(m => m.DayUse);
+                                        columns.AddFor(m => m.DayUse);
 
-                                columns.AddFor(m => m.Routes);
+                                        columns.AddFor(m => m.Routes).Visible(false);
 
-                                columns.AddFor(m => m.Comments);
-                            })
-                            .MasterDetail(md =>
-                            {
-                            md.Enabled(true);
-                            md.Template(@<text>
-                                <div style="width:47%;">
-                                    <div class="master-detail-caption"><h2>Order Stopover Data for Order Request with id <%= data.Id %>:</h2></div>
-                                    @Html.Partial("_OrderStopoverDataForRequest")
-                                    <hr style="clear:both;" />
-                                    <div class="master-detail-caption"><h2>Order Activity Data for Order Request with id <%= data.Id %>:</h2></div>
-                                    @Html.Partial("_OrderActivityDataForRequest")
-                                    <button class="btn btn-primary pull-right" style="margin-top:20px; margin-left: 20px;" onclick="submit_request(<%= data.Id %>)">Submit Request</button>
-                                    <button class="btn btn-success pull-right" style="margin-top:20px;" onclick="confirm_request(<%= data.Id %>)">Confirm Request</button>
-                                    <button class="btn btn-danger pull-left" style="margin-top:20px;" onclick="reject_request(<%= data.Id %>)">Reject Request</button>                              
-                                </div>
-                            </text>);
-                            })
-                        .Editing(e => e
-                                  .AllowAdding(true)
-                                  .AllowUpdating(true)
-                                  .AllowDeleting(true)
-                                  .UseIcons(true)
-                                  .Mode(GridEditMode.Popup)
-                        )
+                                        columns.AddFor(m => m.Comments);
+                                    })
+                                    .MasterDetail(md =>
+                                    {
+                                        md.Enabled(true);
+                                        md.Template(@<text>
+                                            @*<div style="width:47%;">*@
+                                            <div class="master-detail-caption"><h2>Order Stopover Data for Order Request with id <%= data.Id %>:</h2></div>
+                                            @Html.Partial("_OrderStopoverDataForRequest")
+                                            <hr style="clear:both;" />
+                                            <div class="master-detail-caption"><h2>Order Activity Data for Order Request with id <%= data.Id %>:</h2></div>
+                                            @Html.Partial("_OrderActivityDataForRequest")
+                                            <button class="btn btn-primary pull-left" onclick="submit_request(<%= data.Id %>)">Submit Request</button>
+                                            <button class="btn btn-success pull-left" onclick="confirm_request(<%= data.Id %>)">Confirm Request</button>
+                                            <button class="btn btn-danger pull-left" onclick="reject_request(<%= data.Id %>)">Reject Request</button>
+                                            @*</div>*@
+                                            </text>);
+                                                })
+                                    .ColumnChooser(cc =>
+                                    {
+                                        cc.Enabled(true);
+                                        cc.Mode(GridColumnChooserMode.Select);
+                                    })
+
+                                    .Editing(e => e
+                                              .AllowAdding(true)
+                                              .AllowUpdating(true)
+                                              .AllowDeleting(true)
+                                              .UseIcons(true)
+                                              .Mode(GridEditMode.Popup)
+                                    )
+                                   .OnDataErrorOccurred("function(e) { DevExpress.ui.notify(e.error); }")
 )
 
 
@@ -196,7 +203,7 @@
         this.defaultSetCellValue(rowData, value);
     }
 
-     function getHotelStore(options) {
+    function getHotelStore(options) {
         var dataSourceConfiguration = {
             store: DevExpress.data.AspNet.createStore({
                 key: "Value",
@@ -216,34 +223,37 @@
 
     function submit_request(requestId) {
         $.ajax({
-            url: '/api/OrderRequests/PutRequest',
+            url: '/api/OrderRequests/SubmitRequest?id=' + requestId,
             type: 'PUT',
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(requestId),
             success: function (response) {
                 window.location.href = '/Main/OrderRequests'
+            },
+            error: function (data) {
+                alert(data.responseJSON.Message);
             }
-        }); 
+        });
     }
 
     function reject_request(requestId) {
+        var reject_message = prompt("Enter reason for rejection:");
+        console.log(JSON.stringify(reject_message));
         $.ajax({
-            url: '/api/OrderRequests/DeleteRequest',
-            type: 'DELETE',
+            url: '/api/OrderRequests/RejectRequest?id=' + requestId + "&reject_message=" + reject_message,
+            type: 'PUT',
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(requestId),
+            //data: JSON.stringify(reject_message),
             success: function (response) {
                 window.location.href = '/Main/OrderRequests'
             }
-        }); 
+        });
     }
 
     function confirm_request(requestId) {
         $.ajax({
-            url: '/api/OrderRequests/ConfirmRequest',
+            url: '/api/OrderRequests/ConfirmRequest?requestId=' + requestId,
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(requestId),
             success: function (response) {
                 window.location.href = '/Main/OrderRequests'
             }

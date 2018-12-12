@@ -86,6 +86,9 @@
     <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
@@ -115,6 +118,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
@@ -157,6 +161,55 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.AuthenticateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.ConfirmOrderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.CreateOrderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.FifthStepResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.FirstStepResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.FourthStepResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.GetActivitiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.GetCitiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.GetFlightsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.MainResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.SecondStepResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.SeventhStepResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.SixthStepResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.ThirdStepResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService.disco" />
+    <None Include="Connected Services\StopoverHolidaysServiceReference\configuration91.svcinfo" />
+    <None Include="Connected Services\StopoverHolidaysServiceReference\configuration.svcinfo" />
+    <None Include="Connected Services\StopoverHolidaysServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -251,6 +304,28 @@
     <Content Include="Views\Main\Activities.cshtml" />
     <Content Include="Views\PassengerRecords\LoadPassengers.cshtml" />
     <Content Include="Views\Main\OrderRequests.cshtml" />
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService.wsdl" />
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
@@ -285,6 +360,7 @@
     <Content Include="Scripts\jquery-3.1.0.min.map" />
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Login\LoginView.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -379,8 +455,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Auth\AuthContext.cs" />
     <Compile Include="Auth\AuthRepository.cs" />
+    <Compile Include="Auth\LoginModel.cs" />
     <Compile Include="Auth\SimpleAuthorizationProvider.cs" />
+    <Compile Include="Auth\Token.cs" />
     <Compile Include="Auth\UserModel.cs" />
+    <Compile Include="Connected Services\StopoverHolidaysServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\ActivityBlockedDaysController.cs" />
@@ -393,6 +476,7 @@
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\ExtraRoomPricesController.cs" />
     <Compile Include="Controllers\FlightPassengersController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrderActivityDataController.cs" />
     <Compile Include="Controllers\OrderCostsController.cs" />
     <Compile Include="Controllers\OrderRequestsController.cs" />
@@ -541,6 +625,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\StopoverHolidaysServiceReference\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

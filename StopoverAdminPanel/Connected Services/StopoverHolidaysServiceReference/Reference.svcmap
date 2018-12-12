@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0844b08c-92b8-4fed-9ace-f0ce1de19d08" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://websala:274/StopoverHolidaysService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="StopoverHolidaysService.xsd" MetadataType="Schema" ID="f6d89e9e-c016-4bbb-aede-2394435fdf80" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd1" />
+    <MetadataFile FileName="StopoverHolidaysService1.xsd" MetadataType="Schema" ID="0947260f-2277-4321-acae-3a0a9dad27f0" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd0" />
+    <MetadataFile FileName="StopoverHolidaysService.disco" MetadataType="Disco" ID="f6eb801e-a4b9-499f-a042-847e19f99949" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?disco" />
+    <MetadataFile FileName="StopoverHolidaysService2.xsd" MetadataType="Schema" ID="1dc373e6-871d-47e8-a36d-09d6557d8d6e" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd6" />
+    <MetadataFile FileName="StopoverHolidaysService3.xsd" MetadataType="Schema" ID="cb79ba38-7b2e-430f-8c7b-aedfd076ac28" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd4" />
+    <MetadataFile FileName="StopoverHolidaysService4.xsd" MetadataType="Schema" ID="1d9e51ba-5f15-4de8-8194-29f192ee4d4d" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd5" />
+    <MetadataFile FileName="StopoverHolidaysService.wsdl" MetadataType="Wsdl" ID="171ae751-ff1b-4cce-bc32-bc34c4d5d812" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?wsdl" />
+    <MetadataFile FileName="StopoverHolidaysService5.xsd" MetadataType="Schema" ID="6b008e65-010c-4610-8642-9689cfa93c63" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd2" />
+    <MetadataFile FileName="StopoverHolidaysService6.xsd" MetadataType="Schema" ID="d2f501f4-591f-4f72-9c05-5735d526dc64" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

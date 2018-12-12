@@ -12,6 +12,11 @@
     font-weight: 300;
 }
 
+.pull-left {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
 @media (max-width: 767px) {
     .dropdown-menu.multi-column {
         min-width: 240px !important;

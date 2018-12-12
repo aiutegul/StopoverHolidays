@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Requests" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Requests" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Stopover" />
+  <xs:complexType name="AuthenticateRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Ip" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OrderType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PartnerCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Referrer" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AuthenticateRequest" nillable="true" type="tns:AuthenticateRequest" />
+  <xs:complexType name="MainRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LangCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SessionHash" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MainRequest" nillable="true" type="tns:MainRequest" />
+  <xs:complexType name="FirstStepRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BookingReferences" nillable="true" type="q1:ArrayOfstring" />
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FirstStepRequest" nillable="true" type="tns:FirstStepRequest" />
+  <xs:complexType name="SecondStepRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ArriveDateTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CityId" type="xs:int" />
+          <xs:element minOccurs="0" name="DepartureDateTime" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SecondStepRequest" nillable="true" type="tns:SecondStepRequest" />
+  <xs:complexType name="ThirdStepRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Stopover" minOccurs="0" name="StopoverPassengers" nillable="true" type="q2:ArrayOfMStopoverPassenger" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ThirdStepRequest" nillable="true" type="tns:ThirdStepRequest" />
+  <xs:complexType name="FourthStepRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CheckIn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CheckOut" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DayUse" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Nights" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FourthStepRequest" nillable="true" type="tns:FourthStepRequest" />
+  <xs:complexType name="FifthStepRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="HotelId" type="xs:int" />
+          <xs:element minOccurs="0" name="IsPromo" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FifthStepRequest" nillable="true" type="tns:FifthStepRequest" />
+  <xs:complexType name="SixthStepRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Stopover" minOccurs="0" name="Rooms" nillable="true" type="q3:ArrayOfMRoom" />
+          <xs:element minOccurs="0" name="TotalPrice" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SixthStepRequest" nillable="true" type="tns:SixthStepRequest" />
+  <xs:complexType name="SeventhStepRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Stopover" minOccurs="0" name="OrderActivities" nillable="true" type="q4:ArrayOfMOrderActivity" />
+          <xs:element minOccurs="0" name="TotalPrice" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SeventhStepRequest" nillable="true" type="tns:SeventhStepRequest" />
+  <xs:complexType name="GetActivitiesRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CityId" type="xs:int" />
+          <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetActivitiesRequest" nillable="true" type="tns:GetActivitiesRequest" />
+  <xs:complexType name="GetCitiesRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetCitiesRequest" nillable="true" type="tns:GetCitiesRequest" />
+  <xs:complexType name="GetFlightsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BookingReferences" nillable="true" type="q5:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetFlightsRequest" nillable="true" type="tns:GetFlightsRequest" />
+  <xs:complexType name="CreateOrderRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="TermsAgreed" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateOrderRequest" nillable="true" type="tns:CreateOrderRequest" />
+  <xs:complexType name="ConfirmOrderRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MainRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ACKNOWLEDGEMENT_URL" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CHECKSUM" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OrderId" type="xs:int" />
+          <xs:element minOccurs="0" name="PAYMENT_REFERENCE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="STATUS" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ConfirmOrderRequest" nillable="true" type="tns:ConfirmOrderRequest" />
+</xs:schema>

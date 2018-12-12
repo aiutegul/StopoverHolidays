@@ -5,9 +5,16 @@
 }
 
 <h2>Orders</h2>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script>
+    function onBeforeSendSetToken(ajaxOptions) {
+        var token = $.cookie("access_token");
+        ajaxOptions.headers = { Authorization: 'Bearer ' + token }
+    }
+</script>
 @(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.Order>()
                             .DataSource(ds => ds.WebApi()
+                                .OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }")
                                 .RouteName("OrdersApi")
                                 .LoadAction("Get")
                                 .InsertAction("Post")

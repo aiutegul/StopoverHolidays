@@ -23,6 +23,7 @@ namespace StopoverAdminPanel.Models
         public string LastName { get; set; }
         [Display(Name = "Child")]
         public Nullable<bool> IsChild { get; set; }
+        [Display(Name = "PNR")]
         public string BookingReference { get; set; }
         public string TicketNumber { get; set; }
         public Nullable<int> RoomNum { get; set; }

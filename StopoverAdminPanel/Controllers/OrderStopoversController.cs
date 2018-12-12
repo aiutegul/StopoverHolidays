@@ -27,6 +27,8 @@ namespace StopoverAdminPanel.Models.Controllers
                 i.DeletedDate,
                 i.OrderId,
                 i.TransferId,
+                i.FromAirportTransferUsed,
+                i.FromHotelTransferUsed,
                 i.HotelId,
                 i.IsPromo,
                 i.CheckIn,
@@ -52,7 +54,7 @@ namespace StopoverAdminPanel.Models.Controllers
             if (!ModelState.IsValid)
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, GetFullErrorMessage(ModelState));
 
-            if(model.CheckOut <= model.CheckIn)
+            if(model.CheckOut < model.CheckIn)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Checkout date cannot be earlier than " +
                     "Checkin date");
@@ -82,7 +84,7 @@ namespace StopoverAdminPanel.Models.Controllers
                 i.HotelId,
                 i.StartDate,
                 i.EndDate
-            }).Where(i => checkIn >= i.StartDate && checkIn <= i.EndDate);
+            }).Where(i => i.HotelId == hotelId).Where(i => checkIn >= i.StartDate && checkIn <= i.EndDate);
             return hotelpromodisable.Any();
         }
 
@@ -200,6 +202,8 @@ namespace StopoverAdminPanel.Models.Controllers
                 i.DeletedDate,
                 i.OrderId,
                 i.TransferId,
+                i.FromAirportTransferUsed,
+                i.FromHotelTransferUsed,
                 i.HotelId,
                 i.IsPromo,
                 i.CheckIn,

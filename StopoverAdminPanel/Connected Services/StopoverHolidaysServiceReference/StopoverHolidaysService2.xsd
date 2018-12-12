@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Stopover" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Stopover" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ArrayOfStopoverAvailableCity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StopoverAvailableCity" nillable="true" type="tns:StopoverAvailableCity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStopoverAvailableCity" nillable="true" type="tns:ArrayOfStopoverAvailableCity" />
+  <xs:complexType name="StopoverAvailableCity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ArriveDateTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="City" nillable="true" type="tns:MCity" />
+      <xs:element minOccurs="0" name="DepartureDateTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StopoverAvailableCity" nillable="true" type="tns:StopoverAvailableCity" />
+  <xs:complexType name="MCity">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IataCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MCity" nillable="true" type="tns:MCity" />
+  <xs:complexType name="Identity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Identity" nillable="true" type="tns:Identity" />
+  <xs:complexType name="ArrayOfMStopoverPassenger">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MStopoverPassenger" nillable="true" type="tns:MStopoverPassenger" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMStopoverPassenger" nillable="true" type="tns:ArrayOfMStopoverPassenger" />
+  <xs:complexType name="MStopoverPassenger">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BookingReference" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Passenger" nillable="true" type="tns:MPassenger" />
+          <xs:element minOccurs="0" name="PromoUsed" type="xs:boolean" />
+          <xs:element minOccurs="0" name="RoomNum" type="xs:int" />
+          <xs:element minOccurs="0" name="TicketNumber" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MStopoverPassenger" nillable="true" type="tns:MStopoverPassenger" />
+  <xs:complexType name="MPassenger">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsChild" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MPassenger" nillable="true" type="tns:MPassenger" />
+  <xs:complexType name="CheckMinMaxDates">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CheckMaxDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CheckMinDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CheckMinMaxDates" nillable="true" type="tns:CheckMinMaxDates" />
+  <xs:complexType name="ArrayOfMHotel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MHotel" nillable="true" type="tns:MHotel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMHotel" nillable="true" type="tns:ArrayOfMHotel" />
+  <xs:complexType name="MHotel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Enabled" type="xs:boolean" />
+          <xs:element minOccurs="0" name="HotelPromoDisableDates" nillable="true" type="tns:ArrayOfMHotelPromoDisable" />
+          <xs:element minOccurs="0" name="IsPromo" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Rooms" nillable="true" type="tns:ArrayOfMRoom" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MHotel" nillable="true" type="tns:MHotel" />
+  <xs:complexType name="ArrayOfMHotelPromoDisable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MHotelPromoDisable" nillable="true" type="tns:MHotelPromoDisable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMHotelPromoDisable" nillable="true" type="tns:ArrayOfMHotelPromoDisable" />
+  <xs:complexType name="MHotelPromoDisable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MHotelPromoDisable" nillable="true" type="tns:MHotelPromoDisable" />
+  <xs:complexType name="ArrayOfMRoom">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MRoom" nillable="true" type="tns:MRoom" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMRoom" nillable="true" type="tns:ArrayOfMRoom" />
+  <xs:complexType name="MRoom">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ExtraRoomPrices" nillable="true" type="tns:ArrayOfMExtraRoomPrice" />
+          <xs:element minOccurs="0" name="FirstNightPrice" type="xs:int" />
+          <xs:element minOccurs="0" name="RoomType" nillable="true" type="tns:MRoomType" />
+          <xs:element minOccurs="0" name="SecondNightPrice" type="xs:int" />
+          <xs:element minOccurs="0" name="StopoverPassengers" nillable="true" type="tns:ArrayOfMStopoverPassenger" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MRoom" nillable="true" type="tns:MRoom" />
+  <xs:complexType name="ArrayOfMExtraRoomPrice">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MExtraRoomPrice" nillable="true" type="tns:MExtraRoomPrice" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMExtraRoomPrice" nillable="true" type="tns:ArrayOfMExtraRoomPrice" />
+  <xs:complexType name="MExtraRoomPrice">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FirstNightPrice" type="xs:int" />
+      <xs:element minOccurs="0" name="SecondNightPrice" type="xs:int" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MExtraRoomPrice" nillable="true" type="tns:MExtraRoomPrice" />
+  <xs:complexType name="MRoomType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Capacity" type="xs:int" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MRoomType" nillable="true" type="tns:MRoomType" />
+  <xs:complexType name="ArrayOfMOrderActivity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MOrderActivity" nillable="true" type="tns:MOrderActivity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMOrderActivity" nillable="true" type="tns:ArrayOfMOrderActivity" />
+  <xs:complexType name="MOrderActivity">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActivityPassengers" nillable="true" type="tns:ArrayOfMActivityPassenger" />
+          <xs:element minOccurs="0" name="ActivityTime" nillable="true" type="tns:MActivityTime" />
+          <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Price" type="xs:int" />
+          <xs:element minOccurs="0" name="TransferLocation" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MOrderActivity" nillable="true" type="tns:MOrderActivity" />
+  <xs:complexType name="ArrayOfMActivityPassenger">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MActivityPassenger" nillable="true" type="tns:MActivityPassenger" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMActivityPassenger" nillable="true" type="tns:ArrayOfMActivityPassenger" />
+  <xs:complexType name="MActivityPassenger">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Passenger" nillable="true" type="tns:MPassenger" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MActivityPassenger" nillable="true" type="tns:MActivityPassenger" />
+  <xs:complexType name="MActivityTime">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Time" type="ser:duration" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MActivityTime" nillable="true" type="tns:MActivityTime" />
+  <xs:complexType name="ArrayOfMActivity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MActivity" nillable="true" type="tns:MActivity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMActivity" nillable="true" type="tns:ArrayOfMActivity" />
+  <xs:complexType name="MActivity">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ActivityBlockedDays" nillable="true" type="q1:ArrayOfstring" />
+          <xs:element minOccurs="0" name="ActivityPrices" nillable="true" type="tns:ArrayOfMActivityPrice" />
+          <xs:element minOccurs="0" name="ActivityTimes" nillable="true" type="tns:ArrayOfMActivityTime" />
+          <xs:element minOccurs="0" name="MinPassengers" type="xs:int" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PreviewImage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PreviewText" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MActivity" nillable="true" type="tns:MActivity" />
+  <xs:complexType name="ArrayOfMActivityPrice">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MActivityPrice" nillable="true" type="tns:MActivityPrice" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMActivityPrice" nillable="true" type="tns:ArrayOfMActivityPrice" />
+  <xs:complexType name="MActivityPrice">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActivityPriceType" nillable="true" type="tns:MActivityPriceType" />
+          <xs:element minOccurs="0" name="PassengerAmount" type="xs:int" />
+          <xs:element minOccurs="0" name="Price" type="xs:int" />
+          <xs:element minOccurs="0" name="PriceNet" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MActivityPrice" nillable="true" type="tns:MActivityPrice" />
+  <xs:complexType name="MActivityPriceType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Identity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MActivityPriceType" nillable="true" type="tns:MActivityPriceType" />
+  <xs:complexType name="ArrayOfMActivityTime">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MActivityTime" nillable="true" type="tns:MActivityTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMActivityTime" nillable="true" type="tns:ArrayOfMActivityTime" />
+  <xs:complexType name="ArrayOfMCity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MCity" nillable="true" type="tns:MCity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMCity" nillable="true" type="tns:ArrayOfMCity" />
+</xs:schema>

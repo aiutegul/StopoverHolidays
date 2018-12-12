@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 namespace StopoverAdminPanel.Controllers
 {
+    //[Authorize]
+
     public class MainController : Controller
     {
         // GET: Main
@@ -13,7 +15,7 @@ namespace StopoverAdminPanel.Controllers
         {
             return View();
         }
-
+        
         public ActionResult AllOrderStopovers()
         {
             return View();

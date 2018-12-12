@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="StopoverHolidaysService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Requests" />
+      <xsd:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Responses" />
+      <xsd:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Content" />
+      <xsd:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://websala:274/StopoverHolidaysService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/StopoverHolidaysWCF.Models.Stopover" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IStopoverHolidaysService_Authenticate_InputMessage">
+    <wsdl:part name="parameters" element="tns:Authenticate" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_Authenticate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_FirstStep_InputMessage">
+    <wsdl:part name="parameters" element="tns:FirstStep" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_FirstStep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FirstStepResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SecondStep_InputMessage">
+    <wsdl:part name="parameters" element="tns:SecondStep" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SecondStep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SecondStepResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_ThirdStep_InputMessage">
+    <wsdl:part name="parameters" element="tns:ThirdStep" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_ThirdStep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ThirdStepResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_FourthStep_InputMessage">
+    <wsdl:part name="parameters" element="tns:FourthStep" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_FourthStep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FourthStepResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_FifthStep_InputMessage">
+    <wsdl:part name="parameters" element="tns:FifthStep" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_FifthStep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FifthStepResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SixthStep_InputMessage">
+    <wsdl:part name="parameters" element="tns:SixthStep" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SixthStep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SixthStepResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SeventhStep_InputMessage">
+    <wsdl:part name="parameters" element="tns:SeventhStep" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SeventhStep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SeventhStepResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_GetActivities_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetActivities" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_GetActivities_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetActivitiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_GetCities_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCities" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_GetCities_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCitiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_GetFlights_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFlights" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_GetFlights_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFlightsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_CreateOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateOrder" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_CreateOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_ConfirmOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmOrder" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_ConfirmOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SendVouchers_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendVouchers" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SendVouchers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendVouchersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SendVoucherTo_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendVoucherTo" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SendVoucherTo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendVoucherToResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SolveOrderCost_InputMessage">
+    <wsdl:part name="parameters" element="tns:SolveOrderCost" />
+  </wsdl:message>
+  <wsdl:message name="IStopoverHolidaysService_SolveOrderCost_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SolveOrderCostResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IStopoverHolidaysService">
+    <wsdl:operation name="Authenticate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/Authenticate" message="tns:IStopoverHolidaysService_Authenticate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/AuthenticateResponse" message="tns:IStopoverHolidaysService_Authenticate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FirstStep">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/FirstStep" message="tns:IStopoverHolidaysService_FirstStep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/FirstStepResponse" message="tns:IStopoverHolidaysService_FirstStep_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SecondStep">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SecondStep" message="tns:IStopoverHolidaysService_SecondStep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SecondStepResponse" message="tns:IStopoverHolidaysService_SecondStep_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ThirdStep">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/ThirdStep" message="tns:IStopoverHolidaysService_ThirdStep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/ThirdStepResponse" message="tns:IStopoverHolidaysService_ThirdStep_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FourthStep">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/FourthStep" message="tns:IStopoverHolidaysService_FourthStep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/FourthStepResponse" message="tns:IStopoverHolidaysService_FourthStep_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FifthStep">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/FifthStep" message="tns:IStopoverHolidaysService_FifthStep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/FifthStepResponse" message="tns:IStopoverHolidaysService_FifthStep_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SixthStep">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SixthStep" message="tns:IStopoverHolidaysService_SixthStep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SixthStepResponse" message="tns:IStopoverHolidaysService_SixthStep_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SeventhStep">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SeventhStep" message="tns:IStopoverHolidaysService_SeventhStep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SeventhStepResponse" message="tns:IStopoverHolidaysService_SeventhStep_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetActivities">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/GetActivities" message="tns:IStopoverHolidaysService_GetActivities_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/GetActivitiesResponse" message="tns:IStopoverHolidaysService_GetActivities_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCities">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/GetCities" message="tns:IStopoverHolidaysService_GetCities_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/GetCitiesResponse" message="tns:IStopoverHolidaysService_GetCities_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFlights">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/GetFlights" message="tns:IStopoverHolidaysService_GetFlights_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/GetFlightsResponse" message="tns:IStopoverHolidaysService_GetFlights_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/CreateOrder" message="tns:IStopoverHolidaysService_CreateOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/CreateOrderResponse" message="tns:IStopoverHolidaysService_CreateOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/ConfirmOrder" message="tns:IStopoverHolidaysService_ConfirmOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/ConfirmOrderResponse" message="tns:IStopoverHolidaysService_ConfirmOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendVouchers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SendVouchers" message="tns:IStopoverHolidaysService_SendVouchers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SendVouchersResponse" message="tns:IStopoverHolidaysService_SendVouchers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendVoucherTo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SendVoucherTo" message="tns:IStopoverHolidaysService_SendVoucherTo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SendVoucherToResponse" message="tns:IStopoverHolidaysService_SendVoucherTo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SolveOrderCost">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SolveOrderCost" message="tns:IStopoverHolidaysService_SolveOrderCost_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStopoverHolidaysService/SolveOrderCostResponse" message="tns:IStopoverHolidaysService_SolveOrderCost_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IStopoverHolidaysService" type="tns:IStopoverHolidaysService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Authenticate">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/Authenticate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FirstStep">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/FirstStep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SecondStep">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/SecondStep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ThirdStep">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/ThirdStep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FourthStep">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/FourthStep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FifthStep">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/FifthStep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SixthStep">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/SixthStep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SeventhStep">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/SeventhStep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActivities">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/GetActivities" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCities">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/GetCities" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFlights">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/GetFlights" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/CreateOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmOrder">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/ConfirmOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendVouchers">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/SendVouchers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendVoucherTo">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/SendVoucherTo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SolveOrderCost">
+      <soap:operation soapAction="http://tempuri.org/IStopoverHolidaysService/SolveOrderCost" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StopoverHolidaysService">
+    <wsdl:port name="BasicHttpBinding_IStopoverHolidaysService" binding="tns:BasicHttpBinding_IStopoverHolidaysService">
+      <soap:address location="http://websala:274/StopoverHolidaysService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

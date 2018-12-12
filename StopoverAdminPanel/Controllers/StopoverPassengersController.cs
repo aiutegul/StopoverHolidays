@@ -109,8 +109,10 @@ namespace StopoverAdminPanel.Models.Controllers
                          select new {
                              Value = i.Id,
                              Text = (from r in _context.RoomType
+                                     join t in _context.Translation on r.NameCode equals t.NameCode
                                      where i.RoomTypeId == r.Id
-                                     select r.NameCode )
+                                     where t.LangCode == "EN"
+                                     select t.Text )
                          };
             return Request.CreateResponse(DataSourceLoader.Load(lookup, loadOptions));
         }
