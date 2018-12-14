@@ -12,21 +12,18 @@
  * CLDR JavaScript Library v0.5.0 2017-08-11T11:52Z MIT license © Rafael Xavier
  * http://git.io/h4lmVg
  */
-(function( factory ) {
-
-	if ( typeof define === "function" && define.amd ) {
+(function (factory) {
+	if (typeof define === "function" && define.amd) {
 		// AMD.
-		define( [ "../cldr" ], factory );
-	} else if ( typeof module === "object" && typeof module.exports === "object" ) {
+		define(["../cldr"], factory);
+	} else if (typeof module === "object" && typeof module.exports === "object") {
 		// Node. CommonJS.
-		module.exports = factory( require( "../cldr" ) );
+		module.exports = factory(require("../cldr"));
 	} else {
 		// Global
-		factory( Cldr );
+		factory(Cldr);
 	}
-
-}(function( Cldr ) {
-
+}(function (Cldr) {
 	// Build optimization hack to avoid duplicating functions across modules.
 	var coreLoad = Cldr._coreLoad;
 	var jsonMerge = Cldr._jsonMerge;
@@ -35,95 +32,86 @@
 	var validatePresence = Cldr._validatePresence;
 	var validateTypePath = Cldr._validateTypePath;
 
-
-
-	var bundleParentLookup = function( Cldr, locale ) {
+	var bundleParentLookup = function (Cldr, locale) {
 		var normalizedPath, parent;
 
-		if ( locale === "root" ) {
+		if (locale === "root") {
 			return;
 		}
 
 		// First, try to find parent on supplemental data.
-		normalizedPath = pathNormalize( [ "supplemental/parentLocales/parentLocale", locale ] );
-		parent = resourceGet( Cldr._resolved, normalizedPath ) || resourceGet( Cldr._raw, normalizedPath );
-		if ( parent ) {
+		normalizedPath = pathNormalize(["supplemental/parentLocales/parentLocale", locale]);
+		parent = resourceGet(Cldr._resolved, normalizedPath) || resourceGet(Cldr._raw, normalizedPath);
+		if (parent) {
 			return parent;
 		}
 
 		// Or truncate locale.
-		parent = locale.substr( 0, locale.lastIndexOf( Cldr.localeSep ) );
-		if ( !parent ) {
+		parent = locale.substr(0, locale.lastIndexOf(Cldr.localeSep));
+		if (!parent) {
 			return "root";
 		}
 
 		return parent;
 	};
 
-
-
-
 	// @path: normalized path
-	var resourceSet = function( data, path, value ) {
+	var resourceSet = function (data, path, value) {
 		var i,
 			node = data,
 			length = path.length;
 
-		for ( i = 0; i < length - 1; i++ ) {
-			if ( !node[ path[ i ] ] ) {
-				node[ path[ i ] ] = {};
+		for (i = 0; i < length - 1; i++) {
+			if (!node[path[i]]) {
+				node[path[i]] = {};
 			}
-			node = node[ path[ i ] ];
+			node = node[path[i]];
 		}
-		node[ path[ i ] ] = value;
+		node[path[i]] = value;
 	};
 
+	var itemLookup = (function () {
+		var lookup;
 
-	var itemLookup = (function() {
+		lookup = function (Cldr, locale, path, attributes, childLocale) {
+			var normalizedPath, parent, value;
 
-	var lookup;
+			// 1: Finish recursion
+			// 2: Avoid infinite loop
+			if (typeof locale === "undefined" /* 1 */ || locale === childLocale /* 2 */) {
+				return;
+			}
 
-	lookup = function( Cldr, locale, path, attributes, childLocale ) {
-		var normalizedPath, parent, value;
+			// Resolve path
+			normalizedPath = pathNormalize(path, attributes);
 
-		// 1: Finish recursion
-		// 2: Avoid infinite loop
-		if ( typeof locale === "undefined" /* 1 */ || locale === childLocale /* 2 */ ) {
-			return;
-		}
+			// Check resolved (cached) data first
+			// 1: Due to #16, never use the cached resolved non-leaf nodes. It may not
+			//    represent its leafs in its entirety.
+			value = resourceGet(Cldr._resolved, normalizedPath);
+			if (value !== undefined && typeof value !== "object" /* 1 */) {
+				return value;
+			}
 
-		// Resolve path
-		normalizedPath = pathNormalize( path, attributes );
+			// Check raw data
+			value = resourceGet(Cldr._raw, normalizedPath);
 
-		// Check resolved (cached) data first
-		// 1: Due to #16, never use the cached resolved non-leaf nodes. It may not
-		//    represent its leafs in its entirety.
-		value = resourceGet( Cldr._resolved, normalizedPath );
-		if ( value !== undefined && typeof value !== "object" /* 1 */ ) {
+			if (value === undefined) {
+				// Or, lookup at parent locale
+				parent = bundleParentLookup(Cldr, locale);
+				value = lookup(Cldr, parent, path, jsonMerge(attributes, { bundle: parent }), locale);
+			}
+
+			if (value !== undefined) {
+				// Set resolved (cached)
+				resourceSet(Cldr._resolved, normalizedPath, value);
+			}
+
 			return value;
-		}
+		};
 
-		// Check raw data
-		value = resourceGet( Cldr._raw, normalizedPath );
-
-		if ( value === undefined ) {
-			// Or, lookup at parent locale
-			parent = bundleParentLookup( Cldr, locale );
-			value = lookup( Cldr, parent, path, jsonMerge( attributes, { bundle: parent }), locale );
-		}
-
-		if ( value !== undefined ) {
-			// Set resolved (cached)
-			resourceSet( Cldr._resolved, normalizedPath, value );
-		}
-
-		return value;
-	};
-
-	return lookup;
-
-}());
-
+		return lookup;
+	}());
 
 	Cldr._raw = {};
 
@@ -135,30 +123,26 @@
 	 * Load resolved or unresolved cldr data.
 	 * Overwrite Cldr.load().
 	 */
-	Cldr.load = function() {
-		Cldr._raw = coreLoad( Cldr, Cldr._raw, arguments );
+	Cldr.load = function () {
+		Cldr._raw = coreLoad(Cldr, Cldr._raw, arguments);
 	};
 
 	/**
 	 * Overwrite Cldr.prototype.get().
 	 */
-	Cldr.prototype.get = function( path ) {
-		validatePresence( path, "path" );
-		validateTypePath( path, "path" );
+	Cldr.prototype.get = function (path) {
+		validatePresence(path, "path");
+		validateTypePath(path, "path");
 
 		// 1: use bundle as locale on item lookup for simplification purposes, because no other extended subtag is used anyway on bundle parent lookup.
 		// 2: during init(), this method is called, but bundle is yet not defined. Use "" as a workaround in this very specific scenario.
-		return itemLookup( Cldr, this.attributes && this.attributes.bundle /* 1 */ || "" /* 2 */, path, this.attributes );
+		return itemLookup(Cldr, this.attributes && this.attributes.bundle /* 1 */ || "" /* 2 */, path, this.attributes);
 	};
 
 	// In case cldr/unresolved is loaded after cldr/event, we trigger its overloads again. Because, .get is overwritten in here.
-	if ( Cldr._eventInit ) {
+	if (Cldr._eventInit) {
 		Cldr._eventInit();
 	}
 
 	return Cldr;
-
-
-
-
 }));

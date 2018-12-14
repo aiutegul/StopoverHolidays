@@ -1,8 +1,4 @@
-﻿using DevExtreme.AspNet.Data;
-using DevExtreme.AspNet.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,129 +6,149 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Mvc;
+using Newtonsoft.Json;
 
 namespace StopoverAdminPanel.Models.Controllers
 {
-    [Route("api/Order/{action}", Name = "OrdersApi")]
-    public class OrdersController : ApiController
-    {
-        private StopoverDbContext _context = new StopoverDbContext();
-        [HttpGet]
-        public HttpResponseMessage Get(DataSourceLoadOptions loadOptions) {
-            var order = _context.Order.Select(i => new {
-                i.Id,
-                i.CreatedDate,
-                i.UpdatedDate,
-                i.DeletedDate,
-                i.RegistrationNumber,
-                i.CityId,
-                i.Email,
-                i.Referral,
-                i.PartnerId,
-                i.MailSent,
-                i.Passengers,
-                i.Language,
-                i.Comments
-            }).Where(i => i.DeletedDate == null);
-            return Request.CreateResponse(DataSourceLoader.Load(order, loadOptions));
-        }
+	[Route("api/Order/{action}", Name = "OrdersApi")]
+	public class OrdersController : ApiController
+	{
+		private StopoverDbContext _context = new StopoverDbContext();
 
-        [HttpPost]
-        public HttpResponseMessage Post(FormDataCollection form) {
-            var model = new Order();
-            var values = form.Get("values");
-            JsonConvert.PopulateObject(values, model);
-            model.CreatedDate = DateTime.UtcNow;
-            model.UpdatedDate = DateTime.UtcNow;
-            model.DeletedDate = null;
+		[HttpGet]
+		[Authorize(Roles = "Admin, Office")]
+		public HttpResponseMessage Get(DataSourceLoadOptions loadOptions)
+		{
+			var order = _context.Order.Select(i => new
+			{
+				i.Id,
+				i.CreatedDate,
+				i.UpdatedDate,
+				i.DeletedDate,
+				i.RegistrationNumber,
+				i.CityId,
+				i.Email,
+				i.Referral,
+				i.PartnerId,
+				i.MailSent,
+				i.Passengers,
+				i.Language,
+				i.Comments
+			}).Where(i => i.DeletedDate == null);
+			return Request.CreateResponse(DataSourceLoader.Load(order, loadOptions));
+		}
 
-            Validate(model);
-            if (!ModelState.IsValid)
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, GetFullErrorMessage(ModelState));
+		[Authorize(Roles = "Admin")]
+		[HttpPost]
+		public HttpResponseMessage Post(FormDataCollection form)
+		{
+			var model = new Order();
+			var values = form.Get("values");
+			JsonConvert.PopulateObject(values, model);
+			model.CreatedDate = DateTime.UtcNow;
+			model.UpdatedDate = DateTime.UtcNow;
+			model.DeletedDate = null;
 
-            var result = _context.Order.Add(model);
-            _context.SaveChanges();
+			Validate(model);
+			if (!ModelState.IsValid)
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, GetFullErrorMessage(ModelState));
 
-            return Request.CreateResponse(HttpStatusCode.Created, result.Id);
-        }
+			var result = _context.Order.Add(model);
+			_context.SaveChanges();
 
-        [HttpPut]
-        public HttpResponseMessage Put(FormDataCollection form) {
-            var key = Convert.ToInt32(form.Get("key"));
-            var model = _context.Order.FirstOrDefault(item => item.Id == key);
-            if(model == null)
-                return Request.CreateResponse(HttpStatusCode.Conflict, "Order not found");
+			return Request.CreateResponse(HttpStatusCode.Created, result.Id);
+		}
 
-            var values = form.Get("values");
-            JsonConvert.PopulateObject(values, model);
-            model.UpdatedDate = DateTime.UtcNow;
+		[HttpPut]
+		[Authorize(Roles = "Admin")]
+		public HttpResponseMessage Put(FormDataCollection form)
+		{
+			var key = Convert.ToInt32(form.Get("key"));
+			var model = _context.Order.FirstOrDefault(item => item.Id == key);
+			if (model == null)
+				return Request.CreateResponse(HttpStatusCode.Conflict, "Order not found");
 
-            //Validate(model);
-            if (!ModelState.IsValid)
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, GetFullErrorMessage(ModelState));
+			var values = form.Get("values");
+			JsonConvert.PopulateObject(values, model);
+			model.UpdatedDate = DateTime.UtcNow;
 
-            _context.SaveChanges();
+			//Validate(model);
+			if (!ModelState.IsValid)
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, GetFullErrorMessage(ModelState));
 
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }
+			_context.SaveChanges();
 
-        [HttpDelete]
-        public void Delete(FormDataCollection form) {
-            var key = Convert.ToInt32(form.Get("key"));
-            var model = _context.Order.FirstOrDefault(item => item.Id == key);
+			return Request.CreateResponse(HttpStatusCode.OK);
+		}
 
-            if (model == null)
-            {
-                Request.CreateResponse(NotFound());
-            }
+		[HttpDelete]
+		[Authorize(Roles = "Admin")]
+		public void Delete(FormDataCollection form)
+		{
+			var key = Convert.ToInt32(form.Get("key"));
+			var model = _context.Order.FirstOrDefault(item => item.Id == key);
 
-            model.DeletedDate = DateTime.UtcNow;
-            _context.SaveChanges();
-        }
+			if (model == null)
+			{
+				Request.CreateResponse(NotFound());
+			}
 
+			model.DeletedDate = DateTime.UtcNow;
+			_context.SaveChanges();
+		}
 
-        [HttpGet]
-        public HttpResponseMessage CityLookup(DataSourceLoadOptions loadOptions) {
-            var lookup = from i in _context.City
-                         orderby i.IataCode
-                         where i.DeletedDate == null
-                         select new {
-                             Value = i.Id,
-                             Text = i.IataCode
-                         };
-            return Request.CreateResponse(DataSourceLoader.Load(lookup, loadOptions));
-        }
+		[HttpGet]
+		[Authorize]
+		public HttpResponseMessage CityLookup(DataSourceLoadOptions loadOptions)
+		{
+			var lookup = from i in _context.City
+						 orderby i.IataCode
+						 where i.DeletedDate == null
+						 select new
+						 {
+							 Value = i.Id,
+							 Text = i.IataCode
+						 };
+			return Request.CreateResponse(DataSourceLoader.Load(lookup, loadOptions));
+		}
 
-        [HttpGet]
-        public HttpResponseMessage PartnerLookup(DataSourceLoadOptions loadOptions)
-        {
-            var lookup = from i in _context.Partner
-                         orderby i.Code
-                         where i.DeletedDate == null
-                         select new
-                         {
-                             Value = i.Id,
-                             Text = i.Code
-                         };
-            return Request.CreateResponse(DataSourceLoader.Load(lookup, loadOptions));
-        }
+		[HttpGet]
+		[Authorize]
+		public HttpResponseMessage PartnerLookup(DataSourceLoadOptions loadOptions)
+		{
+			var lookup = from i in _context.Partner
+						 orderby i.Code
+						 where i.DeletedDate == null
+						 select new
+						 {
+							 Value = i.Id,
+							 Text = i.Code
+						 };
+			return Request.CreateResponse(DataSourceLoader.Load(lookup, loadOptions));
+		}
 
-        private string GetFullErrorMessage(ModelStateDictionary modelState) {
-            var messages = new List<string>();
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_context.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-            foreach(var entry in modelState) {
-                foreach(var error in entry.Value.Errors)
-                    messages.Add(error.ErrorMessage);
-            }
+		private string GetFullErrorMessage(ModelStateDictionary modelState)
+		{
+			var messages = new List<string>();
 
-            return String.Join(" ", messages);
-        }
+			foreach (var entry in modelState)
+			{
+				foreach (var error in entry.Value.Errors)
+					messages.Add(error.ErrorMessage);
+			}
 
-        protected override void Dispose(bool disposing) {
-            if (disposing) {
-                _context.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-    }
+			return String.Join(" ", messages);
+		}
+	}
 }

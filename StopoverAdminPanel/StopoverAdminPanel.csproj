@@ -453,6 +453,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Auth\ApplicationUser.cs" />
     <Compile Include="Auth\AuthContext.cs" />
     <Compile Include="Auth\AuthRepository.cs" />
     <Compile Include="Auth\LoginModel.cs" />
@@ -658,6 +659,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties DismissedDevExtremeVersion="18.1.4.0" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

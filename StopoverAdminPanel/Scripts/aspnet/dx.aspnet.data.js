@@ -5,347 +5,343 @@
 // jshint strict: true, undef: true, unused: true, eqeqeq: true
 /* global DevExpress, jQuery, define */
 
-(function(factory) {
-    "use strict";
+(function (factory) {
+	"use strict";
 
-    if(typeof define === "function" && define.amd) {
-        define(function(require, exports, module) {
-            module.exports = factory(
-                require("jquery"),
-                require("devextreme/data/custom_store"),
-                require("devextreme/data/utils")
-            );
-        });
-    } else {
-        DevExpress.data.AspNet = factory(
-            jQuery,
-            DevExpress.data.CustomStore,
-            DevExpress.data.utils
-        );
-    }
+	if (typeof define === "function" && define.amd) {
+		define(function (require, exports, module) {
+			module.exports = factory(
+				require("jquery"),
+				require("devextreme/data/custom_store"),
+				require("devextreme/data/utils")
+			);
+		});
+	} else {
+		DevExpress.data.AspNet = factory(
+			jQuery,
+			DevExpress.data.CustomStore,
+			DevExpress.data.utils
+		);
+	}
+})(function ($, CustomStore, dataUtils) {
+	"use strict";
 
-})(function($, CustomStore, dataUtils) {
-    "use strict";
+	function createStore(options) {
+		var store = new CustomStore(createStoreConfig(options));
+		store._useDefaultSearch = true;
+		return store;
+	}
 
-    function createStore(options) {
-        var store = new CustomStore(createStoreConfig(options));
-        store._useDefaultSearch = true;
-        return store;
-    }
+	function createStoreConfig(options) {
+		var keyExpr = options.key,
+			loadUrl = options.loadUrl,
+			loadMethod = options.loadMethod || "GET",
+			loadParams = options.loadParams,
+			updateUrl = options.updateUrl,
+			insertUrl = options.insertUrl,
+			deleteUrl = options.deleteUrl,
+			onBeforeSend = options.onBeforeSend;
 
-    function createStoreConfig(options) {
-        var keyExpr = options.key,
-            loadUrl = options.loadUrl,
-            loadMethod = options.loadMethod || "GET",
-            loadParams = options.loadParams,
-            updateUrl = options.updateUrl,
-            insertUrl = options.insertUrl,
-            deleteUrl = options.deleteUrl,
-            onBeforeSend = options.onBeforeSend;
+		function send(operation, requiresKey, ajaxSettings, customSuccessHandler) {
+			var d = $.Deferred();
 
-        function send(operation, requiresKey, ajaxSettings, customSuccessHandler) {
-            var d = $.Deferred();
+			if (requiresKey && !keyExpr) {
+				d.reject(new Error("Primary key is not specified (operation: '" + operation + "', url: '" + ajaxSettings.url + "')"));
+			} else {
+				if (operation === "load") {
+					ajaxSettings.cache = false;
+					ajaxSettings.dataType = "json";
+				} else {
+					ajaxSettings.dataType = "text";
+				}
 
-            if(requiresKey && !keyExpr) {
-                d.reject(new Error("Primary key is not specified (operation: '" + operation + "', url: '" + ajaxSettings.url + "')"));
-            } else {
-                if(operation === "load") {
-                    ajaxSettings.cache = false;
-                    ajaxSettings.dataType = "json";
-                } else {
-                    ajaxSettings.dataType = "text";
-                }
+				if (onBeforeSend)
+					onBeforeSend(operation, ajaxSettings);
 
-                if(onBeforeSend)
-                    onBeforeSend(operation, ajaxSettings);
+				$.ajax(ajaxSettings)
+					.done(function (res, textStatus, xhr) {
+						if (customSuccessHandler)
+							customSuccessHandler(d, res, xhr);
+						else
+							d.resolve();
+					})
+					.fail(function (xhr, textStatus) {
+						var message = getErrorMessageFromXhr(xhr);
+						if (message)
+							d.reject(message);
+						else
+							d.reject(xhr, textStatus);
+					});
+			}
 
-                $.ajax(ajaxSettings)
-                    .done(function(res, textStatus, xhr) {
-                        if(customSuccessHandler)
-                            customSuccessHandler(d, res, xhr);
-                        else
-                            d.resolve();
-                    })
-                    .fail(function(xhr, textStatus) {
-                        var message = getErrorMessageFromXhr(xhr);
-                        if(message)
-                            d.reject(message);
-                        else
-                            d.reject(xhr, textStatus);
-                    });
-            }
+			return d.promise();
+		}
 
-            return d.promise();
-        }
+		function filterByKey(keyValue) {
+			if (!Array.isArray(keyExpr))
+				return [keyExpr, keyValue];
 
-        function filterByKey(keyValue) {
-            if(!Array.isArray(keyExpr))
-                return [keyExpr, keyValue];
+			return keyExpr.map(function (i) {
+				return [i, keyValue[i]];
+			});
+		}
 
-            return keyExpr.map(function(i) {
-                return [i, keyValue[i]];
-            });
-        }
+		function loadOptionsToActionParams(options, isCountQuery) {
+			var result = {};
 
-        function loadOptionsToActionParams(options, isCountQuery) {
-            var result = {};
+			if (isCountQuery)
+				result.isCountQuery = isCountQuery;
 
-            if(isCountQuery)
-                result.isCountQuery = isCountQuery;
+			if (options) {
+				["skip", "take", "requireTotalCount", "requireGroupCount"].forEach(function (i) {
+					if (i in options)
+						result[i] = options[i];
+				});
 
-            if(options) {
+				var normalizeSorting = dataUtils.normalizeSortingInfo,
+					group = options.group,
+					filter = options.filter,
+					select = options.select;
 
-                ["skip", "take", "requireTotalCount", "requireGroupCount"].forEach(function(i) {
-                    if(i in options)
-                        result[i] = options[i];
-                });
+				if (options.sort)
+					result.sort = JSON.stringify(normalizeSorting(options.sort));
 
-                var normalizeSorting = dataUtils.normalizeSortingInfo,
-                    group = options.group,
-                    filter = options.filter,
-                    select = options.select;
+				if (group) {
+					if (!isAdvancedGrouping(group))
+						group = normalizeSorting(group);
+					result.group = JSON.stringify(group);
+				}
 
-                if(options.sort)
-                    result.sort = JSON.stringify(normalizeSorting(options.sort));
+				if (Array.isArray(filter)) {
+					filter = $.extend(true, [], filter);
+					stringifyDatesInFilter(filter);
+					result.filter = JSON.stringify(filter);
+				}
 
-                if(group) {
-                    if(!isAdvancedGrouping(group))
-                        group = normalizeSorting(group);
-                    result.group = JSON.stringify(group);
-                }
+				if (options.totalSummary)
+					result.totalSummary = JSON.stringify(options.totalSummary);
 
-                if(Array.isArray(filter)) {
-                    filter = $.extend(true, [], filter);
-                    stringifyDatesInFilter(filter);
-                    result.filter = JSON.stringify(filter);
-                }
+				if (options.groupSummary)
+					result.groupSummary = JSON.stringify(options.groupSummary);
 
-                if(options.totalSummary)
-                    result.totalSummary = JSON.stringify(options.totalSummary);
+				if (select) {
+					if (!Array.isArray(select))
+						select = [select];
+					result.select = JSON.stringify(select);
+				}
+			}
 
-                if(options.groupSummary)
-                    result.groupSummary = JSON.stringify(options.groupSummary);
+			$.extend(result, loadParams);
 
-                if(select) {
-                    if(!Array.isArray(select))
-                        select = [ select ];
-                    result.select = JSON.stringify(select);
-                }
-            }
+			return result;
+		}
 
-            $.extend(result, loadParams);
+		return {
+			key: keyExpr,
 
-            return result;
-        }
+			load: function (loadOptions) {
+				return send(
+					"load",
+					false,
+					{
+						url: loadUrl,
+						method: loadMethod,
+						data: loadOptionsToActionParams(loadOptions)
+					},
+					function (d, res) {
+						processLoadResponse(d, res, function (res) {
+							return [res.data, createLoadExtra(res)];
+						});
+					}
+				);
+			},
 
-        return {
-            key: keyExpr,
+			totalCount: function (loadOptions) {
+				return send(
+					"load",
+					false,
+					{
+						url: loadUrl,
+						method: loadMethod,
+						data: loadOptionsToActionParams(loadOptions, true)
+					},
+					function (d, res) {
+						processLoadResponse(d, res, function (res) {
+							return [res.totalCount];
+						});
+					}
+				);
+			},
 
-            load: function(loadOptions) {
-                return send(
-                    "load",
-                    false,
-                    {
-                        url: loadUrl,
-                        method: loadMethod,
-                        data: loadOptionsToActionParams(loadOptions)
-                    },
-                    function(d, res) {
-                        processLoadResponse(d, res, function(res) {
-                            return [ res.data, createLoadExtra(res) ];
-                        });
-                    }
-                );
-            },
+			byKey: function (key) {
+				return send(
+					"load",
+					true,
+					{
+						url: loadUrl,
+						method: loadMethod,
+						data: loadOptionsToActionParams({ filter: filterByKey(key) })
+					},
+					function (d, res) {
+						processLoadResponse(d, res, function (res) {
+							return [res.data[0]];
+						});
+					}
+				);
+			},
 
-            totalCount: function(loadOptions) {
-                return send(
-                    "load",
-                    false,
-                    {
-                        url: loadUrl,
-                        method: loadMethod,
-                        data: loadOptionsToActionParams(loadOptions, true)
-                    },
-                    function(d, res) {
-                        processLoadResponse(d, res, function(res) {
-                            return [ res.totalCount ];
-                        });
-                    }
-                );
-            },
+			update: updateUrl && function (key, values) {
+				return send("update", true, {
+					url: updateUrl,
+					method: options.updateMethod || "PUT",
+					data: {
+						key: serializeKey(key),
+						values: JSON.stringify(values)
+					}
+				});
+			},
 
-            byKey: function(key) {
-                return send(
-                    "load",
-                    true,
-                    {
-                        url: loadUrl,
-                        method: loadMethod,
-                        data: loadOptionsToActionParams({ filter: filterByKey(key) })
-                    },
-                    function(d, res) {
-                        processLoadResponse(d, res, function(res) {
-                            return [ res.data[0] ];
-                        });
-                    }
-                );
-            },
+			insert: insertUrl && function (values) {
+				return send(
+					"insert",
+					true,
+					{
+						url: insertUrl,
+						method: options.insertMethod || "POST",
+						data: { values: JSON.stringify(values) }
+					},
+					function (d, res, xhr) {
+						var mime = xhr.getResponseHeader("Content-Type"),
+							isJSON = mime && mime.indexOf("application/json") > -1;
+						d.resolve(isJSON ? JSON.parse(res) : res);
+					}
+				);
+			},
 
-            update: updateUrl && function(key, values) {
-                return send("update", true, {
-                    url: updateUrl,
-                    method: options.updateMethod || "PUT",
-                    data: {
-                        key: serializeKey(key),
-                        values: JSON.stringify(values)
-                    }
-                });
-            },
+			remove: deleteUrl && function (key) {
+				return send("delete", true, {
+					url: deleteUrl,
+					method: options.deleteMethod || "DELETE",
+					data: { key: serializeKey(key) }
+				});
+			}
+		};
+	}
 
-            insert: insertUrl && function(values) {
-                return send(
-                    "insert",
-                    true,
-                    {
-                        url: insertUrl,
-                        method: options.insertMethod || "POST",
-                        data: { values: JSON.stringify(values) }
-                    },
-                    function(d, res, xhr) {
-                        var mime = xhr.getResponseHeader("Content-Type"),
-                            isJSON = mime && mime.indexOf("application/json") > -1;
-                        d.resolve(isJSON ? JSON.parse(res) : res);
-                    }
-                );
-            },
+	function processLoadResponse(d, res, getResolveArgs) {
+		res = expandLoadResponse(res);
 
-            remove: deleteUrl && function(key) {
-                return send("delete", true, {
-                    url: deleteUrl,
-                    method: options.deleteMethod || "DELETE",
-                    data: { key: serializeKey(key) }
-                });
-            }
+		if (!res || typeof res !== "object")
+			d.reject(new Error("Unexpected response received"));
+		else
+			d.resolve.apply(d, getResolveArgs(res));
+	}
 
-        };
-    }
+	function expandLoadResponse(value) {
+		if (Array.isArray(value))
+			return { data: value };
 
-    function processLoadResponse(d, res, getResolveArgs) {
-        res = expandLoadResponse(res);
+		if (typeof value === "number")
+			return { totalCount: value };
 
-        if(!res || typeof res !== "object")
-            d.reject(new Error("Unexpected response received"));
-        else
-            d.resolve.apply(d, getResolveArgs(res));
-    }
+		return value;
+	}
 
-    function expandLoadResponse(value) {
-        if(Array.isArray(value))
-            return { data: value };
+	function createLoadExtra(res) {
+		return {
+			totalCount: "totalCount" in res ? res.totalCount : -1,
+			groupCount: "groupCount" in res ? res.groupCount : -1,
+			summary: res.summary || null
+		};
+	}
 
-        if(typeof value === "number")
-            return { totalCount: value };
+	function serializeKey(key) {
+		if (typeof key === "object")
+			return JSON.stringify(key);
 
-        return value;
-    }
+		return key;
+	}
 
-    function createLoadExtra(res) {
-        return {
-            totalCount: "totalCount" in res ? res.totalCount : -1,
-            groupCount: "groupCount" in res ? res.groupCount : -1,
-            summary: res.summary || null
-        };
-    }
+	function serializeDate(date) {
+		function zpad(text, len) {
+			text = String(text);
+			while (text.length < len)
+				text = "0" + text;
+			return text;
+		}
 
-    function serializeKey(key) {
-        if(typeof key === "object")
-            return JSON.stringify(key);
+		var builder = [1 + date.getMonth(), "/", date.getDate(), "/", date.getFullYear()],
+			h = date.getHours(),
+			m = date.getMinutes(),
+			s = date.getSeconds(),
+			f = date.getMilliseconds();
 
-        return key;
-    }
+		if (h + m + s + f > 0)
+			builder.push(" ", zpad(h, 2), ":", zpad(m, 2), ":", zpad(s, 2), ".", zpad(f, 3));
 
-    function serializeDate(date) {
+		return builder.join("");
+	}
 
-        function zpad(text, len) {
-            text = String(text);
-            while(text.length < len)
-                text = "0" + text;
-            return text;
-        }
+	function stringifyDatesInFilter(crit) {
+		crit.forEach(function (v, k) {
+			if (Array.isArray(v)) {
+				stringifyDatesInFilter(v);
+			} else if (Object.prototype.toString.call(v) === "[object Date]") {
+				crit[k] = serializeDate(v);
+			}
+		});
+	}
 
-        var builder = [1 + date.getMonth(), "/", date.getDate(), "/", date.getFullYear()],
-            h = date.getHours(),
-            m = date.getMinutes(),
-            s = date.getSeconds(),
-            f = date.getMilliseconds();
+	function isAdvancedGrouping(expr) {
+		if (!Array.isArray(expr))
+			return false;
 
-        if(h + m + s + f > 0)
-            builder.push(" ", zpad(h, 2), ":", zpad(m, 2), ":", zpad(s, 2), ".", zpad(f, 3));
+		for (var i = 0; i < expr.length; i++) {
+			if ("groupInterval" in expr[i] || "isExpanded" in expr[i])
+				return true;
+		}
 
-        return builder.join("");
-    }
+		return false;
+	}
 
-    function stringifyDatesInFilter(crit) {
-        crit.forEach(function(v, k) {
-            if(Array.isArray(v)) {
-                stringifyDatesInFilter(v);
-            } else if(Object.prototype.toString.call(v) === "[object Date]") {
-                crit[k] = serializeDate(v);
-            }
-        });
-    }
+	function getErrorMessageFromXhr(xhr) {
+		var mime = xhr.getResponseHeader("Content-Type"),
+			responseText = xhr.responseText;
 
-    function isAdvancedGrouping(expr) {
-        if(!Array.isArray(expr))
-            return false;
+		if (!mime)
+			return null;
 
-        for(var i = 0; i < expr.length; i++) {
-            if("groupInterval" in expr[i] || "isExpanded" in expr[i])
-                return true;
-        }
+		if (mime.indexOf("text/plain") === 0)
+			return responseText;
 
-        return false;
-    }
+		if (mime.indexOf("application/json") === 0) {
+			var jsonObj = safeParseJSON(responseText);
 
-    function getErrorMessageFromXhr(xhr) {
-        var mime = xhr.getResponseHeader("Content-Type"),
-            responseText = xhr.responseText;
+			if (typeof jsonObj === "string")
+				return jsonObj;
 
-        if(!mime)
-            return null;
+			if (typeof jsonObj === "object") {
+				for (var key in jsonObj) {
+					if (typeof jsonObj[key] === "string")
+						return jsonObj[key];
+				}
+			}
 
-        if(mime.indexOf("text/plain") === 0)
-            return responseText;
+			return responseText;
+		}
 
-        if(mime.indexOf("application/json") === 0) {
-            var jsonObj = safeParseJSON(responseText);
+		return null;
+	}
 
-            if(typeof jsonObj === "string")
-                return jsonObj;
+	function safeParseJSON(json) {
+		try {
+			return JSON.parse(json);
+		} catch (x) {
+			return null;
+		}
+	}
 
-            if(typeof jsonObj === "object") {
-                for(var key in jsonObj) {
-                    if(typeof jsonObj[key] === "string")
-                        return jsonObj[key];
-                }
-            }
-
-            return responseText;
-        }
-
-        return null;
-    }
-
-    function safeParseJSON(json) {
-        try {
-            return JSON.parse(json);
-        } catch(x) {
-            return null;
-        }
-    }
-
-    return {
-        createStore: createStore
-    };
+	return {
+		createStore: createStore
+	};
 });
