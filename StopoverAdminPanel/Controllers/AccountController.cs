@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using StopoverAdminPanel.Auth;
+using StopoverAdminPanel.Models;
 
 namespace StopoverAdminPanel.Controllers
 {
@@ -9,6 +11,7 @@ namespace StopoverAdminPanel.Controllers
 	public class AccountController : ApiController
 	{
 		private readonly AuthRepository _repo;
+	    private readonly StopoverDbContext _context;
 
 		public AccountController()
 		{
@@ -38,15 +41,30 @@ namespace StopoverAdminPanel.Controllers
 			return Ok();
 		}
 
+        [Authorize(Roles = "Admin")]
+	    [HttpGet]
+	    public IHttpActionResult GetPartnersList()
+        {
+            var partners = _context.Partner.Select(p => new
+            {
+                p.Id,
+                p.Code
+            }).ToList();
+            return Ok(partners);
+        }
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
 				_repo.Dispose();
+                _context.Dispose();
 			}
 
 			base.Dispose(disposing);
 		}
+
+        
 
 		private IHttpActionResult GetErrorResult(IdentityResult result)
 		{

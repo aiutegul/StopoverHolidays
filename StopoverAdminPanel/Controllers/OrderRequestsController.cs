@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using DevExtreme.AspNet.Data;
@@ -76,6 +77,11 @@ namespace StopoverAdminPanel.Models.Controllers
 		[HttpGet]
 		public HttpResponseMessage Get(DataSourceLoadOptions loadOptions)
 		{
+            var isUser = HttpContext.Current.User.IsInRole("User");
+            if (isUser)
+            {
+                //select orderrequests with user.PartnerId
+            }
 			var orderrequests = _context.OrderRequests.Select(i => new
 			{
 				i.Id,

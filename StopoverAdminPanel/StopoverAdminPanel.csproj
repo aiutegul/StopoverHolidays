@@ -290,8 +290,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Views\Main\AllOrderStopovers.cshtml" />
-    <Content Include="Views\Main\AllOrderActivities.cshtml" />
     <EntityDeploy Include="Models\StopoverDbContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>StopoverDbContext.Designer.cs</LastGenOutput>

@@ -107,7 +107,7 @@ namespace StopoverAdminPanel.Models.Controllers
 					messages.Add(error.ErrorMessage);
 			}
 
-			return String.Join(" ", messages);
+			return string.Join(" ", messages);
 		}
 	}
 }
