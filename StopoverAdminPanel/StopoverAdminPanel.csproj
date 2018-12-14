@@ -498,6 +498,7 @@
     <Compile Include="Controllers\StopoverPassengersController.cs" />
     <Compile Include="Controllers\TransfersController.cs" />
     <Compile Include="Controllers\TranslationsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -618,6 +619,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="UserModels\RegisterUserModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Libs\" />
