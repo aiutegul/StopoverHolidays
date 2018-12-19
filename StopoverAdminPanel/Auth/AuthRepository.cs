@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 
 namespace StopoverAdminPanel.Auth
 {
 	public class AuthRepository : IDisposable
 	{
 		private readonly AuthContext _ctx;
-
 		private readonly UserManager<ApplicationUser> _userManager;
 
 		public AuthRepository()
@@ -37,20 +42,86 @@ namespace StopoverAdminPanel.Auth
 			}
 		}
 
+		public List<string> GetListRoles()
+		{
+			var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_ctx));
+			return roleManager.Roles.Select(x => x.Name).ToList();
+		}
+
+		public List<FormattedUser> GetUsers()
+		{
+			var formatterUsers = _userManager.Users.Select(u => new FormattedUser
+			{
+				Id = u.Id,
+				UserName = u.UserName,
+				PartnerId = u.PartnerId
+			}).ToList();
+			formatterUsers.ForEach(user => { user.Role = _userManager.GetRoles(user.Id).ToList()[0]; });
+			return formatterUsers;
+		}
+
+		public async Task<IdentityResult> DeleteUser(string userid)
+		{
+			var usr = await _userManager.FindByIdAsync(userid);
+			if (usr != null)
+			{
+				var result = await _userManager.DeleteAsync(usr);
+				if (result.Succeeded)
+				{
+					return result;
+				}
+			}
+
+			return null;
+		}
+
 		public async Task<IdentityResult> RegisterUser(UserModel userModel)
 		{
 			ApplicationUser user = new ApplicationUser
 			{
-				UserName = userModel.UserName
+				UserName = userModel.UserName,
+				Email = userModel.UserName,
+				PartnerId = userModel.PartnerId
 			};
-
-			var result = await _userManager.CreateAsync(user, userModel.Password);
+			string generatedPassword = Membership.GeneratePassword(10, 0);
+			var result = await _userManager.CreateAsync(user, generatedPassword);
 
 			if (result.Succeeded)
 			{
 				var currentuser = _userManager.FindByName(user.UserName);
 				string role = userModel.Role;
-				await _userManager.AddToRolesAsync(currentuser.Id, role);
+				var rolesResult = await _userManager.AddToRolesAsync(currentuser.Id, role);
+				if (rolesResult.Succeeded)
+				{
+					using (HttpClient client = new HttpClient())
+					{
+						client.BaseAddress = new Uri(ConfigurationManager.AppSettings["emailApiAddr"]);
+						var destination = new EmailDestination
+						{
+							Addresses = new List<Addresses> { new Addresses { Address = user.Email } }
+						};
+						var message = new Messages { Text = "Your StopoverAdminPanel password: " + "<b>" + generatedPassword + "</b>" };
+						var model = new EmailModel
+						{
+							Destinations = new List<EmailDestination> { destination },
+							Messages = new List<Messages> { message }
+						};
+						var body = JsonConvert.SerializeObject(model);
+						var content = new StringContent(body, Encoding.UTF8, "application/json");
+						var emailResult = await client.PostAsync("", content);
+						if (emailResult.IsSuccessStatusCode)
+						{
+						}
+						else
+						{
+							// not sent
+						}
+					}
+				}
+				else
+				{
+					return rolesResult;
+				}
 			}
 			return result;
 		}

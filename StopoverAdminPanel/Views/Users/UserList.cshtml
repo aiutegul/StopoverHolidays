@@ -1,0 +1,46 @@
+﻿@model IEnumerable<StopoverAdminPanel.Auth.FormattedUser>
+
+@{
+	ViewBag.Title = "UserList";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Managing accounts</h2>
+
+<p>
+	@Html.ActionLink("Create New User", "Register", new { }, new { @class = "btn btn-default" })
+</p>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.UserName)
+			</th>
+			<th>Role</th>
+			<th>
+				Partner
+			</th>
+			<th>Actions</th>
+		</tr>
+
+		@foreach (var item in Model)
+		{
+			<tr>
+
+				<td>
+					@Html.DisplayFor(modelItem => item.UserName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Role)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.PartnerId)
+				</td>
+				<td>
+					@Html.ActionLink("Edit", "EditUser", new { userid = item.Id }, new { @class = "btn btn-default" })
+					@Html.ActionLink("Delete", "DeleteUser", new { userid = item.Id }, new { onclick = "return confirm('Are you sure?');", @class = "btn btn-default" })
+				</td>
+			</tr>
+		}
+	</table>
+</div>

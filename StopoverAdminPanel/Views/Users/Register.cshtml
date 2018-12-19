@@ -1,0 +1,43 @@
+﻿@{
+	ViewBag.Title = "Register";
+}
+
+@model StopoverAdminPanel.UserModels.RegisterUserModel
+@{
+	ViewBag.Title = "Register";
+}
+
+<h2>Create account in StopoverAdmin</h2>
+
+@using (Html.BeginForm())
+{
+	<div class="form-group" style="margin: 0 auto;">
+		<hr />
+		@Html.ValidationSummary(false)
+
+		<div style="width: 20%">
+			Username
+			<div>
+				@Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+			</div>
+		</div>
+		<div style="width: 20%">
+			Role
+			<div>
+				@Html.DropDownListFor(model => model.role, Model.roles, "Select role", new { @class = "form-control" })
+			</div>
+		</div>
+		<div style="width: 20%">
+			Partners
+			<div>
+				@Html.DropDownListFor(model => model.PartnerId, Model.partners, "Select Partner", new { @class = "form-control" })
+			</div>
+		</div>
+		<div>
+			<div>
+				<br />
+				<input type="submit" value="Register" class="btn btn-default" />
+			</div>
+		</div>
+	</div>
+}
