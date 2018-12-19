@@ -297,15 +297,6 @@ namespace StopoverAdminPanel.Models.Controllers
 			return confirmation_message;
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				_context.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		private void deleteEntireRequest(int requestId)
 		{
 			var model = _context.OrderRequests.FirstOrDefault(item => item.Id == requestId);
@@ -344,6 +335,8 @@ namespace StopoverAdminPanel.Models.Controllers
 			_context.Order.Add(order);
 			var orderStopover = createOrderStopover(orderRequest, order);
 
+		    var routes = orderRequest.Routes.Split().ToList();
+
 			//Need logic over here to check if flight is transit or it's point to point
 			//Then update OrderStopover by checking if Promo is available for it (setting isPromo to true or false)
 			var flight = new Flight
@@ -357,15 +350,12 @@ namespace StopoverAdminPanel.Models.Controllers
 				ArriveFlight = orderRequest.ArriveFlight,
 				DepartureFlight = orderRequest.DepartureFlight,
 				Routes = orderRequest.Routes,
-				IsPointToPoint = false, //change this
-				IsTransit = true, //change this
+				IsPointToPoint = checkFlightIsPointToPoint(routes),
+				IsTransit = checkFlightIsTransit(routes),
 				Comments = null
 			};
 
-			/*if(checkStopoverPromo(orderStopover, flight, orderRequest.Id))
-            {
-                orderStopover.IsPromo = true;
-            }*/
+		    orderStopover.IsPromo = checkStopoverPromo(orderStopover, flight);
 
 			_context.Flight.Add(flight);
 
@@ -401,17 +391,17 @@ namespace StopoverAdminPanel.Models.Controllers
 			return "Records Created!";
 		}
 
-		/*private bool checkStopoverPromo(OrderStopover os, Flight flight, int requestId)
+        private bool checkStopoverPromo(OrderStopover orderStopover, Flight flight)
         {
-            bool isPromo = true;
-            var stopoverPaxRequest = _context.OrderStopoverData.Where(p => p.OrderId == requestId);
+            var hotel = _context.Hotel.Find(orderStopover.HotelId);
+ 
+            return !CheckInPromoDisabled(orderStopover.CheckIn, hotel.Id) && 
+                   (hotel.IsPromo && 
+                    ((flight.IsPointToPoint && orderStopover.Nights > 1) 
+                     || flight.IsTransit));
+        }
 
-            if (checkFlightIsPointToPoint(Flight flight))
-            {
-            }
-        }*/
-
-		private bool checkFlightIsPointToPoint(Flight flight)
+        private bool checkFlightIsPointToPoint(List<string> routes)
 		{
 			using (StopoverHolidaysServiceReference.StopoverHolidaysServiceClient client =
 				new StopoverHolidaysServiceReference.StopoverHolidaysServiceClient())
@@ -421,7 +411,7 @@ namespace StopoverAdminPanel.Models.Controllers
 			}
 		}
 
-		private bool checkFlightIsTransit(Flight flight)
+		private bool checkFlightIsTransit(List<string> routes)
 		{
 			using (StopoverHolidaysServiceReference.StopoverHolidaysServiceClient client =
 				 new StopoverHolidaysServiceReference.StopoverHolidaysServiceClient())
@@ -452,12 +442,8 @@ namespace StopoverAdminPanel.Models.Controllers
 
 		private OrderStopover createOrderStopover(OrderRequests orderRequest, Order order)
 		{
-			var transferIdForPassengerAmount = _context.Transfer.Select(t => new
-			{
-				t.Id,
-				t.CityId,
-				t.PassengerAmount
-			}).Where(t => t.CityId == orderRequest.CityId).Where(t => t.PassengerAmount == orderRequest.NumberOfPassengers).First();
+			var transferForPassengerAmount = _context.Transfer.First(t => t.CityId == orderRequest.CityId &&
+			                                                                t.PassengerAmount == orderRequest.NumberOfPassengers);
 
 			var orderStopover = new OrderStopover
 			{
@@ -466,7 +452,7 @@ namespace StopoverAdminPanel.Models.Controllers
 				DeletedDate = null,
 				Order = order,
 				HotelId = orderRequest.HotelId.GetValueOrDefault(),
-				TransferId = transferIdForPassengerAmount.Id,
+				TransferId = transferForPassengerAmount.Id,
 				FromAirportTransferUsed = orderRequest.FromAirportTransferUsed.GetValueOrDefault(),
 				FromHotelTransferUsed = orderRequest.FromHotelTransferUsed.GetValueOrDefault(),
 				IsPromo = true, //change this once you clarify with Janna
@@ -478,10 +464,7 @@ namespace StopoverAdminPanel.Models.Controllers
 				Comments = null
 			};
 
-			if (CheckInPromoDisabled(orderStopover.CheckIn, orderStopover.HotelId))
-			{
-				orderStopover.IsPromo = false;
-			}
+			
 
 			return orderStopover;
 		}
@@ -563,8 +546,7 @@ namespace StopoverAdminPanel.Models.Controllers
 
 				_context.Passenger.Add(passengerToAdd);
 
-				var room = _context.Room.Select(r => new { r.Id, r.HotelId, r.RoomTypeId })
-					.Where(r => r.HotelId == orderStopover.HotelId && r.RoomTypeId == passenger.RoomTypeId).First();
+			    var room = _context.Room.First(r => r.HotelId == orderStopover.HotelId && r.RoomTypeId == passenger.RoomTypeId);
 
 				var stopoverPassenger = new StopoverPassenger
 				{
@@ -577,16 +559,19 @@ namespace StopoverAdminPanel.Models.Controllers
 					BookingReference = bookingReference,
 					RoomNum = passenger.RoomNum.GetValueOrDefault(),
 					TicketNumber = passenger.TicketNumber,
-					PromoUsed = true //change this once you clarify with Janna, should be true after a payment has been made
+					PromoUsed = false //change this once you clarify with Janna, should be true after a payment has been made
 				};
 
 				_context.StopoverPassenger.Add(stopoverPassenger);
 			}
 		}
 
+        //private bool CheckPromoUsedTicketNumber() -- need to implement
+
 		private int calculateStopoverPrice(int requestId, OrderStopover os)
 		{
 			int TotalPrice = 0;
+		    int firstNightPrice;
 			var roomTypesInRequest = _context.OrderStopoverData.Select(r => new
 			{
 				r.OrderId,
@@ -594,12 +579,43 @@ namespace StopoverAdminPanel.Models.Controllers
 				r.RoomNum
 			}).Where(r => r.OrderId == requestId).Distinct();
 
-			foreach (var roomtype in roomTypesInRequest)
+		    var promoUsedRooms = from sd in _context.OrderStopoverData
+		        join sp in _context.StopoverPassenger on sd.TicketNumber equals sp.TicketNumber
+		        where sp.PromoUsed.HasValue && sp.PromoUsed.GetValueOrDefault()
+                                 where sd.OrderId == requestId
+		        select new
+		        {
+                    sd.OrderId,
+		            sd.RoomTypeId,
+		            sd.RoomNum
+		        };
+
+            foreach (var roomtype in roomTypesInRequest)
 			{
 				var room = _context.Room.First(r => r.HotelId == os.HotelId && r.RoomTypeId == roomtype.RoomTypeId);
-				//Here we should check if OrderStopover.CheckIn falls between ExtraRoomPrice.StartDate and EndDate
-				//and add that price, after I clarify with Janna how it works
-				TotalPrice += room.FirstNightPrice;
+                //Here we should check if OrderStopover.CheckIn falls between ExtraRoomPrice.StartDate and EndDate
+                //and add that price, after I clarify with Janna how it works
+                //also check if promo had been previously used on the ticket number
+                //if not then first Night price should be 1 dora
+			    if (os.IsPromo)
+			    {
+			        if (promoUsedRooms.Contains(roomtype))
+                    { 
+			            firstNightPrice = room.FirstNightPrice;
+                    }
+			        else
+			        {
+			            firstNightPrice = 370;//CONVERT TO 1 DORA PRICE HERE
+                    }
+			    }
+			    else
+			    {
+			        firstNightPrice = room.FirstNightPrice;
+			    }
+
+			    TotalPrice += firstNightPrice;
+
+                //HOW MANY NIGHTS ARE THERE??? CAN THERE BE 3 NIGHTS?
 				if (os.Nights > 1)
 				{
 					TotalPrice += room.SecondNightPrice;
@@ -626,7 +642,16 @@ namespace StopoverAdminPanel.Models.Controllers
 			return TotalPrice;
 		}
 
-		private string GetFullErrorMessage(ModelStateDictionary modelState)
+	    protected override void Dispose(bool disposing)
+	    {
+	        if (disposing)
+	        {
+	            _context.Dispose();
+	        }
+	        base.Dispose(disposing);
+	    }
+
+        private string GetFullErrorMessage(ModelStateDictionary modelState)
 		{
 			var messages = new List<string>();
 

@@ -25,6 +25,7 @@ namespace StopoverAdminPanel.Controllers
 
 			using (HttpClient httpClient = new HttpClient())
 			{
+			    httpClient.BaseAddress = new Uri(getTokenUrl);
 				HttpContent content = new FormUrlEncodedContent(new[]
 				{
 					new KeyValuePair<string, string>("grant_type", "password"),
@@ -32,7 +33,7 @@ namespace StopoverAdminPanel.Controllers
 					new KeyValuePair<string, string>("password", model.Password)
 				});
 
-				HttpResponseMessage result = httpClient.PostAsync(getTokenUrl, content).Result;
+				HttpResponseMessage result = httpClient.PostAsync("", content).Result;
 
 				// TODO if not 200 alert username and password not correct
 
