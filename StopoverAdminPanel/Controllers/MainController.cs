@@ -6,7 +6,6 @@ namespace StopoverAdminPanel.Controllers
 
 	public class MainController : Controller
 	{
-
 		[Authorize(Roles = "Admin, Office")]
 		public ActionResult Orders()
 		{
@@ -33,6 +32,5 @@ namespace StopoverAdminPanel.Controllers
 		{
 			return View();
 		}
-
 	}
 }

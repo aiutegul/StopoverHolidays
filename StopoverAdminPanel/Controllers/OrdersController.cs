@@ -15,7 +15,7 @@ namespace StopoverAdminPanel.Models.Controllers
 	[Route("api/Order/{action}", Name = "OrdersApi")]
 	public class OrdersController : ApiController
 	{
-		private StopoverDbContext _context = new StopoverDbContext();
+		private readonly StopoverDbContext _context = new StopoverDbContext();
 
 		[HttpGet]
 		[Authorize(Roles = "Admin, Office")]
