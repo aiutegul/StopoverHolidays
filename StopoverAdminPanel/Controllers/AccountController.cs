@@ -11,16 +11,17 @@ namespace StopoverAdminPanel.Controllers
 	public class AccountController : ApiController
 	{
 		private readonly AuthRepository _repo;
-	    private readonly StopoverDbContext _context;
+		private readonly StopoverDbContext _context;
 
 		public AccountController()
 		{
 			_repo = new AuthRepository();
+			_context = new StopoverDbContext();
 		}
 
 		// POST api/Account/Register
 		// MUST DELETE IN PROD OR ONLY ADMIN CAN REGISTER USERS
-		[AllowAnonymous]
+		[Authorize(Roles = "Admin")]
 		[Route("Register")]
 		public async Task<IHttpActionResult> Register(UserModel userModel)
 		{
@@ -41,30 +42,69 @@ namespace StopoverAdminPanel.Controllers
 			return Ok();
 		}
 
-        [Authorize(Roles = "Admin")]
-	    [HttpGet]
-	    public IHttpActionResult GetPartnersList()
-        {
-            var partners = _context.Partner.Select(p => new
-            {
-                p.Id,
-                p.Code
-            }).ToList();
-            return Ok(partners);
-        }
+		[Authorize(Roles = "Admin")]
+		[Route("GetPartnersAndRoles")]
+		[HttpGet]
+		public IHttpActionResult GetPartnersAndRoles()
+		{
+			var partnersList = _context.Partner.Select(p => new
+			{
+				p.Id,
+				p.Code
+			}).ToList();
+			var rolelist = _repo.GetListRoles();
+			return Ok(new { partners = partnersList, roles = rolelist });
+		}
+
+		[Authorize(Roles = "Admin")]
+		[Route("Users")]
+		[HttpGet]
+		public IHttpActionResult GetUsers()
+		{
+			return Ok(_repo.GetUsers());
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpGet]
+		[Route("{id}/roles")]
+		public async Task<IHttpActionResult> GetRoles(string id)
+		{
+			return Ok(await _repo.UserRoles(id));
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpGet]
+		[Route("{id}")]
+		public async Task<IHttpActionResult> Get(string id)
+		{
+			return Ok(await _repo.FindUserById(id));
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpDelete]
+		[Route("{id}")]
+		public async Task<IHttpActionResult> Delete(string id)
+		{
+			var result = await _repo.DeleteUser(id);
+			var errorResult = GetErrorResult(result);
+
+			if (errorResult != null)
+			{
+				return errorResult;
+			}
+			return Ok();
+		}
 
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
 				_repo.Dispose();
-                _context.Dispose();
+				_context.Dispose();
 			}
 
 			base.Dispose(disposing);
 		}
-
-        
 
 		private IHttpActionResult GetErrorResult(IdentityResult result)
 		{

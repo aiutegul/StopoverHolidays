@@ -24,7 +24,7 @@ namespace StopoverAdminPanel
 			app.UseCookieAuthentication(new CookieAuthenticationOptions()
 			{
 				AuthenticationType = "ApplicationCookie",
-				LoginPath = new PathString("/Login/LoginView"),
+				LoginPath = new PathString("/Login/Login"),
 			});
 		}
 

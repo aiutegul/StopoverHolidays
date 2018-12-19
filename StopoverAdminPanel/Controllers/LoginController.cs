@@ -12,8 +12,16 @@ namespace StopoverAdminPanel.Controllers
 {
 	public class LoginController : Controller
 	{
+		private readonly HttpClient _client;
+
+		public LoginController(HttpClient client)
+		{
+			_client = client;
+			_client.BaseAddress = new Uri(System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority));
+		}
+
 		// GET: Login
-		public ActionResult LoginView()
+		public ActionResult Login(LoginModel model)
 		{
 			return View();
 		}
@@ -21,42 +29,37 @@ namespace StopoverAdminPanel.Controllers
 		[HttpPost]
 		public ActionResult Login(LoginModel model, string returnUrl)
 		{
-			var getTokenUrl = "http://" + HttpContext.Request.Url?.Host + ":" + HttpContext.Request.Url?.Port + "/api/Account/login";
-
-			using (HttpClient httpClient = new HttpClient())
+			HttpContent content = new FormUrlEncodedContent(new[]
 			{
-				HttpContent content = new FormUrlEncodedContent(new[]
-				{
 					new KeyValuePair<string, string>("grant_type", "password"),
 					new KeyValuePair<string, string>("username", model.Username),
 					new KeyValuePair<string, string>("password", model.Password)
 				});
 
-				HttpResponseMessage result = httpClient.PostAsync(getTokenUrl, content).Result;
-
-				// TODO if not 200 alert username and password not correct
-
+			var result = _client.PostAsync("/api/Account/login", content).Result;
+			if (result.IsSuccessStatusCode)
+			{
 				string resultContent = result.Content.ReadAsStringAsync().Result;
 
 				var response = JsonConvert.DeserializeObject<Token>(resultContent);
 
-				AuthenticationProperties options = new AuthenticationProperties();
-
-				options.AllowRefresh = true;
-				options.IsPersistent = true;
-				options.ExpiresUtc = DateTime.UtcNow.AddSeconds(int.Parse(response.expires_in));
+				AuthenticationProperties options = new AuthenticationProperties
+				{
+					AllowRefresh = true,
+					IsPersistent = true,
+					ExpiresUtc = DateTime.UtcNow.AddSeconds(int.Parse(response.expires_in))
+				};
 
 				var claims = new[]
 				{
 					new Claim(ClaimTypes.Name, model.Username),
-					new Claim("AccessToken", string.Format("Bearer {0}", response.access_token)),
+					new Claim("AccessToken", $"Bearer {response.access_token}"),
 				};
 
-				HttpCookie cookie = new HttpCookie("access_token");
-
-				cookie.Value = response.access_token;
-
-				// Добавить куки в ответ
+				var cookie = new HttpCookie("access_token")
+				{
+					Value = response.access_token
+				};
 				Response.Cookies.Add(cookie);
 				var identity = new ClaimsIdentity(claims, "ApplicationCookie");
 				var responseRoles = JsonConvert.DeserializeObject<List<string>>(response.roles);
@@ -64,20 +67,27 @@ namespace StopoverAdminPanel.Controllers
 				{
 					identity.AddClaim(new Claim(ClaimTypes.Role, role));
 				}
-				Request.GetOwinContext().Authentication.SignIn(options, identity);
-			}
 
-			return RedirectToAction("Orders", "Main");
+				Request.GetOwinContext().Authentication.SignIn(options, identity);
+				if (Url.IsLocalUrl(returnUrl))
+				{
+					return Redirect(returnUrl);
+				}
+				return RedirectToAction("Orders", "Main");
+			}
+			else
+			{
+				ModelState.AddModelError("", "Login or password are incorrect!");
+			}
+			return View(model);
 		}
 
 		public ActionResult LogOut()
 		{
 			Request.GetOwinContext().Authentication.SignOut("ApplicationCookie");
-			//Response.Cookies.Remove("access_token");
-			//Request.Cookies.Remove("access_token");
 			HttpContext.Response.Cookies.Clear();
 			HttpContext.Request.Cookies.Clear();
-			return RedirectToAction("LoginView");
+			return RedirectToAction("Login");
 		}
 	}
 }

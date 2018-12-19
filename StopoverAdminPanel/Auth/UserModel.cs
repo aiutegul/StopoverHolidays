@@ -5,16 +5,14 @@ namespace StopoverAdminPanel.Auth
 	public class UserModel
 	{
 		[Required]
+		[DataType(DataType.EmailAddress)]
 		[Display(Name = "User name")]
 		public string UserName { get; set; }
 
-		[Required]
-		[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-		[DataType(DataType.Password)]
-		[Display(Name = "Password")]
-		public string Password { get; set; }
-
 		[Required(ErrorMessage = "Role is required")]
 		public string Role { get; set; }
+
+		[Required(ErrorMessage = "Partner is required")]
+		public int PartnerId { get; set; }
 	}
 }

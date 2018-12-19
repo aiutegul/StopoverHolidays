@@ -1,0 +1,33 @@
+﻿@model StopoverAdminPanel.Auth.FormattedUser
+@{
+	ViewBag.Title = "EditUser";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit User</h2>
+@using (Html.BeginForm())
+{
+	<div class="form-group" style="margin: 0 auto;">
+		<hr />
+		@Html.ValidationSummary(false)
+		@Html.HiddenFor(model => model.Id)
+		<div>
+			Role
+			<div>
+				@Html.DropDownListFor(model => model.Role, Model.Roles, "Select role", new { @class = "form-control" })
+			</div>
+		</div>
+		<div>
+			Partner
+			<div>
+				@Html.DropDownListFor(model => model.PartnerId, Model.Partners, "Select partner", new { @class = "form-control" })
+			</div>
+		</div>
+		<div>
+			<div>
+				<br />
+				<input type="submit" value="Edit" class="btn btn-default" />
+			</div>
+		</div>
+	</div>
+}
