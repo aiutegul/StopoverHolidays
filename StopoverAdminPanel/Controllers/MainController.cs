@@ -52,5 +52,11 @@ namespace StopoverAdminPanel.Controllers
 		{
 			return View();
 		}
-	}
+
+	    [Authorize(Roles = "Admin")]
+	    public ActionResult Partners()
+	    {
+	        return View();
+	    }
+    }
 }

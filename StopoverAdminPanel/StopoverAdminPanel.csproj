@@ -230,13 +230,13 @@
     <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.ThirdStepResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService.disco" />
     <None Include="Connected Services\StopoverHolidaysServiceReference\configuration91.svcinfo" />
     <None Include="Connected Services\StopoverHolidaysServiceReference\configuration.svcinfo" />
     <None Include="Connected Services\StopoverHolidaysServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService1.disco" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -329,28 +329,29 @@
     <Content Include="Views\Main\Activities.cshtml" />
     <Content Include="Views\PassengerRecords\LoadPassengers.cshtml" />
     <Content Include="Views\Main\OrderRequests.cshtml" />
-    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService.wsdl" />
-    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService.xsd">
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService1.wsdl" />
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService7.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService1.xsd">
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService71.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService2.xsd">
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService72.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService3.xsd">
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService73.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService4.xsd">
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService74.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService5.xsd">
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService75.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService6.xsd">
+    <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService76.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Main\Partners.cshtml" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
@@ -516,6 +517,7 @@
     <Compile Include="Controllers\OrderCostsController.cs" />
     <Compile Include="Controllers\OrderRequestsController.cs" />
     <Compile Include="Controllers\OrderStopoverDataController.cs" />
+    <Compile Include="Controllers\PartnersController.cs" />
     <Compile Include="Controllers\StopoverDataController.cs" />
     <Compile Include="Controllers\PassengerRecordsController.cs" />
     <Compile Include="Controllers\FlightsController.cs" />

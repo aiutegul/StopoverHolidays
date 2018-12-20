@@ -674,6 +674,9 @@ namespace StopoverAdminPanel.StopoverHolidaysServiceReference {
         private bool PromoUsedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PromoUsedDraftField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int RoomNumField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -714,6 +717,19 @@ namespace StopoverAdminPanel.StopoverHolidaysServiceReference {
                 if ((this.PromoUsedField.Equals(value) != true)) {
                     this.PromoUsedField = value;
                     this.RaisePropertyChanged("PromoUsed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PromoUsedDraft {
+            get {
+                return this.PromoUsedDraftField;
+            }
+            set {
+                if ((this.PromoUsedDraftField.Equals(value) != true)) {
+                    this.PromoUsedDraftField = value;
+                    this.RaisePropertyChanged("PromoUsedDraft");
                 }
             }
         }
@@ -3288,6 +3304,18 @@ namespace StopoverAdminPanel.StopoverHolidaysServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStopoverHolidaysService/SolveOrderCost", ReplyAction="http://tempuri.org/IStopoverHolidaysService/SolveOrderCostResponse")]
         System.Threading.Tasks.Task<StopoverAdminPanel.StopoverHolidaysServiceReference.MainResponse> SolveOrderCostAsync(int orderId, decimal airfareTaxes, bool isOffline);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStopoverHolidaysService/IsPointToPoint", ReplyAction="http://tempuri.org/IStopoverHolidaysService/IsPointToPointResponse")]
+        bool IsPointToPoint(string[] routes);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStopoverHolidaysService/IsPointToPoint", ReplyAction="http://tempuri.org/IStopoverHolidaysService/IsPointToPointResponse")]
+        System.Threading.Tasks.Task<bool> IsPointToPointAsync(string[] routes);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStopoverHolidaysService/IsTransit", ReplyAction="http://tempuri.org/IStopoverHolidaysService/IsTransitResponse")]
+        bool IsTransit(string[] routes);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStopoverHolidaysService/IsTransit", ReplyAction="http://tempuri.org/IStopoverHolidaysService/IsTransitResponse")]
+        System.Threading.Tasks.Task<bool> IsTransitAsync(string[] routes);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -3443,6 +3471,22 @@ namespace StopoverAdminPanel.StopoverHolidaysServiceReference {
         
         public System.Threading.Tasks.Task<StopoverAdminPanel.StopoverHolidaysServiceReference.MainResponse> SolveOrderCostAsync(int orderId, decimal airfareTaxes, bool isOffline) {
             return base.Channel.SolveOrderCostAsync(orderId, airfareTaxes, isOffline);
+        }
+        
+        public bool IsPointToPoint(string[] routes) {
+            return base.Channel.IsPointToPoint(routes);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsPointToPointAsync(string[] routes) {
+            return base.Channel.IsPointToPointAsync(routes);
+        }
+        
+        public bool IsTransit(string[] routes) {
+            return base.Channel.IsTransit(routes);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsTransitAsync(string[] routes) {
+            return base.Channel.IsTransitAsync(routes);
         }
     }
 }

@@ -346,7 +346,7 @@ namespace StopoverAdminPanel.Models.Controllers
 			_context.Order.Add(order);
 			var orderStopover = createOrderStopover(orderRequest, order);
 
-			var routes = orderRequest.Routes.Split().ToList();
+			var routes = orderRequest.Routes.Split();
 
 			//Need logic over here to check if flight is transit or it's point to point
 			//Then update OrderStopover by checking if Promo is available for it (setting isPromo to true or false)
@@ -412,23 +412,23 @@ namespace StopoverAdminPanel.Models.Controllers
 					 || flight.IsTransit));
 		}
 
-		private bool checkFlightIsPointToPoint(List<string> routes)
+		private bool checkFlightIsPointToPoint(string[] routes)
 		{
 			using (StopoverHolidaysServiceReference.StopoverHolidaysServiceClient client =
 				new StopoverHolidaysServiceReference.StopoverHolidaysServiceClient())
 			{
 				//CHANGE THIS TO USE SERVICE.ISPOINTTOPOINT
-				return true;
+				return client.IsPointToPoint(routes);
 			}
 		}
 
-		private bool checkFlightIsTransit(List<string> routes)
+		private bool checkFlightIsTransit(string[] routes)
 		{
 			using (StopoverHolidaysServiceReference.StopoverHolidaysServiceClient client =
 				 new StopoverHolidaysServiceReference.StopoverHolidaysServiceClient())
 			{
 				//CHANGE THIS TO USE SERVICE.ISTRANSIT
-				return true;
+				return client.IsTransit(routes);
 			}
 		}
 

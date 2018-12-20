@@ -19,18 +19,18 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://websala:274/StopoverHolidaysService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://stopoverholidayswcf-new-version-test-slot.azurewebsites.net/StopoverHolidaysService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="StopoverHolidaysService.xsd" MetadataType="Schema" ID="f6d89e9e-c016-4bbb-aede-2394435fdf80" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd1" />
-    <MetadataFile FileName="StopoverHolidaysService1.xsd" MetadataType="Schema" ID="0947260f-2277-4321-acae-3a0a9dad27f0" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd0" />
-    <MetadataFile FileName="StopoverHolidaysService.disco" MetadataType="Disco" ID="f6eb801e-a4b9-499f-a042-847e19f99949" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?disco" />
-    <MetadataFile FileName="StopoverHolidaysService2.xsd" MetadataType="Schema" ID="1dc373e6-871d-47e8-a36d-09d6557d8d6e" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd6" />
-    <MetadataFile FileName="StopoverHolidaysService3.xsd" MetadataType="Schema" ID="cb79ba38-7b2e-430f-8c7b-aedfd076ac28" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd4" />
-    <MetadataFile FileName="StopoverHolidaysService4.xsd" MetadataType="Schema" ID="1d9e51ba-5f15-4de8-8194-29f192ee4d4d" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd5" />
-    <MetadataFile FileName="StopoverHolidaysService.wsdl" MetadataType="Wsdl" ID="171ae751-ff1b-4cce-bc32-bc34c4d5d812" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?wsdl" />
-    <MetadataFile FileName="StopoverHolidaysService5.xsd" MetadataType="Schema" ID="6b008e65-010c-4610-8642-9689cfa93c63" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd2" />
-    <MetadataFile FileName="StopoverHolidaysService6.xsd" MetadataType="Schema" ID="d2f501f4-591f-4f72-9c05-5735d526dc64" SourceId="1" SourceUrl="http://websala:274/StopoverHolidaysService.svc?xsd=xsd3" />
+    <MetadataFile FileName="StopoverHolidaysService1.disco" MetadataType="Disco" ID="6735ba6e-8454-4a40-a132-3ed0c35ff092" SourceId="1" SourceUrl="http://stopoverholidayswcf-new-version-test-slot.azurewebsites.net/StopoverHolidaysService.svc?disco" />
+    <MetadataFile FileName="StopoverHolidaysService7.xsd" MetadataType="Schema" ID="4acc76f8-3c80-461a-8013-e6e619397752" SourceId="1" SourceUrl="http://stopoverholidayswcf-new-version-test-slot.azurewebsites.net/StopoverHolidaysService.svc?xsd=xsd0" />
+    <MetadataFile FileName="StopoverHolidaysService71.xsd" MetadataType="Schema" ID="3285cd73-dac5-4656-8d4c-474a7668a169" SourceId="1" SourceUrl="http://stopoverholidayswcf-new-version-test-slot.azurewebsites.net/StopoverHolidaysService.svc?xsd=xsd6" />
+    <MetadataFile FileName="StopoverHolidaysService72.xsd" MetadataType="Schema" ID="33de30bc-70c3-43c5-8731-7c14348fc820" SourceId="1" SourceUrl="http://stopoverholidayswcf-new-version-test-slot.azurewebsites.net/StopoverHolidaysService.svc?xsd=xsd1" />
+    <MetadataFile FileName="StopoverHolidaysService73.xsd" MetadataType="Schema" ID="cc5e0b7e-1ee4-4bf3-b824-c296dfe69cfa" SourceId="1" SourceUrl="http://stopoverholidayswcf-new-version-test-slot.azurewebsites.net/StopoverHolidaysService.svc?xsd=xsd3" />
+    <MetadataFile FileName="StopoverHolidaysService74.xsd" MetadataType="Schema" ID="0eb2d835-e2c0-4ecd-9144-20f3fe6748c8" SourceId="1" SourceUrl="http://stopoverholidayswcf-new-version-test-slot.azurewebsites.net/StopoverHolidaysService.svc?xsd=xsd2" />
+    <MetadataFile FileName="StopoverHolidaysService75.xsd" MetadataType="Schema" ID="9c711337-a920-4f3e-884d-ab7a9d4af9b9" SourceId="1" SourceUrl="http://stopoverholidayswcf-new-version-test-slot.azurewebsites.net/StopoverHolidaysService.svc?xsd=xsd4" />
+    <MetadataFile FileName="StopoverHolidaysService1.wsdl" MetadataType="Wsdl" ID="2e6d1040-9279-452a-b258-34d00aa2b8f0" SourceId="1" SourceUrl="http://stopoverholidayswcf-new-version-test-slot.azurewebsites.net/StopoverHolidaysService.svc?wsdl" />
+    <MetadataFile FileName="StopoverHolidaysService76.xsd" MetadataType="Schema" ID="766794ce-3ff7-4ea9-b398-8c4c1901859d" SourceId="1" SourceUrl="http://stopoverholidayswcf-new-version-test-slot.azurewebsites.net/StopoverHolidaysService.svc?xsd=xsd5" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

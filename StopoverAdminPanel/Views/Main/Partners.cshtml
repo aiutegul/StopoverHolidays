@@ -1,0 +1,47 @@
+﻿@using DevExtreme.AspNet.Mvc
+@{
+    ViewData["Title"] = "Partners";
+}
+
+<h2>Partners</h2>
+
+@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.Partner>()
+    .DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }")
+        .RouteName("PartnersApi")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .ShowBorders(true)
+    .Paging(p => p.PageSize(10))
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Grouping(g => g.AutoExpandAll(false))
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Code);
+
+        columns.AddFor(m => m.Name);
+
+        columns.AddFor(m => m.Description);
+
+        columns.AddFor(m => m.StartDate);
+
+        columns.AddFor(m => m.EndDate);
+
+        columns.AddFor(m => m.Enabled);
+
+        columns.AddFor(m => m.Comments);
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .UseIcons(true)
+        .Mode(GridEditMode.Popup)
+    )
+)
