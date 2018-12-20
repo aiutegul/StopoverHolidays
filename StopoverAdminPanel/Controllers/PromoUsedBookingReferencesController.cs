@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 namespace StopoverAdminPanel.Models.Controllers
 {
 	[Route("api/PromoUsedBookingReference/{action}", Name = "PromoUsedBookingReferencesApi")]
+	[Authorize(Roles = "Admin")]
 	public class PromoUsedBookingReferencesController : ApiController
 	{
 		private StopoverDbContext _context = new StopoverDbContext();

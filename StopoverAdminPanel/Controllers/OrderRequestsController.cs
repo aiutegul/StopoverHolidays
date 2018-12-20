@@ -77,11 +77,11 @@ namespace StopoverAdminPanel.Models.Controllers
 		[HttpGet]
 		public HttpResponseMessage Get(DataSourceLoadOptions loadOptions)
 		{
-            var isUser = HttpContext.Current.User.IsInRole("User");
-            if (isUser)
-            {
-                //select orderrequests with user.PartnerId
-            }
+			var isUser = HttpContext.Current.User.IsInRole("User");
+			if (isUser)
+			{
+				//select orderrequests with user.PartnerId
+			}
 			var orderrequests = _context.OrderRequests.Select(i => new
 			{
 				i.Id,
@@ -246,6 +246,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPut]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage RejectRequest(int id, string reject_message)
 		{
 			var model = _context.OrderRequests.FirstOrDefault(r => r.Id == id);
@@ -256,6 +257,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage ConfirmRequest(int requestId)
 		{
 			var orderRequest = _context.OrderRequests.FirstOrDefault(item => item.Id == requestId);
@@ -297,6 +299,15 @@ namespace StopoverAdminPanel.Models.Controllers
 			return confirmation_message;
 		}
 
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_context.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
 		private void deleteEntireRequest(int requestId)
 		{
 			var model = _context.OrderRequests.FirstOrDefault(item => item.Id == requestId);
@@ -335,7 +346,7 @@ namespace StopoverAdminPanel.Models.Controllers
 			_context.Order.Add(order);
 			var orderStopover = createOrderStopover(orderRequest, order);
 
-		    var routes = orderRequest.Routes.Split().ToList();
+			var routes = orderRequest.Routes.Split().ToList();
 
 			//Need logic over here to check if flight is transit or it's point to point
 			//Then update OrderStopover by checking if Promo is available for it (setting isPromo to true or false)
@@ -355,7 +366,7 @@ namespace StopoverAdminPanel.Models.Controllers
 				Comments = null
 			};
 
-		    orderStopover.IsPromo = checkStopoverPromo(orderStopover, flight);
+			orderStopover.IsPromo = checkStopoverPromo(orderStopover, flight);
 
 			_context.Flight.Add(flight);
 
@@ -391,17 +402,17 @@ namespace StopoverAdminPanel.Models.Controllers
 			return "Records Created!";
 		}
 
-        private bool checkStopoverPromo(OrderStopover orderStopover, Flight flight)
-        {
-            var hotel = _context.Hotel.Find(orderStopover.HotelId);
- 
-            return !CheckInPromoDisabled(orderStopover.CheckIn, hotel.Id) && 
-                   (hotel.IsPromo && 
-                    ((flight.IsPointToPoint && orderStopover.Nights > 1) 
-                     || flight.IsTransit));
-        }
+		private bool checkStopoverPromo(OrderStopover orderStopover, Flight flight)
+		{
+			var hotel = _context.Hotel.Find(orderStopover.HotelId);
 
-        private bool checkFlightIsPointToPoint(List<string> routes)
+			return !CheckInPromoDisabled(orderStopover.CheckIn, hotel.Id) &&
+				   (hotel.IsPromo &&
+					((flight.IsPointToPoint && orderStopover.Nights > 1)
+					 || flight.IsTransit));
+		}
+
+		private bool checkFlightIsPointToPoint(List<string> routes)
 		{
 			using (StopoverHolidaysServiceReference.StopoverHolidaysServiceClient client =
 				new StopoverHolidaysServiceReference.StopoverHolidaysServiceClient())
@@ -443,7 +454,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		private OrderStopover createOrderStopover(OrderRequests orderRequest, Order order)
 		{
 			var transferForPassengerAmount = _context.Transfer.First(t => t.CityId == orderRequest.CityId &&
-			                                                                t.PassengerAmount == orderRequest.NumberOfPassengers);
+																			t.PassengerAmount == orderRequest.NumberOfPassengers);
 
 			var orderStopover = new OrderStopover
 			{
@@ -463,8 +474,6 @@ namespace StopoverAdminPanel.Models.Controllers
 				Price = 0,
 				Comments = null
 			};
-
-			
 
 			return orderStopover;
 		}
@@ -546,7 +555,7 @@ namespace StopoverAdminPanel.Models.Controllers
 
 				_context.Passenger.Add(passengerToAdd);
 
-			    var room = _context.Room.First(r => r.HotelId == orderStopover.HotelId && r.RoomTypeId == passenger.RoomTypeId);
+				var room = _context.Room.First(r => r.HotelId == orderStopover.HotelId && r.RoomTypeId == passenger.RoomTypeId);
 
 				var stopoverPassenger = new StopoverPassenger
 				{
@@ -566,12 +575,12 @@ namespace StopoverAdminPanel.Models.Controllers
 			}
 		}
 
-        //private bool CheckPromoUsedTicketNumber() -- need to implement
+		//private bool CheckPromoUsedTicketNumber() -- need to implement
 
 		private int calculateStopoverPrice(int requestId, OrderStopover os)
 		{
 			int TotalPrice = 0;
-		    int firstNightPrice;
+			int firstNightPrice;
 			var roomTypesInRequest = _context.OrderStopoverData.Select(r => new
 			{
 				r.OrderId,
@@ -579,43 +588,43 @@ namespace StopoverAdminPanel.Models.Controllers
 				r.RoomNum
 			}).Where(r => r.OrderId == requestId).Distinct();
 
-		    var promoUsedRooms = from sd in _context.OrderStopoverData
-		        join sp in _context.StopoverPassenger on sd.TicketNumber equals sp.TicketNumber
-		        where sp.PromoUsed.HasValue && sp.PromoUsed.GetValueOrDefault()
-                                 where sd.OrderId == requestId
-		        select new
-		        {
-                    sd.OrderId,
-		            sd.RoomTypeId,
-		            sd.RoomNum
-		        };
+			var promoUsedRooms = from sd in _context.OrderStopoverData
+								 join sp in _context.StopoverPassenger on sd.TicketNumber equals sp.TicketNumber
+								 where sp.PromoUsed.HasValue && sp.PromoUsed.GetValueOrDefault()
+								 where sd.OrderId == requestId
+								 select new
+								 {
+									 sd.OrderId,
+									 sd.RoomTypeId,
+									 sd.RoomNum
+								 };
 
-            foreach (var roomtype in roomTypesInRequest)
+			foreach (var roomtype in roomTypesInRequest)
 			{
 				var room = _context.Room.First(r => r.HotelId == os.HotelId && r.RoomTypeId == roomtype.RoomTypeId);
-                //Here we should check if OrderStopover.CheckIn falls between ExtraRoomPrice.StartDate and EndDate
-                //and add that price, after I clarify with Janna how it works
-                //also check if promo had been previously used on the ticket number
-                //if not then first Night price should be 1 dora
-			    if (os.IsPromo)
-			    {
-			        if (promoUsedRooms.Contains(roomtype))
-                    { 
-			            firstNightPrice = room.FirstNightPrice;
-                    }
-			        else
-			        {
-			            firstNightPrice = 370;//CONVERT TO 1 DORA PRICE HERE
-                    }
-			    }
-			    else
-			    {
-			        firstNightPrice = room.FirstNightPrice;
-			    }
+				//Here we should check if OrderStopover.CheckIn falls between ExtraRoomPrice.StartDate and EndDate
+				//and add that price, after I clarify with Janna how it works
+				//also check if promo had been previously used on the ticket number
+				//if not then first Night price should be 1 dora
+				if (os.IsPromo)
+				{
+					if (promoUsedRooms.Contains(roomtype))
+					{
+						firstNightPrice = room.FirstNightPrice;
+					}
+					else
+					{
+						firstNightPrice = 370;//CONVERT TO 1 DORA PRICE HERE
+					}
+				}
+				else
+				{
+					firstNightPrice = room.FirstNightPrice;
+				}
 
-			    TotalPrice += firstNightPrice;
+				TotalPrice += firstNightPrice;
 
-                //HOW MANY NIGHTS ARE THERE??? CAN THERE BE 3 NIGHTS?
+				//HOW MANY NIGHTS ARE THERE??? CAN THERE BE 3 NIGHTS?
 				if (os.Nights > 1)
 				{
 					TotalPrice += room.SecondNightPrice;
@@ -642,16 +651,7 @@ namespace StopoverAdminPanel.Models.Controllers
 			return TotalPrice;
 		}
 
-	    protected override void Dispose(bool disposing)
-	    {
-	        if (disposing)
-	        {
-	            _context.Dispose();
-	        }
-	        base.Dispose(disposing);
-	    }
-
-        private string GetFullErrorMessage(ModelStateDictionary modelState)
+		private string GetFullErrorMessage(ModelStateDictionary modelState)
 		{
 			var messages = new List<string>();
 

@@ -13,12 +13,12 @@ using Newtonsoft.Json;
 namespace StopoverAdminPanel.Models.Controllers
 {
 	[Route("api/Activity/{action}", Name = "ActivitiesApi")]
-	[Authorize(Roles = "Admin")]
 	public class ActivitiesController : ApiController
 	{
 		private StopoverDbContext _context = new StopoverDbContext();
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, User")]
 		public HttpResponseMessage Get(DataSourceLoadOptions loadOptions)
 		{
 			var activity = _context.Activity.Select(i => new
@@ -39,6 +39,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Post(FormDataCollection form)
 		{
 			var model = new Activity();
@@ -59,6 +60,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPut]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Put(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));
@@ -80,6 +82,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpDelete]
+		[Authorize(Roles = "Admin")]
 		public void Delete(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));
@@ -95,6 +98,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, User")]
 		public HttpResponseMessage CityLookup(DataSourceLoadOptions loadOptions)
 		{
 			var lookup = from i in _context.City
@@ -109,6 +113,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, Office")]
 		public HttpResponseMessage GetActivitiesForOrderActivity(int activityId, DataSourceLoadOptions loadOptions)
 		{
 			var activity = _context.Activity.Select(i => new

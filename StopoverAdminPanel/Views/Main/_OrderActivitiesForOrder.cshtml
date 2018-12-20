@@ -1,62 +1,62 @@
-﻿
-@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderActivity>()
-    .DataSource(ds => ds.WebApi()
-        .RouteName("OrderActivitiesApi")
-        .LoadAction("GetOrderActivitiesForOrder")
-        .UpdateAction("Put")
-        .DeleteAction("Delete")
-        .LoadParams(new { orderId = new JS("data.Id") })
-        .Key("Id")
-    )
-    .ShowBorders(true)
-    .Paging(p => p.PageSize(10))
-    .FilterRow(f => f.Visible(true))
-    .HeaderFilter(f => f.Visible(true))
-    .GroupPanel(p => p.Visible(true))
-    .Grouping(g => g.AutoExpandAll(false))
-    .RemoteOperations(true)
-    .Columns(columns => {
+﻿@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderActivity>()
+					.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }")
+						.RouteName("OrderActivitiesApi")
+						.LoadAction("GetOrderActivitiesForOrder")
+						.UpdateAction("Put")
+						.DeleteAction("Delete")
+						.LoadParams(new { orderId = new JS("data.Id") })
+						.Key("Id")
+					)
+					.ShowBorders(true)
+					.Paging(p => p.PageSize(10))
+					.FilterRow(f => f.Visible(true))
+					.HeaderFilter(f => f.Visible(true))
+					.GroupPanel(p => p.Visible(true))
+					.Grouping(g => g.AutoExpandAll(false))
+					.RemoteOperations(true)
+					.Columns(columns =>
+					{
 
-        columns.AddFor(m => m.OrderId).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().RouteName("OrderActivitiesApi").LoadAction("OrderLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
+						columns.AddFor(m => m.OrderId).Lookup(lookup => lookup
+							.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("OrderActivitiesApi").LoadAction("OrderLookup").Key("Value"))
+							.ValueExpr("Value")
+							.DisplayExpr("Text")
+						);
 
-        columns.AddFor(m => m.ActivityTimeId).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().RouteName("OrderActivitiesApi").LoadAction("ActivityTimeLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
+						columns.AddFor(m => m.ActivityTimeId).Lookup(lookup => lookup
+							.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("OrderActivitiesApi").LoadAction("ActivityTimeLookup").Key("Value"))
+							.ValueExpr("Value")
+							.DisplayExpr("Text")
+						);
 
-        columns.AddFor(m => m.ActivityId).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().RouteName("OrderActivitiesApi").LoadAction("ActivityLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
+						columns.AddFor(m => m.ActivityId).Lookup(lookup => lookup
+							.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("OrderActivitiesApi").LoadAction("ActivityLookup").Key("Value"))
+							.ValueExpr("Value")
+							.DisplayExpr("Text")
+						);
 
-        columns.AddFor(m => m.Date).Format("dd.MM.yyyy");
+						columns.AddFor(m => m.Date).Format("dd.MM.yyyy");
 
-        columns.AddFor(m => m.TransferLocation);
+						columns.AddFor(m => m.TransferLocation);
 
-        columns.AddFor(m => m.Price);
+						columns.AddFor(m => m.Price);
 
-        columns.AddFor(m => m.Comments);
-    })
-    .MasterDetail(md =>
-    {
-        md.Enabled(true);
-        md.Template(@<text>
-                <div class="master-detail-caption"><h3>ActivityPassengers For OrderActivity with Id <%= data.Id %></h3></div>
-                @Html.Partial("_ActivityPassengersForOrderActivity")
-        </text>);
-    })
-    .OnRowInserting("function(e) { e.data.OrderId = data.Id; }")
-    .Editing(e => e
-        .AllowAdding(true)
-        .AllowUpdating(true)
-        .AllowDeleting(true)
-        .Mode(GridEditMode.Popup)
-        .UseIcons(true)
-    )
+						columns.AddFor(m => m.Comments);
+					})
+					.MasterDetail(md =>
+					{
+						md.Enabled(true);
+						md.Template(@<text>
+							<div class="master-detail-caption"><h3>ActivityPassengers For OrderActivity with Id <%= data.Id %></h3></div>
+							@Html.Partial("_ActivityPassengersForOrderActivity")
+						</text>);
+							})
+													.OnRowInserting("function(e) { e.data.OrderId = data.Id; }")
+													.Editing(e => e
+														.AllowAdding(ViewBag.Allowed)
+														.AllowUpdating(ViewBag.Allowed)
+														.AllowDeleting(ViewBag.Allowed)
+														.Mode(GridEditMode.Popup)
+														.UseIcons(true)
+													)
 )

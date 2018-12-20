@@ -1,56 +1,55 @@
-﻿
-@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderStopoverData>()
-            .ID("stpvr_datagrid")
-            .DataSource(ds => ds.WebApi()
-                .RouteName("OrderStopoverDataApi")
-                .LoadAction("GetOrderStopoverDataForRequest")
-                .InsertAction("Post")
-                .UpdateAction("Put")
-                .DeleteAction("Delete")
-                .LoadParams(new { requestId = new JS("data.Id") })
-                .Key("Id")
-            )
-            .DateSerializationFormat("yyyy-MM-ddTHH:mm:ss")
-            .ShowBorders(true)
-            .Paging(p => p.PageSize(10))
-            .FilterRow(f => f.Visible(true))
-            .HeaderFilter(f => f.Visible(true))
-            .GroupPanel(p => p.Visible(true))
-            .Grouping(g => g.AutoExpandAll(false))
-            .Selection(s => s.Mode(SelectionMode.Single))
-            .HoverStateEnabled(true)
-            .RemoteOperations(true)
-            .Columns(columns =>
-            {
+﻿@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderStopoverData>()
+					.ID("stpvr_datagrid")
+					.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }")
+						.RouteName("OrderStopoverDataApi")
+						.LoadAction("GetOrderStopoverDataForRequest")
+						.InsertAction("Post")
+						.UpdateAction("Put")
+						.DeleteAction("Delete")
+						.LoadParams(new { requestId = new JS("data.Id") })
+						.Key("Id")
+					)
+					.DateSerializationFormat("yyyy-MM-ddTHH:mm:ss")
+					.ShowBorders(true)
+					.Paging(p => p.PageSize(10))
+					.FilterRow(f => f.Visible(true))
+					.HeaderFilter(f => f.Visible(true))
+					.GroupPanel(p => p.Visible(true))
+					.Grouping(g => g.AutoExpandAll(false))
+					.Selection(s => s.Mode(SelectionMode.Single))
+					.HoverStateEnabled(true)
+					.RemoteOperations(true)
+					.Columns(columns =>
+					{
 
-                columns.AddFor(m => m.FirstName);
+						columns.AddFor(m => m.FirstName);
 
-                columns.AddFor(m => m.LastName);
+						columns.AddFor(m => m.LastName);
 
-                columns.AddFor(m => m.IsChild);
+						columns.AddFor(m => m.IsChild);
 
-                columns.AddFor(m => m.RoomTypeId).Lookup(lookup => lookup
-                        .DataSource(ds => ds.WebApi().RouteName("RoomsApi").LoadAction("RoomTypeLookup").Key("Value"))
-                        .ValueExpr("Value")
-                        .DisplayExpr("Text")
-                    );
+						columns.AddFor(m => m.RoomTypeId).Lookup(lookup => lookup
+								.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("RoomsApi").LoadAction("RoomTypeLookup").Key("Value"))
+								.ValueExpr("Value")
+								.DisplayExpr("Text")
+							);
 
-                columns.AddFor(m => m.RoomNum);
+						columns.AddFor(m => m.RoomNum);
 
-                columns.AddFor(m => m.BookingReference);
+						columns.AddFor(m => m.BookingReference);
 
-                columns.AddFor(m => m.TicketNumber);                
-            })
-            .ColumnAutoWidth(false)
-            .OnInitNewRow("onInitNewRow")
-            .OnSelectionChanged("onSelectionChanged")
-            .OnToolbarPreparing("onStopoverToolbarPreparing")
-            .OnRowInserting("function(e) {  e.data.OrderId = data.Id; }")
-            .Editing(e => e
-                .AllowAdding(true)
-                .AllowUpdating(true)
-                .AllowDeleting(true)
-                .UseIcons(true)
-                .Mode(GridEditMode.Row)
-            )
+						columns.AddFor(m => m.TicketNumber);
+					})
+					.ColumnAutoWidth(false)
+					.OnInitNewRow("onInitNewRow")
+					.OnSelectionChanged("onSelectionChanged")
+					.OnToolbarPreparing("onStopoverToolbarPreparing")
+					.OnRowInserting("function(e) {  e.data.OrderId = data.Id; }")
+					.Editing(e => e
+						.AllowAdding(true)
+						.AllowUpdating(true)
+						.AllowDeleting(true)
+						.UseIcons(true)
+						.Mode(GridEditMode.Row)
+					)
 )

@@ -19,6 +19,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		private StopoverDbContext _context = new StopoverDbContext();
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, Office, User")]
 		public HttpResponseMessage Get(DataSourceLoadOptions loadOptions)
 		{
 			var activitytime = _context.ActivityTime.Select(i => new
@@ -35,6 +36,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Post(FormDataCollection form)
 		{
 			var model = new ActivityTime();
@@ -78,6 +80,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPut]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Put(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));
@@ -99,6 +102,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpDelete]
+		[Authorize(Roles = "Admin")]
 		public void Delete(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));
@@ -114,6 +118,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, Office, User")]
 		public HttpResponseMessage ActivityLookup(DataSourceLoadOptions loadOptions)
 		{
 			var lookup = from i in _context.Activity
@@ -128,6 +133,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, Office, User")]
 		public HttpResponseMessage GetTimesForActivity(int activityId, DataSourceLoadOptions loadOptions)
 		{
 			var activitytime = _context.ActivityTime.Select(i => new
@@ -144,6 +150,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, Office, User")]
 		public HttpResponseMessage GetTimeForOrderActivity(int activityTimeId, DataSourceLoadOptions loadOptions)
 		{
 			var activitytime = _context.ActivityTime.Select(i => new

@@ -1,33 +1,33 @@
-﻿
-@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.ActivityTime>()
-    .DataSource(ds => ds.WebApi()
-        .RouteName("ActivityTimesApi")
-        .LoadAction("GetTimesForActivity")
-        .InsertAction("Post")
-        .UpdateAction("Put")
-        .DeleteAction("Delete")
-        .LoadParams(new { activityId = new JS("data.Id") })
-        .Key("Id")
-    )
-    .ShowBorders(true)
-    .Paging(p => p.PageSize(10))
-    .FilterRow(f => f.Visible(true))
-    .HeaderFilter(f => f.Visible(true))
-    .GroupPanel(p => p.Visible(true))
-    .Grouping(g => g.AutoExpandAll(false))
-    .RemoteOperations(true)
-    .Columns(columns => {
+﻿@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.ActivityTime>()
+		.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }")
+			.RouteName("ActivityTimesApi")
+			.LoadAction("GetTimesForActivity")
+			.InsertAction("Post")
+			.UpdateAction("Put")
+			.DeleteAction("Delete")
+			.LoadParams(new { activityId = new JS("data.Id") })
+			.Key("Id")
+		)
+		.ShowBorders(true)
+		.Paging(p => p.PageSize(10))
+		.FilterRow(f => f.Visible(true))
+		.HeaderFilter(f => f.Visible(true))
+		.GroupPanel(p => p.Visible(true))
+		.Grouping(g => g.AutoExpandAll(false))
+		.RemoteOperations(true)
+		.Columns(columns =>
+		{
 
-        columns.AddFor(m => m.Time).DataType(GridColumnDataType.DateTime).Format("HH:mm");
+			columns.AddFor(m => m.Time).DataType(GridColumnDataType.DateTime).Format("HH:mm");
 
-        columns.AddFor(m => m.Comments);
-    })
-    .OnRowInserting("function(e) { e.data.ActivityId = data.Id; }")
-    .Editing(e => e
-        .AllowAdding(true)
-        .AllowUpdating(true)
-        .AllowDeleting(true)
-        .Mode(GridEditMode.Popup)
-        .UseIcons(true)
-    )
+			columns.AddFor(m => m.Comments);
+		})
+		.OnRowInserting("function(e) { e.data.ActivityId = data.Id; }")
+		.Editing(e => e
+			.AllowAdding(true)
+			.AllowUpdating(true)
+			.AllowDeleting(true)
+			.Mode(GridEditMode.Popup)
+			.UseIcons(true)
+		)
 )

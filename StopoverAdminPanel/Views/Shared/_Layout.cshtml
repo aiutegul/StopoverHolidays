@@ -15,6 +15,13 @@
 	@Styles.Render("~/Content/DevExtremeBundle")
 	@Scripts.Render("~/Scripts/bundle")
 	@Scripts.Render("~/Scripts/DevExtremeBundle")
+	<script>
+		function onBeforeSendSetToken(ajaxOptions) {
+			var token = $.cookie("access_token");
+			ajaxOptions.headers = { Authorization: 'Bearer ' + token }
+		}
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 </head>
 
 <body>
@@ -33,32 +40,35 @@
 			<ul class="nav navbar-nav navbar-right">
 				@if (!User.Identity.IsAuthenticated)
 				{
-					<li>@Html.ActionLink("Login", "LoginView", "Login")</li>
+					<li>@Html.ActionLink("Login", "Login", "Login")</li>
 
 				}
 				else
 				{
-					<li><p>You are logged as: @User.Identity.Name</p></li>
+					<li><a style="color:white">You are logged as: @User.Identity.Name</a></li>
 					<li>@Html.ActionLink("Logout", "Logout", "Login")</li>
 				}
 			</ul>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-							Show Tables
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu">
-							<li>@Html.ActionLink("Hotels", "Hotels", "Main")</li>
-							<li>@Html.ActionLink("Activities", "Activities", "Main")</li>
-							<li>@Html.ActionLink("Orders", "Orders", "Main")</li>
-							<li>@Html.ActionLink("Order Requests", "OrderRequests", "Main")</li>
-							<li>@Html.ActionLink("Transfers", "Transfers", "Main")</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
+			@if (User.IsInRole("Admin"))
+			{
+				<div id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li class="dropdown">
+							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+								Show Tables
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li>@Html.ActionLink("Hotels", "Hotels", "Main")</li>
+								<li>@Html.ActionLink("Activities", "Activities", "Main")</li>
+								<li>@Html.ActionLink("Orders", "Orders", "Main")</li>
+								<li>@Html.ActionLink("Order Requests", "OrderRequests", "Main")</li>
+								<li>@Html.ActionLink("Transfers", "Transfers", "Main")</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			}
 		</div>
 	</nav>
 

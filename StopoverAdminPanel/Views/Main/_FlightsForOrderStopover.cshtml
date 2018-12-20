@@ -1,51 +1,45 @@
-﻿
-@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.Flight>()
-                            .DataSource(ds => ds.WebApi()
-                                .RouteName("FlightsApi")
-                                .LoadAction("GetFlightsForOrderStopover")
-                                .InsertAction("Post")
-                                .UpdateAction("Put")
-                                .DeleteAction("Delete")
-                                .LoadParams(new { orderStopoverId = new JS("data.Id") })
+﻿@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.Flight>()
+								.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }")
+									.RouteName("FlightsApi")
+									.LoadAction("GetFlightsForOrderStopover")
+									.InsertAction("Post")
+									.UpdateAction("Put")
+									.DeleteAction("Delete")
+									.LoadParams(new { orderStopoverId = new JS("data.Id") })
 
-                                .Key("Id")
-                            )
-                            .ShowBorders(true)
-                            .Paging(p => p.PageSize(10))
-                            .FilterRow(f => f.Visible(true))
-                            .HeaderFilter(f => f.Visible(true))
-                            .GroupPanel(p => p.Visible(true))
-                            .Grouping(g => g.AutoExpandAll(false))
-                            .RemoteOperations(true)
-                            .Columns(columns =>
-                            {
-                                columns.AddFor(m => m.OrderStopoverId);
+									.Key("Id")
+								)
+								.ShowBorders(true)
+								.Paging(p => p.PageSize(10))
+								.FilterRow(f => f.Visible(true))
+								.HeaderFilter(f => f.Visible(true))
+								.GroupPanel(p => p.Visible(true))
+								.Grouping(g => g.AutoExpandAll(false))
+								.RemoteOperations(true)
+								.Columns(columns =>
+								{
+									columns.AddFor(m => m.OrderStopoverId);
 
-                                columns.AddFor(m => m.ArriveDate).Format("dd.MM.yyyy HH:mm");
+									columns.AddFor(m => m.ArriveDate).Format("dd.MM.yyyy HH:mm");
 
-                                columns.AddFor(m => m.DepartureDate).Format("dd.MM.yyyy HH:mm");
+									columns.AddFor(m => m.DepartureDate).Format("dd.MM.yyyy HH:mm");
 
-                                columns.AddFor(m => m.ArriveFlight);
+									columns.AddFor(m => m.ArriveFlight);
 
-                                columns.AddFor(m => m.DepartureFlight);
+									columns.AddFor(m => m.DepartureFlight);
 
-                                columns.AddFor(m => m.Routes);
+									columns.AddFor(m => m.Routes);
 
-                                columns.AddFor(m => m.IsTransit);
+									columns.AddFor(m => m.IsTransit);
 
-                                columns.AddFor(m => m.IsPointToPoint);
+									columns.AddFor(m => m.IsPointToPoint);
 
-                                columns.AddFor(m => m.Comments);
+									columns.AddFor(m => m.Comments);
 
-                            })
-                            .Editing(e => e
-                                        .AllowUpdating(true)
-                                        .AllowDeleting(true)
-                                        .UseIcons(true)
-                            )
+								})
+								.Editing(e => e
+											.AllowUpdating(ViewBag.Allowed)
+											.AllowDeleting(ViewBag.Allowed)
+											.UseIcons(true)
+								)
 )
-
-
-
-
-

@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 namespace StopoverAdminPanel.Models.Controllers
 {
 	[Route("api/ActivityBlockedDay/{action}", Name = "ActivityBlockedDaysApi")]
+	[Authorize(Roles = "Admin")]
 	public class ActivityBlockedDaysController : ApiController
 	{
 		private StopoverDbContext _context = new StopoverDbContext();

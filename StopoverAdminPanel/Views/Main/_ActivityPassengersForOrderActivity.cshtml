@@ -1,37 +1,37 @@
-﻿
-@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.ActivityPassenger>()
-    .DataSource(ds => ds.WebApi()
-        .RouteName("ActivityPassengersApi")
-        .LoadAction("GetPassengerDetailsForOrderActivity")
-        .InsertAction("Post")
-        .UpdateAction("Put")
-        .DeleteAction("Delete")
-        .LoadParams(new { orderActivityId = new JS("data.Id") })
-        .Key("Id")
-    )
-    .ShowBorders(true)
-    .Paging(p => p.PageSize(10))
-    .FilterRow(f => f.Visible(true))
-    .HeaderFilter(f => f.Visible(true))
-    .GroupPanel(p => p.Visible(true))
-    .Grouping(g => g.AutoExpandAll(false))
-    .RemoteOperations(true)
-    .Columns(columns => {
+﻿@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.ActivityPassenger>()
+			.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }")
+				.RouteName("ActivityPassengersApi")
+				.LoadAction("GetPassengerDetailsForOrderActivity")
+				.InsertAction("Post")
+				.UpdateAction("Put")
+				.DeleteAction("Delete")
+				.LoadParams(new { orderActivityId = new JS("data.Id") })
+				.Key("Id")
+			)
+			.ShowBorders(true)
+			.Paging(p => p.PageSize(10))
+			.FilterRow(f => f.Visible(true))
+			.HeaderFilter(f => f.Visible(true))
+			.GroupPanel(p => p.Visible(true))
+			.Grouping(g => g.AutoExpandAll(false))
+			.RemoteOperations(true)
+			.Columns(columns =>
+			{
 
-        columns.AddFor(m => m.PassengerId).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().RouteName("ActivityPassengersApi").LoadAction("PassengerLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
+				columns.AddFor(m => m.PassengerId).Lookup(lookup => lookup
+					.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("ActivityPassengersApi").LoadAction("PassengerLookup").Key("Value"))
+					.ValueExpr("Value")
+					.DisplayExpr("Text")
+				);
 
-        columns.AddFor(m => m.Comments);
-    })
-    .OnRowInserting("function(e) {  e.data.OrderActivityId = data.Id; }")
-    .Editing(e => e
-        .AllowAdding(true)
-        .AllowUpdating(true)
-        .AllowDeleting(true)
-        .UseIcons(true)
-        .Mode(GridEditMode.Popup)
-    )
+				columns.AddFor(m => m.Comments);
+			})
+			.OnRowInserting("function(e) {  e.data.OrderActivityId = data.Id; }")
+			.Editing(e => e
+				.AllowAdding(true)
+				.AllowUpdating(true)
+				.AllowDeleting(true)
+				.UseIcons(true)
+				.Mode(GridEditMode.Popup)
+			)
 )

@@ -44,7 +44,7 @@ namespace StopoverAdminPanel.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
-			var result = await _client.GetAsync("api/Account/");
+			var result = await _client.GetAsync("api/Account/" + userid);
 			var user = JsonConvert.DeserializeObject<FormattedUser>(await result.Content.ReadAsStringAsync());
 			var rolesAndPartners = await GetRolesAndPartnersList();
 			var partners = rolesAndPartners.Partners;

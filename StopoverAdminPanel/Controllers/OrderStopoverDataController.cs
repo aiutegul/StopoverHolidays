@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 namespace StopoverAdminPanel.Models.Controllers
 {
 	[Route("api/OrderStopoverData/{action}", Name = "OrderStopoverDataApi")]
+	[Authorize(Roles = "Admin, User")]
 	public class OrderStopoverDataController : ApiController
 	{
 		private StopoverDbContext _context = new StopoverDbContext();

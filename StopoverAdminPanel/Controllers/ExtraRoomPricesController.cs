@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 namespace StopoverAdminPanel.Models.Controllers
 {
 	[Route("api/ExtraRoomPrice/{action}", Name = "ExtraRoomPricesApi")]
+	[Authorize(Roles = "Admin")]
 	public class ExtraRoomPricesController : ApiController
 	{
 		private StopoverDbContext _context = new StopoverDbContext();
@@ -37,6 +38,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Post(FormDataCollection form)
 		{
 			var model = new ExtraRoomPrice();
@@ -57,6 +59,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPut]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Put(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));
@@ -78,6 +81,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpDelete]
+		[Authorize(Roles = "Admin")]
 		public void Delete(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));

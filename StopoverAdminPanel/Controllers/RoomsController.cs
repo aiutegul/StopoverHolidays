@@ -18,6 +18,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		private StopoverDbContext _context = new StopoverDbContext();
 
 		[HttpGet]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Get(DataSourceLoadOptions loadOptions)
 		{
 			var room = _context.Room.Select(i => new
@@ -39,6 +40,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Post(FormDataCollection form)
 		{
 			var model = new Room();
@@ -60,6 +62,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPut]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Put(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));
@@ -81,6 +84,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpDelete]
+		[Authorize(Roles = "Admin")]
 		public void Delete(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));
@@ -96,6 +100,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
+		[Authorize]
 		public HttpResponseMessage HotelLookup(DataSourceLoadOptions loadOptions)
 		{
 			var lookup = from i in _context.Hotel
@@ -110,6 +115,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
+		[Authorize]
 		public HttpResponseMessage RoomTypeLookup(DataSourceLoadOptions loadOptions)
 		{
 			var lookup = from i in _context.RoomType
@@ -125,6 +131,7 @@ namespace StopoverAdminPanel.Models.Controllers
 			return Request.CreateResponse(DataSourceLoader.Load(lookup, loadOptions));
 		}
 
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage GetRoomsForHotel(int HotelId, DataSourceLoadOptions loadOptions)
 		{
 			var room = from r in _context.Room

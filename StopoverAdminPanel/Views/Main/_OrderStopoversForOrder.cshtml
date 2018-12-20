@@ -1,71 +1,69 @@
-﻿
-@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderStopover>()
-                                    .DataSource(ds => ds.WebApi()
-                                        .RouteName("OrderStopoversApi")
-                                        .LoadAction("GetOrderStopoverForOrder")
-                                        .InsertAction("Post")
-                                        .UpdateAction("Put")
-                                        .DeleteAction("Delete")
-                                        .LoadParams(new { orderId = new JS("data.Id") })
-                                        .Key("Id")
-                                    )
-                                    .ShowBorders(true)
-                                    .Paging(p => p.PageSize(10))
-                                    .FilterRow(f => f.Visible(true))
-                                    .HeaderFilter(f => f.Visible(true))
-                                    .GroupPanel(p => p.Visible(true))
-                                    .Grouping(g => g.AutoExpandAll(false))
-                                    .RemoteOperations(true)
-                                    .Columns(columns =>
-                                    {
+﻿@(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.OrderStopover>()
+												.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }")
+													.RouteName("OrderStopoversApi")
+													.LoadAction("GetOrderStopoverForOrder")
+													.InsertAction("Post")
+													.UpdateAction("Put")
+													.DeleteAction("Delete")
+													.LoadParams(new { orderId = new JS("data.Id") })
+													.Key("Id")
+												)
+												.ShowBorders(true)
+												.Paging(p => p.PageSize(10))
+												.FilterRow(f => f.Visible(true))
+												.HeaderFilter(f => f.Visible(true))
+												.GroupPanel(p => p.Visible(true))
+												.Grouping(g => g.AutoExpandAll(false))
+												.RemoteOperations(true)
+												.Columns(columns =>
+												{
 
-                                        columns.AddFor(m => m.TransferId).Lookup(lookup => lookup 
-                                            .DataSource(ds => ds.WebApi().RouteName("OrderStopoversApi").LoadAction("TransferLookup").Key("Value"))
-                                            .ValueExpr("Value")
-                                            .DisplayExpr("Text")
-                                        );
+													columns.AddFor(m => m.TransferId).Lookup(lookup => lookup
+														.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("OrderStopoversApi").LoadAction("TransferLookup").Key("Value"))
+														.ValueExpr("Value")
+														.DisplayExpr("Text")
+													);
 
-                                        columns.AddFor(m => m.HotelId).Lookup(lookup => lookup
-                                            .DataSource(ds => ds.WebApi().RouteName("OrderStopoversApi").LoadAction("HotelLookup").Key("Value"))
-                                            .ValueExpr("Value")
-                                            .DisplayExpr("Text")
-                                        );
+													columns.AddFor(m => m.HotelId).Lookup(lookup => lookup
+														.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("OrderStopoversApi").LoadAction("HotelLookup").Key("Value"))
+														.ValueExpr("Value")
+														.DisplayExpr("Text")
+													);
 
-                                        columns.AddFor(m => m.FromAirportTransferUsed);
+													columns.AddFor(m => m.FromAirportTransferUsed);
 
-                                        columns.AddFor(m => m.FromHotelTransferUsed);
+													columns.AddFor(m => m.FromHotelTransferUsed);
 
-                                        columns.AddFor(m => m.IsPromo);
+													columns.AddFor(m => m.IsPromo);
 
-                                        columns.AddFor(m => m.CheckIn).Format("dd.MM.yyyy HH:mm");
+													columns.AddFor(m => m.CheckIn).Format("dd.MM.yyyy HH:mm");
 
-                                        columns.AddFor(m => m.CheckOut).Format("dd.MM.yyyy HH:mm");
+													columns.AddFor(m => m.CheckOut).Format("dd.MM.yyyy HH:mm");
 
-                                        columns.AddFor(m => m.DayUse);
+													columns.AddFor(m => m.DayUse);
 
-                                        columns.AddFor(m => m.Nights);
+													columns.AddFor(m => m.Nights);
 
-                                        columns.AddFor(m => m.Price);
+													columns.AddFor(m => m.Price);
 
-                                        columns.AddFor(m => m.Comments);
-                                    })
-                                    .MasterDetail(md =>
-                                    {
-                                        md.Enabled(true);
-                                        md.Template(@<text>
-                                            <div class="master-detail-caption"><h3>Flights for the Stopover Order with id: <%= data.Id %></h3></div>
-                                            @Html.Partial("_FlightsForOrderStopover")
-                                            <div class="master-detail-caption" style="clear:both"><h3>Stopover Passengers For OrderStopover with id: <%= data.Id %></h3></div>
-                                            @Html.Partial("_StopoverPassengersForOrderStopover")
-                                        </text>);
-                                            })
-                                            .OnRowInserting("function(e) {  e.data.OrderId = data.Id; }")
-                                            .Editing(e => e
-                                                 .AllowAdding(true)
-                                                 .AllowUpdating(true)
-                                                 .AllowDeleting(true)
-                                                 .Mode(GridEditMode.Popup)
-                                                 .UseIcons(true)
-                                            )
+													columns.AddFor(m => m.Comments);
+												})
+												.MasterDetail(md =>
+												{
+													md.Enabled(true);
+													md.Template(@<text>
+														<div class="master-detail-caption"><h3>Flights for the Stopover Order with id: <%= data.Id %></h3></div>
+														@Html.Partial("_FlightsForOrderStopover")
+														<div class="master-detail-caption" style="clear:both"><h3>Stopover Passengers For OrderStopover with id: <%= data.Id %></h3></div>
+														@Html.Partial("_StopoverPassengersForOrderStopover")
+													</text>);
+														})
+																				.OnRowInserting("function(e) {  e.data.OrderId = data.Id; }")
+																				.Editing(e => e
+																					 .AllowAdding(ViewBag.Allowed)
+																					 .AllowUpdating(ViewBag.Allowed)
+																					 .AllowDeleting(ViewBag.Allowed)
+																					 .Mode(GridEditMode.Popup)
+																					 .UseIcons(true)
+																				)
 )
-

@@ -13,12 +13,12 @@ using Newtonsoft.Json;
 namespace StopoverAdminPanel.Models.Controllers
 {
 	[Route("api/Transfer/{action}", Name = "TransfersApi")]
+	[Authorize(Roles = "Admin")]
 	public class TransfersController : ApiController
 	{
 		private StopoverDbContext _context = new StopoverDbContext();
 
 		[HttpGet]
-		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Get(DataSourceLoadOptions loadOptions)
 		{
 			var transfer = _context.Transfer.Select(i => new

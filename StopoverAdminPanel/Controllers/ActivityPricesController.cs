@@ -18,6 +18,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		private StopoverDbContext _context = new StopoverDbContext();
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, Office")]
 		public HttpResponseMessage Get(DataSourceLoadOptions loadOptions)
 		{
 			var activityprice = _context.ActivityPrice.Select(i => new
@@ -37,6 +38,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Post(FormDataCollection form)
 		{
 			var model = new ActivityPrice();
@@ -57,6 +59,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPut]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Put(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));
@@ -78,6 +81,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpDelete]
+		[Authorize(Roles = "Admin")]
 		public void Delete(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));
@@ -93,6 +97,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, Office")]
 		public HttpResponseMessage ActivityLookup(DataSourceLoadOptions loadOptions)
 		{
 			var lookup = from i in _context.Activity
@@ -107,6 +112,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, Office")]
 		public HttpResponseMessage ActivityPriceTypeLookup(DataSourceLoadOptions loadOptions)
 		{
 			var lookup = from i in _context.ActivityPriceType
@@ -121,6 +127,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Admin, Office")]
 		public HttpResponseMessage GetPricesForActivity(int activityId, DataSourceLoadOptions loadOptions)
 		{
 			var activityprice = _context.ActivityPrice.Select(i => new

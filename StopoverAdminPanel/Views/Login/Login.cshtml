@@ -3,17 +3,17 @@
 }
 @model StopoverAdminPanel.Auth.LoginModel
 <h2>Login</h2>
-@Html.ValidationSummary();
+@Html.ValidationSummary()
 @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "form-inline", role = "form" }))
 {
 	<div class="form-group">
 		<div class="col-md-10">
-			@Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Логин" })
+			@Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "login" })
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-md-10">
-			@Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Пароль" })
+			@Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "password" })
 		</div>
 	</div>
 	<div class="form-group">

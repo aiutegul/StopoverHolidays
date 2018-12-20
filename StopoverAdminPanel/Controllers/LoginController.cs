@@ -67,13 +67,13 @@ namespace StopoverAdminPanel.Controllers
 				{
 					identity.AddClaim(new Claim(ClaimTypes.Role, role));
 				}
-
 				Request.GetOwinContext().Authentication.SignIn(options, identity);
+
 				if (Url.IsLocalUrl(returnUrl))
 				{
 					return Redirect(returnUrl);
 				}
-				return RedirectToAction("Orders", "Main");
+				return RedirectToAction("Index", "Main");
 			}
 			else
 			{

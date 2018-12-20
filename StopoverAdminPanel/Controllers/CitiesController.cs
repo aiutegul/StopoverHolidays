@@ -18,6 +18,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		private StopoverDbContext _context = new StopoverDbContext();
 
 		[HttpGet]
+		[Authorize]
 		public HttpResponseMessage Get(DataSourceLoadOptions loadOptions)
 		{
 			var city = _context.City.Select(i => new
@@ -34,6 +35,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Post(FormDataCollection form)
 		{
 			var model = new City();
@@ -53,6 +55,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpPut]
+		[Authorize(Roles = "Admin")]
 		public HttpResponseMessage Put(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));
@@ -74,6 +77,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpDelete]
+		[Authorize(Roles = "Admin")]
 		public void Delete(FormDataCollection form)
 		{
 			var key = Convert.ToInt32(form.Get("key"));

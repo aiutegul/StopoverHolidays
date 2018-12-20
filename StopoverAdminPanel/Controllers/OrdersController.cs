@@ -100,7 +100,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize(Roles = "Admin, Office, User")]
 		public HttpResponseMessage CityLookup(DataSourceLoadOptions loadOptions)
 		{
 			var lookup = from i in _context.City
@@ -115,7 +115,7 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize(Roles = "Admin, Office, User")]
 		public HttpResponseMessage PartnerLookup(DataSourceLoadOptions loadOptions)
 		{
 			var lookup = from i in _context.Partner
