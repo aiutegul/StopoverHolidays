@@ -4,12 +4,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
+using System.Web.Routing;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using StopoverAdminPanel.Auth;
 
 namespace StopoverAdminPanel.Models.Controllers
 {
@@ -17,6 +21,7 @@ namespace StopoverAdminPanel.Models.Controllers
 	[Authorize(Roles = "Admin, User")]
 	public class OrderRequestsController : ApiController
 	{
+		private readonly AuthRepository _repo = new AuthRepository();
 		private StopoverDbContext _context = new StopoverDbContext();
 
 		private List<RequestType> requestTypes = new List<RequestType>
@@ -75,14 +80,42 @@ namespace StopoverAdminPanel.Models.Controllers
 		}
 
 		[HttpGet]
-		public HttpResponseMessage Get(DataSourceLoadOptions loadOptions)
+		public async Task<HttpResponseMessage> Get(DataSourceLoadOptions loadOptions)
 		{
 			var isUser = HttpContext.Current.User.IsInRole("User");
 			if (isUser)
 			{
-				//select orderrequests with user.PartnerId
+				string userId = User.Identity.GetUserId();
+				var user = await _repo.FindUserById(userId);
+				var partnerId = user.PartnerId;
+				var orderrequests = _context.OrderRequests.Select(i => new
+				{
+					i.Id,
+					i.RequestDate,
+					i.PartnerId,
+					i.RequestType,
+					i.RequestStatus,
+					i.RegistrationNumber,
+					i.CityId,
+					i.HotelId,
+					i.NumberOfPassengers,
+					i.CheckIn,
+					i.CheckOut,
+					i.FromAirportTransferUsed,
+					i.FromHotelTransferUsed,
+					i.DayUse,
+					i.Nights,
+					i.ArriveDate,
+					i.DepartureDate,
+					i.ArriveFlight,
+					i.DepartureFlight,
+					i.Routes,
+					i.Comments
+				}).Where(p => p.PartnerId == partnerId);
+				return Request.CreateResponse(DataSourceLoader.Load(orderrequests, loadOptions));
 			}
-			var orderrequests = _context.OrderRequests.Select(i => new
+
+			var orderRequests = _context.OrderRequests.Select(i => new
 			{
 				i.Id,
 				i.RequestDate,
@@ -106,7 +139,7 @@ namespace StopoverAdminPanel.Models.Controllers
 				i.Routes,
 				i.Comments
 			});
-			return Request.CreateResponse(DataSourceLoader.Load(orderrequests, loadOptions));
+			return Request.CreateResponse(DataSourceLoader.Load(orderRequests, loadOptions));
 		}
 
 		[HttpPost]

@@ -45,7 +45,11 @@
 				}
 				else
 				{
-					<li><a style="color:white">You are logged as: @User.Identity.Name</a></li>
+					if (User.IsInRole("Admin"))
+					{
+						<li>@Html.ActionLink("Manage Accounts", "userList", "Users", null, new { @style = "color:white" })</li>
+					}
+					<li><a style="color:white">@User.Identity.Name</a></li>
 					<li>@Html.ActionLink("Logout", "Logout", "Login")</li>
 				}
 			</ul>
