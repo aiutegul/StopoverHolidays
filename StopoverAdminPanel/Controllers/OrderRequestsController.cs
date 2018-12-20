@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
-using System.Web.Routing;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNet.Identity;
@@ -22,6 +21,7 @@ namespace StopoverAdminPanel.Models.Controllers
 	public class OrderRequestsController : ApiController
 	{
 		private readonly AuthRepository _repo = new AuthRepository();
+
 		private StopoverDbContext _context = new StopoverDbContext();
 
 		private List<RequestType> requestTypes = new List<RequestType>

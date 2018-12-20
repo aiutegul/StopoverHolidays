@@ -7,13 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using StopoverAdminPanel.Audit;
+
 namespace StopoverAdminPanel.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StopoverDbContext : DbContext
+    public partial class StopoverDbContext : DbContextAuditable
     {
         public StopoverDbContext()
             : base("name=StopoverDbContext")

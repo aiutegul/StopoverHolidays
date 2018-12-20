@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json;
+using StopoverAdminPanel.Audit;
 
 namespace StopoverAdminPanel.Auth
 {
@@ -28,7 +29,7 @@ namespace StopoverAdminPanel.Auth
 				var rolesOfUser = await _repo.UserRoles(user.Id);
 				var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 				identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
-
+				identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
 				foreach (string role in rolesOfUser)
 				{
 					identity.AddClaim(new Claim(ClaimTypes.Role, role));
@@ -44,6 +45,8 @@ namespace StopoverAdminPanel.Auth
 					}
 				});
 				var ticket = new AuthenticationTicket(identity, props);
+				DbContextAuditable.SetAuditContext(new AuditContext());
+				DbContextAuditable.SetUser(user.UserName);
 				context.Validated(ticket);
 			}
 		}
