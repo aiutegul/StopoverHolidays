@@ -83,6 +83,20 @@ namespace StopoverAdminPanel.Controllers
 		[Authorize(Roles = "Admin")]
 		[HttpDelete]
 		[Route("{id}")]
+		[HttpPut]
+		public async Task<IHttpActionResult> Edit([FromBody] FormattedUser user)
+		{
+			var result = await _repo.EditUser(user);
+			if (result.Succeeded)
+			{
+				return Ok();
+			}
+			return BadRequest("Can't edit");
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpDelete]
+		[Route("{id}")]
 		public async Task<IHttpActionResult> Delete(string id)
 		{
 			var result = await _repo.DeleteUser(id);

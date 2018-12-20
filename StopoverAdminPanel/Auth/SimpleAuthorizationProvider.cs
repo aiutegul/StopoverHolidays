@@ -38,6 +38,9 @@ namespace StopoverAdminPanel.Auth
 				{
 					{
 						"roles", JsonConvert.SerializeObject(rolesOfUser)
+					},
+					{
+						"PartnerId", user.PartnerId.ToString()
 					}
 				});
 				var ticket = new AuthenticationTicket(identity, props);

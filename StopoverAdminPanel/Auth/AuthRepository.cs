@@ -9,6 +9,7 @@ using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
+using StopoverAdminPanel.Models;
 
 namespace StopoverAdminPanel.Auth
 {
@@ -16,9 +17,11 @@ namespace StopoverAdminPanel.Auth
 	{
 		private readonly AuthContext _ctx;
 		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly StopoverDbContext _context;
 
 		public AuthRepository()
 		{
+			_context = new StopoverDbContext();
 			_ctx = new AuthContext();
 			_userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_ctx));
 		}
@@ -50,14 +53,17 @@ namespace StopoverAdminPanel.Auth
 
 		public List<FormattedUser> GetUsers()
 		{
-			var formatterUsers = _userManager.Users.Select(u => new FormattedUser
-			{
-				Id = u.Id,
-				UserName = u.UserName,
-				PartnerId = u.PartnerId
-			}).ToList();
-			formatterUsers.ForEach(user => { user.Role = _userManager.GetRoles(user.Id).ToList()[0]; });
-			return formatterUsers;
+			var usrs = (from u in _userManager.Users.ToList()
+						join c in _context.Partner.ToList() on u.PartnerId equals c.Id
+						select new FormattedUser
+						{
+							Id = u.Id,
+							UserName = u.UserName,
+							PartnerId = u.PartnerId,
+							PartnerCode = c.Code
+						}).ToList();
+			usrs.ForEach(user => { user.Role = _userManager.GetRoles(user.Id).ToList()[0]; });
+			return usrs;
 		}
 
 		public async Task<IdentityResult> DeleteUser(string userid)
@@ -72,6 +78,21 @@ namespace StopoverAdminPanel.Auth
 				}
 			}
 
+			return null;
+		}
+
+		public async Task<IdentityResult> EditUser(FormattedUser model)
+		{
+			var user = await FindUserById(model.Id);
+			if (user != null)
+			{
+				user.PartnerId = model.PartnerId;
+				var roles = await _userManager.GetRolesAsync(user.Id);
+				await _userManager.RemoveFromRolesAsync(user.Id, roles.ToArray());
+				var roleResult = await _userManager.AddToRoleAsync(user.Id, model.Role);
+				var result = await _userManager.UpdateAsync(user);
+				return result;
+			}
 			return null;
 		}
 

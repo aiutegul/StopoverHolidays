@@ -54,6 +54,7 @@ namespace StopoverAdminPanel.Controllers
 				{
 					new Claim(ClaimTypes.Name, model.Username),
 					new Claim("AccessToken", $"Bearer {response.access_token}"),
+					new Claim("PartnerId",response.PartnerId)
 				};
 
 				var cookie = new HttpCookie("access_token")

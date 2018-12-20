@@ -75,6 +75,20 @@ namespace StopoverAdminPanel.Controllers
 		}
 
 		[Authorize(Roles = "Admin")]
+		[HttpPost]
+		public async Task<ActionResult> EditUser(FormattedUser user)
+		{
+			var serializedUser = JsonConvert.SerializeObject(user);
+			var result = await _client.PutAsync("api/Account/" + user.Id, new StringContent(serializedUser, Encoding.UTF8, "application/json"));
+			if (result.IsSuccessStatusCode)
+			{
+				return RedirectToAction("UserList");
+			}
+
+			return new HttpStatusCodeResult(400, "Can't edit user");
+		}
+
+		[Authorize(Roles = "Admin")]
 		public async Task<ActionResult> DeleteUser(string userid)
 		{
 			if (userid == null)
@@ -119,7 +133,7 @@ namespace StopoverAdminPanel.Controllers
 				var result = await _client.PostAsync("api/Account/Register", content);
 				if (result.IsSuccessStatusCode)
 				{
-					return RedirectToAction("Register");
+					return RedirectToAction("UserList");
 				}
 
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest, model.UserName + " not registred");
