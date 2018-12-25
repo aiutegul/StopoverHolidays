@@ -392,6 +392,7 @@
     <Content Include="Views\Users\Register.cshtml" />
     <Content Include="Views\Users\UserList.cshtml" />
     <Content Include="Views\Users\EditUser.cshtml" />
+    <Content Include="Views\Users\EditPassword.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -490,6 +491,7 @@
     <Compile Include="Auth\ApplicationUser.cs" />
     <Compile Include="Auth\AuthContext.cs" />
     <Compile Include="Auth\AuthRepository.cs" />
+    <Compile Include="Auth\EditPasswordModel.cs" />
     <Compile Include="Auth\EmailDestination.cs" />
     <Compile Include="Auth\EmailModel.cs" />
     <Compile Include="Auth\FormattedUser.cs" />

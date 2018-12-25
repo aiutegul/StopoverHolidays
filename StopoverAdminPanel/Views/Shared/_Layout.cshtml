@@ -49,7 +49,16 @@
 					{
 						<li>@Html.ActionLink("Manage Accounts", "userList", "Users", null, new { @style = "color:white" })</li>
 					}
-					<li><a style="color:white">@User.Identity.Name</a></li>
+
+					<li class="dropdown" style="margin-top:0px !important">
+						<a class="dropdown-toggle" data-toggle="dropdown">
+							@User.Identity.Name
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>@Html.ActionLink("Change Password", "EditPassword", "Users")</li>
+						</ul>
+					</li>
 					<li>@Html.ActionLink("Logout", "Logout", "Login")</li>
 				}
 			</ul>
@@ -67,8 +76,8 @@
 								<li>@Html.ActionLink("Activities", "Activities", "Main")</li>
 								<li>@Html.ActionLink("Orders", "Orders", "Main")</li>
 								<li>@Html.ActionLink("Order Requests", "OrderRequests", "Main")</li>
-							    <li>@Html.ActionLink("Transfers", "Transfers", "Main")</li>
-							    <li>@Html.ActionLink("Partners", "Partners", "Main")</li>
+								<li>@Html.ActionLink("Transfers", "Transfers", "Main")</li>
+								<li>@Html.ActionLink("Partners", "Partners", "Main")</li>
 							</ul>
 						</li>
 					</ul>

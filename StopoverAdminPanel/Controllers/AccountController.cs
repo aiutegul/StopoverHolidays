@@ -21,11 +21,11 @@ namespace StopoverAdminPanel.Controllers
 
 		// POST api/Account/Register
 		// MUST DELETE IN PROD OR ONLY ADMIN CAN REGISTER USERS
-		[Authorize(Roles = "Admin")] 
+		[Authorize(Roles = "Admin")]
 		[Route("Register")]
 		public async Task<IHttpActionResult> Register(UserModel userModel)
-        {
-            await _repo.InitializeRoles();
+		{
+			//await _repo.InitializeRoles();
 
 			if (!ModelState.IsValid)
 			{
@@ -42,6 +42,23 @@ namespace StopoverAdminPanel.Controllers
 			}
 
 			return Ok();
+		}
+
+		[Authorize]
+		[Route("EditPassword")]
+		[HttpPost]
+		public async Task<IHttpActionResult> EditPassword(EditPasswordModel model)
+		{
+			var res = await _repo.EditPassword(model);
+			if (res != null && res.Succeeded)
+			{
+				return Ok();
+			}
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			return BadRequest("Can't edit password");
 		}
 
 		[Authorize(Roles = "Admin")]
