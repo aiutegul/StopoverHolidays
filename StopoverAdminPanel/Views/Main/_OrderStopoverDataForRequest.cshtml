@@ -39,6 +39,10 @@
 						columns.AddFor(m => m.BookingReference);
 
 						columns.AddFor(m => m.TicketNumber);
+
+					    columns.AddFor(m => m.Emd);
+
+					    columns.AddFor(m => m.Price);
 					})
 					.ColumnAutoWidth(false)
 					.OnInitNewRow("onInitNewRow")

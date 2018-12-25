@@ -11,8 +11,7 @@ namespace StopoverAdminPanel.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,11 +27,8 @@ namespace StopoverAdminPanel.Models
         public System.DateTime CreatedDate { get; set; }
         public System.DateTime UpdatedDate { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
-        [Display(Name = "Reg no.")]
         public string RegistrationNumber { get; set; }
-        [Display(Name = "City")]
         public int CityId { get; set; }
-        [Display(Name = "Partner")]
         public int PartnerId { get; set; }
         public string Email { get; set; }
         public string Referral { get; set; }

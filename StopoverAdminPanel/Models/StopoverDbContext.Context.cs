@@ -7,15 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using StopoverAdminPanel.Audit;
-
 namespace StopoverAdminPanel.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StopoverDbContext : DbContextAuditable
+    public partial class StopoverDbContext : DbContext
     {
         public StopoverDbContext()
             : base("name=StopoverDbContext")
@@ -57,7 +55,7 @@ namespace StopoverAdminPanel.Models
         public virtual DbSet<OrderActivityData> OrderActivityData { get; set; }
         public virtual DbSet<OrderCost> OrderCost { get; set; }
         public virtual DbSet<Payment> Payment { get; set; }
-        public virtual DbSet<OrderStopoverData> OrderStopoverData { get; set; }
         public virtual DbSet<OrderRequests> OrderRequests { get; set; }
+        public virtual DbSet<OrderStopoverData> OrderStopoverData { get; set; }
     }
 }

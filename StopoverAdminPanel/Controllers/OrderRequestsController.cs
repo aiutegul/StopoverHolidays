@@ -83,11 +83,13 @@ namespace StopoverAdminPanel.Models.Controllers
 		public async Task<HttpResponseMessage> Get(DataSourceLoadOptions loadOptions)
 		{
 			var isUser = HttpContext.Current.User.IsInRole("User");
-			if (isUser)
+		    string userId = User.Identity.GetUserId();
+		    var user = await _repo.FindUserById(userId);
+		    var partnerId = user.PartnerId;
+           
+            if (isUser)
 			{
-				string userId = User.Identity.GetUserId();
-				var user = await _repo.FindUserById(userId);
-				var partnerId = user.PartnerId;
+				
 				var orderrequests = _context.OrderRequests.Select(i => new
 				{
 					i.Id,
@@ -416,7 +418,7 @@ namespace StopoverAdminPanel.Models.Controllers
 
 			order.RegistrationNumber = "SP" + order.Id;
 			order.Email = "Sayat.Amanbayev@airastana.com";
-			order.Referral = "Undefined";
+			order.Referral = "Agent";
 
 			orderStopover.Price = calculateStopoverPrice(orderRequest.Id, orderStopover);
 
@@ -612,8 +614,9 @@ namespace StopoverAdminPanel.Models.Controllers
 
 		private int calculateStopoverPrice(int requestId, OrderStopover os)
 		{
-			int TotalPrice = 0;
-			int firstNightPrice;
+		    int TotalPrice = 0;
+		    int firstNightPrice = 0;
+
 			var roomTypesInRequest = _context.OrderStopoverData.Select(r => new
 			{
 				r.OrderId,

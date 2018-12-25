@@ -11,8 +11,7 @@ namespace StopoverAdminPanel.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class OrderStopover
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,12 +26,9 @@ namespace StopoverAdminPanel.Models
         public System.DateTime UpdatedDate { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public int OrderId { get; set; }
-        [Display(Name = "Hotel")]
         public int HotelId { get; set; }
         public int TransferId { get; set; }
-        [Display(Name = "Airport Transfer")]
         public bool FromAirportTransferUsed { get; set; }
-        [Display(Name = "Hotel Transfer")]
         public bool FromHotelTransferUsed { get; set; }
         public bool IsPromo { get; set; }
         public System.DateTime CheckIn { get; set; }

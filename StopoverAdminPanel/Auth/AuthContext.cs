@@ -7,6 +7,7 @@ namespace StopoverAdminPanel.Auth
 		public AuthContext()
 			: base("name=AuthContext")
 		{
+
 		}
 	}
 }

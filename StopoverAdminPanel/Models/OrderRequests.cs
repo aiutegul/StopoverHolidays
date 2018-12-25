@@ -11,8 +11,7 @@ namespace StopoverAdminPanel.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class OrderRequests
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,23 +22,15 @@ namespace StopoverAdminPanel.Models
     
         public int Id { get; set; }
         public Nullable<System.DateTime> RequestDate { get; set; }
-        [Display(Name = "Partner")]
         public Nullable<int> PartnerId { get; set; }
-        [Display(Name = "Type")]
         public Nullable<int> RequestType { get; set; }
-        [Display(Name = "Status")]
         public Nullable<int> RequestStatus { get; set; }
-        [Display(Name = "Reg No")]
         public string RegistrationNumber { get; set; }
-        [Display(Name = "Hotel")]
         public Nullable<int> HotelId { get; set; }
-        [Display(Name = "Pax Count")]
         public Nullable<int> NumberOfPassengers { get; set; }
         public Nullable<System.DateTime> CheckIn { get; set; }
         public Nullable<System.DateTime> CheckOut { get; set; }
-        [Display(Name = "Airport Transfer")]
         public Nullable<bool> FromAirportTransferUsed { get; set; }
-        [Display(Name = "Hotel Transfer")]
         public Nullable<bool> FromHotelTransferUsed { get; set; }
         public Nullable<bool> DayUse { get; set; }
         public Nullable<int> Nights { get; set; }
@@ -49,7 +40,6 @@ namespace StopoverAdminPanel.Models
         public string DepartureFlight { get; set; }
         public string Routes { get; set; }
         public string Comments { get; set; }
-        [Display (Name = "City")]
         public Nullable<int> CityId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

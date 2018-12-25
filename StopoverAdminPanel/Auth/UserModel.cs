@@ -11,8 +11,6 @@ namespace StopoverAdminPanel.Auth
 
 		[Required(ErrorMessage = "Role is required")]
 		public string Role { get; set; }
-
-		[Required(ErrorMessage = "Partner is required")]
-		public int PartnerId { get; set; }
+		public int? PartnerId { get; set; }
 	}
 }

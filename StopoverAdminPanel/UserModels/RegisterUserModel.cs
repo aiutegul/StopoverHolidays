@@ -13,10 +13,7 @@ namespace StopoverAdminPanel.UserModels
 		[Required(ErrorMessage = "Please select a role")]
 		[Display(Name = "Role")]
 		public string role { get; set; }
-
-		[Required(ErrorMessage = "Please select a Partner")]
-		[Display(Name = "Partner")]
-		public int PartnerId { get; set; }
+		public int? PartnerId { get; set; }
 
 		public List<SelectListItem> roles { get; set; }
 		public List<SelectListItem> partners { get; set; }

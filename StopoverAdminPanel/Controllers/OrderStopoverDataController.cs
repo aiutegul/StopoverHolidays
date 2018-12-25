@@ -30,7 +30,9 @@ namespace StopoverAdminPanel.Models.Controllers
 				i.IsChild,
 				i.BookingReference,
 				i.TicketNumber,
-				i.RoomNum
+				i.RoomNum,
+                i.Emd,
+                i.Price
 			});
 			return Request.CreateResponse(DataSourceLoader.Load(orderstopoverdata, loadOptions));
 		}
@@ -108,7 +110,9 @@ namespace StopoverAdminPanel.Models.Controllers
 				i.BookingReference,
 				i.TicketNumber,
 				i.RoomTypeId,
-				i.RoomNum
+				i.RoomNum,
+                i.Emd,
+                i.Price
 			}).Where(i => i.OrderId == requestId);
 			return Request.CreateResponse(DataSourceLoader.Load(orderstopoverdata, loadOptions));
 		}

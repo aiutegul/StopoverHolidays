@@ -11,21 +11,19 @@ namespace StopoverAdminPanel.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class OrderStopoverData
     {
         public int Id { get; set; }
         public Nullable<int> OrderId { get; set; }
-        [Display(Name = "Room Type")]
         public Nullable<int> RoomTypeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        [Display(Name = "Child")]
         public Nullable<bool> IsChild { get; set; }
-        [Display(Name = "PNR")]
         public string BookingReference { get; set; }
         public string TicketNumber { get; set; }
         public Nullable<int> RoomNum { get; set; }
+        public string Emd { get; set; }
+        public Nullable<int> Price { get; set; }
     }
 }

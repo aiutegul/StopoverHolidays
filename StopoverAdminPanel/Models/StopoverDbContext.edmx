@@ -345,6 +345,8 @@
           <Property Name="BookingReference" Type="nvarchar" MaxLength="32" />
           <Property Name="TicketNumber" Type="nvarchar" MaxLength="256" />
           <Property Name="RoomNum" Type="int" />
+          <Property Name="Emd" Type="nvarchar(max)" />
+          <Property Name="Price" Type="int" />
         </EntityType>
         <EntityType Name="Partner">
           <Key>
@@ -1448,7 +1450,6 @@
             <End Role="Order" EntitySet="Order" />
             <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
-          <EntitySet Name="OrderStopoverData" EntityType="StopoverHolidaysDBModel.OrderStopoverData" />
           <AssociationSet Name="FK_Transfer_City" Association="StopoverHolidaysDBModel.FK_Transfer_City">
             <End Role="City" EntitySet="City" />
             <End Role="Transfer" EntitySet="Transfer" />
@@ -1458,6 +1459,7 @@
             <End Role="OrderRequests" EntitySet="OrderRequests" />
             <End Role="OrderActivityData" EntitySet="OrderActivityData" />
           </AssociationSet>
+          <EntitySet Name="OrderStopoverData" EntityType="StopoverHolidaysDBModel.OrderStopoverData" />
         </EntityContainer>
         <EntityType Name="ActivityBlockedDay">
           <Key>
@@ -2032,20 +2034,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="OrderStopoverData">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderId" Type="Int32" />
-          <Property Name="RoomTypeId" Type="Int32" />
-          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IsChild" Type="Boolean" />
-          <Property Name="BookingReference" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="TicketNumber" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="RoomNum" Type="Int32" />
-        </EntityType>
         <Association Name="FK_Transfer_City">
           <End Type="StopoverHolidaysDBModel.City" Role="City" Multiplicity="1" />
           <End Type="StopoverHolidaysDBModel.Transfer" Role="Transfer" Multiplicity="*" />
@@ -2097,6 +2085,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="OrderStopoverData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="RoomTypeId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsChild" Type="Boolean" />
+          <Property Name="BookingReference" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="TicketNumber" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="RoomNum" Type="Int32" />
+          <Property Name="Emd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2576,21 +2580,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrderStopoverData">
-            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.OrderStopoverData">
-              <MappingFragment StoreEntitySet="OrderStopoverData">
-                <ScalarProperty Name="RoomNum" ColumnName="RoomNum" />
-                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
-                <ScalarProperty Name="BookingReference" ColumnName="BookingReference" />
-                <ScalarProperty Name="IsChild" ColumnName="IsChild" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OrderRequests">
             <EntityTypeMapping TypeName="StopoverHolidaysDBModel.OrderRequests">
               <MappingFragment StoreEntitySet="OrderRequests">
@@ -2614,6 +2603,23 @@
                 <ScalarProperty Name="RequestType" ColumnName="RequestType" />
                 <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
                 <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStopoverData">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.OrderStopoverData">
+              <MappingFragment StoreEntitySet="OrderStopoverData">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Emd" ColumnName="Emd" />
+                <ScalarProperty Name="RoomNum" ColumnName="RoomNum" />
+                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+                <ScalarProperty Name="BookingReference" ColumnName="BookingReference" />
+                <ScalarProperty Name="IsChild" ColumnName="IsChild" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

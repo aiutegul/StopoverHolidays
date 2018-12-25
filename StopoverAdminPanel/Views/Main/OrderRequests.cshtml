@@ -94,8 +94,8 @@
 																		@Html.Partial("_OrderActivityDataForRequest")
 																		@if (User.IsInRole("Admin"))
 																					{
-																			<button class="btn btn-success pull-left" onclick="confirm_request( <  %= data.Id %  > )">Confirm Request</button>
-																			<button class="btn btn-danger pull-left" onclick="reject_request( <  %= data.Id %  > )">Reject Request</button>
+																			<button class="btn btn-success pull-left" onclick="confirm_request(<%= data.Id %>)">Confirm Request</button>
+																			<button class="btn btn-danger pull-left" onclick="reject_request(<%= data.Id %>)">Reject Request</button>
 																					}
 																		
 																		<button class="btn btn-primary pull-left" onclick="submit_request(<%= data.Id %>)">Submit Request</button>

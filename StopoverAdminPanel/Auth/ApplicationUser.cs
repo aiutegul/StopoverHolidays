@@ -4,6 +4,6 @@ namespace StopoverAdminPanel.Auth
 {
 	public class ApplicationUser : IdentityUser
 	{
-		public int PartnerId { get; set; }
+		public int? PartnerId { get; set; }
 	}
 }

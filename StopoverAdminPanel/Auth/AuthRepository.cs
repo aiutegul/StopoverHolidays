@@ -62,7 +62,14 @@ namespace StopoverAdminPanel.Auth
 							PartnerId = u.PartnerId,
 							PartnerCode = c.Code
 						}).ToList();
-			usrs.ForEach(user => { user.Role = _userManager.GetRoles(user.Id).ToList()[0]; });
+		    var usersWithNoPartners = from u in _userManager.Users.ToList() where u.PartnerId == null select new FormattedUser
+		    {
+		        Id = u.Id,
+		        UserName = u.UserName,
+		        PartnerId = u.PartnerId
+            };
+            usrs.AddRange(usersWithNoPartners);
+            usrs.ForEach(user => { user.Role = _userManager.GetRoles(user.Id).ToList()[0]; });
 			return usrs;
 		}
 

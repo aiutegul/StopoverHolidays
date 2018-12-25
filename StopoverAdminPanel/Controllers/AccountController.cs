@@ -21,10 +21,12 @@ namespace StopoverAdminPanel.Controllers
 
 		// POST api/Account/Register
 		// MUST DELETE IN PROD OR ONLY ADMIN CAN REGISTER USERS
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin")] 
 		[Route("Register")]
 		public async Task<IHttpActionResult> Register(UserModel userModel)
-		{
+        {
+            await _repo.InitializeRoles();
+
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);

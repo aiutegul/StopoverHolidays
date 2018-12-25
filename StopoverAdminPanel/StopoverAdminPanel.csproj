@@ -330,7 +330,6 @@
     <Content Include="Views\Main\Orders.cshtml" />
     <Content Include="Views\Main\Hotels.cshtml" />
     <Content Include="Views\Main\Activities.cshtml" />
-    <Content Include="Views\PassengerRecords\LoadPassengers.cshtml" />
     <Content Include="Views\Main\OrderRequests.cshtml" />
     <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService1.wsdl" />
     <None Include="Connected Services\StopoverHolidaysServiceReference\StopoverHolidaysService7.xsd">
@@ -395,6 +394,7 @@
     <Content Include="Views\Users\EditUser.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -408,21 +408,19 @@
     <Content Include="Views\Main\_PromoDisabledForHotel.cshtml" />
     <Content Include="Views\Main\_ActivityPriceForActivity.cshtml" />
     <Content Include="Views\Main\_ActivityTimeForActivity.cshtml" />
-    <Content Include="Views\PassengerRecords\FlightInfo.cshtml" />
-    <Content Include="Views\PassengerRecords\Index.cshtml" />
     <Content Include="Views\Main\_ActivityBlockedDayForActivity.cshtml" />
     <Content Include="Views\Main\Transfers.cshtml" />
-    <Content Include="Views\PassengerRecords\StopoverData.cshtml" />
-    <Content Include="Views\PassengerRecords\ActivityData.cshtml" />
     <Content Include="Views\Main\_OrderActivitiesForOrder.cshtml" />
     <Content Include="Views\Main\_ActivityPassengersForOrderActivity.cshtml" />
     <Content Include="Views\Main\_OrderStopoverDataForRequest.cshtml" />
     <Content Include="Views\Main\_OrderActivityDataForRequest.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -508,7 +506,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\ActivityBlockedDaysController.cs" />
-    <Compile Include="Controllers\ActivityDataController.cs" />
     <Compile Include="Controllers\ActivityPassengersController.cs" />
     <Compile Include="Controllers\ActivityPricesController.cs" />
     <Compile Include="Controllers\ActivityPriceTypesController.cs" />
@@ -516,15 +513,12 @@
     <Compile Include="Controllers\BookingReferencesController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\ExtraRoomPricesController.cs" />
-    <Compile Include="Controllers\FlightPassengersController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrderActivityDataController.cs" />
     <Compile Include="Controllers\OrderCostsController.cs" />
     <Compile Include="Controllers\OrderRequestsController.cs" />
     <Compile Include="Controllers\OrderStopoverDataController.cs" />
     <Compile Include="Controllers\PartnersController.cs" />
-    <Compile Include="Controllers\StopoverDataController.cs" />
-    <Compile Include="Controllers\PassengerRecordsController.cs" />
     <Compile Include="Controllers\FlightsController.cs" />
     <Compile Include="Controllers\HotelBlockedDaysController.cs" />
     <Compile Include="Controllers\HotelPromoDisablesController.cs" />
@@ -551,7 +545,6 @@
     <Compile Include="Models\ActivityBlockedDay.cs">
       <DependentUpon>StopoverDbContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ActivityData.cs" />
     <Compile Include="Models\ActivityPassenger.cs">
       <DependentUpon>StopoverDbContext.tt</DependentUpon>
     </Compile>
@@ -620,7 +613,6 @@
     </Compile>
     <Compile Include="Models\RequestStatus.cs" />
     <Compile Include="Models\RequestType.cs" />
-    <Compile Include="Models\StopoverData.cs" />
     <Compile Include="Models\Payment.cs">
       <DependentUpon>StopoverDbContext.tt</DependentUpon>
     </Compile>
