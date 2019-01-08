@@ -5,7 +5,7 @@ namespace StopoverAdminPanel.Auth
 	public class AuthContext : IdentityDbContext<ApplicationUser>
 	{
 		public AuthContext()
-			: base("name=AuthContext")
+			: base("name=AuthAndAuditContext")
 		{
 		}
 	}

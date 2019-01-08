@@ -70,6 +70,16 @@
         <EntityTypeShape EntityType="StopoverHolidaysDBModel.OrderStopoverData" Width="1.5" PointX="3.375" PointY="8.75" />
         <EntityTypeShape EntityType="StopoverHolidaysDBModel.StopoverSearch_v" Width="1.5" PointX="8.375" PointY="4.75" />
         <EntityTypeShape EntityType="StopoverHolidaysDBModel.database_firewall_rules" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="StopoverHolidaysDBModel.AspNetRoles" Width="1.5" PointX="17.375" PointY="7.5" />
+        <EntityTypeShape EntityType="StopoverHolidaysDBModel.AspNetUserClaims" Width="1.5" PointX="21.875" PointY="8.625" />
+        <EntityTypeShape EntityType="StopoverHolidaysDBModel.AspNetUserLogins" Width="1.5" PointX="21.875" PointY="6" />
+        <EntityTypeShape EntityType="StopoverHolidaysDBModel.AspNetUsers" Width="1.5" PointX="19.625" PointY="6.25" />
+        <EntityTypeShape EntityType="StopoverHolidaysDBModel.AuditEntries" Width="1.5" PointX="10.375" PointY="4" />
+        <EntityTypeShape EntityType="StopoverHolidaysDBModel.AuditEntryProperties" Width="1.5" PointX="12.625" PointY="4" />
+        <AssociationConnector Association="StopoverHolidaysDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="StopoverHolidaysDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="StopoverHolidaysDBModel.FK_dbo_AuditEntryProperties_dbo_AuditEntries_AuditEntryID" />
+        <AssociationConnector Association="StopoverHolidaysDBModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

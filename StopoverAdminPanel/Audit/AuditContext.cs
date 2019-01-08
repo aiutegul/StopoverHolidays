@@ -6,7 +6,7 @@ namespace StopoverAdminPanel.Audit
 	public class AuditContext : DbContext
 	{
 		public AuditContext()
-			: base("name=auditContext")
+			: base("name=AuthAndAuditContext")
 		{
 		}
 

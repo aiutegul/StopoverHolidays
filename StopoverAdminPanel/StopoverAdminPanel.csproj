@@ -579,6 +579,24 @@
     <Compile Include="Models\ActivityTime.cs">
       <DependentUpon>StopoverDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AspNetRoles.cs">
+      <DependentUpon>StopoverDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaims.cs">
+      <DependentUpon>StopoverDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogins.cs">
+      <DependentUpon>StopoverDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>StopoverDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuditEntries.cs">
+      <DependentUpon>StopoverDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuditEntryProperties.cs">
+      <DependentUpon>StopoverDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BookingReference.cs">
       <DependentUpon>StopoverDbContext.tt</DependentUpon>
     </Compile>

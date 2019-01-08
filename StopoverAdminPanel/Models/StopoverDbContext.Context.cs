@@ -59,5 +59,11 @@ namespace StopoverAdminPanel.Models
         public virtual DbSet<OrderStopoverData> OrderStopoverData { get; set; }
         public virtual DbSet<StopoverSearch_v> StopoverSearch_v { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<AuditEntries> AuditEntries { get; set; }
+        public virtual DbSet<AuditEntryProperties> AuditEntryProperties { get; set; }
     }
 }

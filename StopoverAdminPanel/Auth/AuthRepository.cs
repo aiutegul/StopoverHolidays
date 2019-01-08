@@ -119,7 +119,8 @@ namespace StopoverAdminPanel.Auth
 
 		public async Task<IdentityResult> RegisterUser(UserModel userModel)
 		{
-			ApplicationUser user = new ApplicationUser
+		    // await InitializeRoles();
+            ApplicationUser user = new ApplicationUser
 			{
 				UserName = userModel.UserName,
 				Email = userModel.UserName,

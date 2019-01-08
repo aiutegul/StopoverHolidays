@@ -86,6 +86,81 @@
           <Property Name="ActivityId" Type="int" Nullable="false" />
           <Property Name="Comments" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PartnerId" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuditEntries">
+          <Key>
+            <PropertyRef Name="AuditEntryID" />
+          </Key>
+          <Property Name="AuditEntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntitySetName" Type="nvarchar" MaxLength="255" />
+          <Property Name="EntityTypeName" Type="nvarchar" MaxLength="255" />
+          <Property Name="State" Type="int" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuditEntryProperties">
+          <Key>
+            <PropertyRef Name="AuditEntryPropertyID" />
+          </Key>
+          <Property Name="AuditEntryPropertyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuditEntryID" Type="int" Nullable="false" />
+          <Property Name="RelationName" Type="nvarchar" MaxLength="255" />
+          <Property Name="PropertyName" Type="nvarchar" MaxLength="255" />
+          <Property Name="OldValue" Type="nvarchar(max)" />
+          <Property Name="NewValue" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="BookingReference">
           <Key>
             <PropertyRef Name="Id" />
@@ -614,6 +689,76 @@ warning 6002: The table/view 'StopoverHolidaysDB.sys.database_firewall_rules' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AuditEntryProperties_dbo_AuditEntries_AuditEntryID">
+          <End Role="AuditEntries" Type="Self.AuditEntries" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AuditEntryProperties" Type="Self.AuditEntryProperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AuditEntries">
+              <PropertyRef Name="AuditEntryID" />
+            </Principal>
+            <Dependent Role="AuditEntryProperties">
+              <PropertyRef Name="AuditEntryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ExtraRoomPrice_Room">
           <End Role="Room" Type="Self.Room" Multiplicity="1" />
           <End Role="ExtraRoomPrice" Type="Self.ExtraRoomPrice" Multiplicity="*" />
@@ -897,6 +1042,13 @@ warning 6002: The table/view 'StopoverHolidaysDB.sys.database_firewall_rules' do
           <EntitySet Name="ActivityPrice" EntityType="Self.ActivityPrice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ActivityPriceType" EntityType="Self.ActivityPriceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ActivityTime" EntityType="Self.ActivityTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuditEntries" EntityType="Self.AuditEntries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuditEntryProperties" EntityType="Self.AuditEntryProperties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookingReference" EntityType="Self.BookingReference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Config" EntityType="Self.Config" Schema="dbo" store:Type="Tables" />
@@ -970,6 +1122,26 @@ warning 6002: The table/view 'StopoverHolidaysDB.sys.database_firewall_rules' do
           <AssociationSet Name="FK_BookingReference_Flight" Association="Self.FK_BookingReference_Flight">
             <End Role="Flight" EntitySet="Flight" />
             <End Role="BookingReference" EntitySet="BookingReference" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AuditEntryProperties_dbo_AuditEntries_AuditEntryID" Association="Self.FK_dbo_AuditEntryProperties_dbo_AuditEntries_AuditEntryID">
+            <End Role="AuditEntries" EntitySet="AuditEntries" />
+            <End Role="AuditEntryProperties" EntitySet="AuditEntryProperties" />
           </AssociationSet>
           <AssociationSet Name="FK_ExtraRoomPrice_Room" Association="Self.FK_ExtraRoomPrice_Room">
             <End Role="Room" EntitySet="Room" />
@@ -1506,6 +1678,28 @@ warning 6002: The table/view 'StopoverHolidaysDB.sys.database_firewall_rules' do
           <EntitySet Name="OrderStopoverData" EntityType="StopoverHolidaysDBModel.OrderStopoverData" />
           <EntitySet Name="StopoverSearch_v" EntityType="StopoverHolidaysDBModel.StopoverSearch_v" />
           <EntitySet Name="database_firewall_rules" EntityType="StopoverHolidaysDBModel.database_firewall_rules" />
+          <EntitySet Name="AspNetRoles" EntityType="StopoverHolidaysDBModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="StopoverHolidaysDBModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="StopoverHolidaysDBModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="StopoverHolidaysDBModel.AspNetUsers" />
+          <EntitySet Name="AuditEntries" EntityType="StopoverHolidaysDBModel.AuditEntries" />
+          <EntitySet Name="AuditEntryProperties" EntityType="StopoverHolidaysDBModel.AuditEntryProperties" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="StopoverHolidaysDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="StopoverHolidaysDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AuditEntryProperties_dbo_AuditEntries_AuditEntryID" Association="StopoverHolidaysDBModel.FK_dbo_AuditEntryProperties_dbo_AuditEntries_AuditEntryID">
+            <End Role="AuditEntries" EntitySet="AuditEntries" />
+            <End Role="AuditEntryProperties" EntitySet="AuditEntryProperties" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="StopoverHolidaysDBModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ActivityBlockedDay">
           <Key>
@@ -2171,6 +2365,127 @@ warning 6002: The table/view 'StopoverHolidaysDB.sys.database_firewall_rules' do
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="StopoverHolidaysDBModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="StopoverHolidaysDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="StopoverHolidaysDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PartnerId" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="StopoverHolidaysDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="StopoverHolidaysDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="StopoverHolidaysDBModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="AuditEntries">
+          <Key>
+            <PropertyRef Name="AuditEntryID" />
+          </Key>
+          <Property Name="AuditEntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntitySetName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EntityTypeName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <Property Name="StateName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AuditEntryProperties" Relationship="StopoverHolidaysDBModel.FK_dbo_AuditEntryProperties_dbo_AuditEntries_AuditEntryID" FromRole="AuditEntries" ToRole="AuditEntryProperties" />
+        </EntityType>
+        <EntityType Name="AuditEntryProperties">
+          <Key>
+            <PropertyRef Name="AuditEntryPropertyID" />
+          </Key>
+          <Property Name="AuditEntryPropertyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuditEntryID" Type="Int32" Nullable="false" />
+          <Property Name="RelationName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PropertyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AuditEntries" Relationship="StopoverHolidaysDBModel.FK_dbo_AuditEntryProperties_dbo_AuditEntries_AuditEntryID" FromRole="AuditEntryProperties" ToRole="AuditEntries" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="StopoverHolidaysDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="StopoverHolidaysDBModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="StopoverHolidaysDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="StopoverHolidaysDBModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AuditEntryProperties_dbo_AuditEntries_AuditEntryID">
+          <End Type="StopoverHolidaysDBModel.AuditEntries" Role="AuditEntries" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="StopoverHolidaysDBModel.AuditEntryProperties" Role="AuditEntryProperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AuditEntries">
+              <PropertyRef Name="AuditEntryID" />
+            </Principal>
+            <Dependent Role="AuditEntryProperties">
+              <PropertyRef Name="AuditEntryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="StopoverHolidaysDBModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="StopoverHolidaysDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2714,6 +3029,85 @@ warning 6002: The table/view 'StopoverHolidaysDB.sys.database_firewall_rules' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuditEntries">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.AuditEntries">
+              <MappingFragment StoreEntitySet="AuditEntries">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="EntityTypeName" ColumnName="EntityTypeName" />
+                <ScalarProperty Name="EntitySetName" ColumnName="EntitySetName" />
+                <ScalarProperty Name="AuditEntryID" ColumnName="AuditEntryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuditEntryProperties">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.AuditEntryProperties">
+              <MappingFragment StoreEntitySet="AuditEntryProperties">
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
+                <ScalarProperty Name="RelationName" ColumnName="RelationName" />
+                <ScalarProperty Name="AuditEntryID" ColumnName="AuditEntryID" />
+                <ScalarProperty Name="AuditEntryPropertyID" ColumnName="AuditEntryPropertyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="StopoverHolidaysDBModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
