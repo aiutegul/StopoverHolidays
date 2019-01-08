@@ -14,7 +14,6 @@ using StopoverAdminPanel.UserModels;
 
 namespace StopoverAdminPanel.Controllers
 {
-	[Authorize(Roles = "Admin")]
 	public class UsersController : Controller
 	{
 		private readonly HttpClient _client;
@@ -25,6 +24,7 @@ namespace StopoverAdminPanel.Controllers
 			_client.BaseAddress = new Uri(System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority));
 		}
 
+		[Authorize(Roles = "Admin")]
 		public async Task<ActionResult> UserList()
 		{
 			var result = await _client.GetAsync("api/Account/Users");
@@ -104,6 +104,7 @@ namespace StopoverAdminPanel.Controllers
 			return Content("Can't delete");
 		}
 
+		[Authorize(Roles = "Admin")]
 		public async Task<ActionResult> Register()
 		{
 			var model = new RegisterUserModel();
@@ -119,6 +120,7 @@ namespace StopoverAdminPanel.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public async Task<ActionResult> Register(RegisterUserModel model)
 		{
 			if (ModelState.IsValid)
@@ -172,6 +174,35 @@ namespace StopoverAdminPanel.Controllers
 			}
 
 			return null;
+		}
+
+		[Authorize]
+		public ActionResult EditPassword()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[Authorize]
+		public async Task<ActionResult> EditPassword(EditPasswordModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				model.Username = User.Identity.Name;
+				var serializedBody = JsonConvert.SerializeObject(model);
+				var result = await _client.PostAsync("api/Account/EditPassword",
+					new StringContent(serializedBody, Encoding.UTF8, "application/json"));
+				if (result.IsSuccessStatusCode)
+				{
+					TempData["Message"] = "Password successfully updated";
+					return RedirectToAction("LogOut", "Login");
+				}
+			}
+			else
+			{
+				ModelState.AddModelError("", "Your previous password is incorrect");
+			}
+			return View();
 		}
 
 		protected override void Initialize(RequestContext requestContext)

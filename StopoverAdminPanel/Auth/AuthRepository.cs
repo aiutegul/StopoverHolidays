@@ -51,6 +51,18 @@ namespace StopoverAdminPanel.Auth
 			return roleManager.Roles.Select(x => x.Name).ToList();
 		}
 
+		public async Task<IdentityResult> EditPassword(EditPasswordModel model)
+		{
+			var user = await _userManager.FindAsync(model.Username, model.PrevPassword);
+			if (user != null)
+			{
+				user.PasswordHash = _userManager.PasswordHasher.HashPassword(model.NewPassword);
+				var result = await _userManager.UpdateAsync(user);
+				return result;
+			}
+			return null;
+		}
+
 		public List<FormattedUser> GetUsers()
 		{
 			var usrs = (from u in _userManager.Users.ToList()
@@ -62,14 +74,16 @@ namespace StopoverAdminPanel.Auth
 							PartnerId = u.PartnerId,
 							PartnerCode = c.Code
 						}).ToList();
-		    var usersWithNoPartners = from u in _userManager.Users.ToList() where u.PartnerId == null select new FormattedUser
-		    {
-		        Id = u.Id,
-		        UserName = u.UserName,
-		        PartnerId = u.PartnerId
-            };
-            usrs.AddRange(usersWithNoPartners);
-            usrs.ForEach(user => { user.Role = _userManager.GetRoles(user.Id).ToList()[0]; });
+			var usersWithNoPartners = from u in _userManager.Users.ToList()
+									  where u.PartnerId == null
+									  select new FormattedUser
+									  {
+										  Id = u.Id,
+										  UserName = u.UserName,
+										  PartnerId = u.PartnerId
+									  };
+			usrs.AddRange(usersWithNoPartners);
+			usrs.ForEach(user => { user.Role = _userManager.GetRoles(user.Id).ToList()[0]; });
 			return usrs;
 		}
 

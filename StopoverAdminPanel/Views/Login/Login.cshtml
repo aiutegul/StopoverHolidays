@@ -3,6 +3,10 @@
 }
 @model StopoverAdminPanel.Auth.LoginModel
 <h2>Login</h2>
+@if (TempData["Message"] != null)
+{
+	<div class="alert alert-success">@TempData["Message"]</div>
+}
 @Html.ValidationSummary()
 @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "form-inline", role = "form" }))
 {
