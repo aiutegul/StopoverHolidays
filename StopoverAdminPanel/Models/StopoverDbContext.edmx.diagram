@@ -68,6 +68,8 @@
         <EntityTypeShape EntityType="StopoverHolidaysDBModel.OrderRequests" Width="1.5" PointX="15.375" PointY="9" />
         <AssociationConnector Association="StopoverHolidaysDBModel.FK_OrderActivityData_OrderRequests" />
         <EntityTypeShape EntityType="StopoverHolidaysDBModel.OrderStopoverData" Width="1.5" PointX="3.375" PointY="8.75" />
+        <EntityTypeShape EntityType="StopoverHolidaysDBModel.StopoverSearch_v" Width="1.5" PointX="8.375" PointY="4.75" />
+        <EntityTypeShape EntityType="StopoverHolidaysDBModel.database_firewall_rules" Width="1.5" PointX="9.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

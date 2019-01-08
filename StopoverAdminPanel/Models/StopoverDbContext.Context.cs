@@ -57,5 +57,7 @@ namespace StopoverAdminPanel.Models
         public virtual DbSet<Payment> Payment { get; set; }
         public virtual DbSet<OrderRequests> OrderRequests { get; set; }
         public virtual DbSet<OrderStopoverData> OrderStopoverData { get; set; }
+        public virtual DbSet<StopoverSearch_v> StopoverSearch_v { get; set; }
+        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
     }
 }

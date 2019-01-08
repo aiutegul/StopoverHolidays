@@ -37,7 +37,8 @@ namespace StopoverAdminPanel.Models.Controllers
 				i.Language,
 				i.Comments
 			}).Where(i => i.DeletedDate == null);
-			return Request.CreateResponse(DataSourceLoader.Load(order, loadOptions));
+		   
+            return Request.CreateResponse(DataSourceLoader.Load(order, loadOptions));
 		}
 
 		[Authorize(Roles = "Admin")]
@@ -128,6 +129,19 @@ namespace StopoverAdminPanel.Models.Controllers
 						 };
 			return Request.CreateResponse(DataSourceLoader.Load(lookup, loadOptions));
 		}
+
+	    [HttpGet]
+	    [Authorize(Roles = "Admin")]
+	    public HttpResponseMessage FindOrders(string queryString)
+	    {
+	        var searchResults = _context.StopoverSearch_v.Where(s => s.findstring.Contains(queryString));
+	        var orderIDs = searchResults.Select(o => o.orderid).Distinct().ToList();
+	        if (!orderIDs.Any())
+	            return Request.CreateResponse(HttpStatusCode.BadRequest, "Search Returned No results");
+	       
+	        //return Request.CreateResponse();
+	        return Request.CreateResponse(HttpStatusCode.OK, orderIDs);
+	    }
 
 		protected override void Dispose(bool disposing)
 		{

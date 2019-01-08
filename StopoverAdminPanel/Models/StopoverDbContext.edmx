@@ -490,6 +490,34 @@
           <Property Name="LangCode" Type="nvarchar" MaxLength="128" />
           <Property Name="Comments" Type="nvarchar(max)" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'StopoverHolidaysDB.dbo.StopoverSearch_v' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="StopoverSearch_v">
+          <Key>
+            <PropertyRef Name="orderid" />
+            <PropertyRef Name="findstring" />
+          </Key>
+          <Property Name="orderid" Type="int" Nullable="false" />
+          <Property Name="findstring" Type="nvarchar" MaxLength="675" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'StopoverHolidaysDB.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Activity_City">
           <End Role="City" Type="Self.City" Multiplicity="1" />
           <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
@@ -895,6 +923,22 @@
           <EntitySet Name="StopoverPassenger" EntityType="Self.StopoverPassenger" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transfer" EntityType="Self.Transfer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Translation" EntityType="Self.Translation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StopoverSearch_v" EntityType="Self.StopoverSearch_v" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [StopoverSearch_v].[orderid] AS [orderid], 
+    [StopoverSearch_v].[findstring] AS [findstring]
+    FROM [dbo].[StopoverSearch_v] AS [StopoverSearch_v]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Activity_City" Association="Self.FK_Activity_City">
             <End Role="City" EntitySet="City" />
             <End Role="Activity" EntitySet="Activity" />
@@ -1460,6 +1504,8 @@
             <End Role="OrderActivityData" EntitySet="OrderActivityData" />
           </AssociationSet>
           <EntitySet Name="OrderStopoverData" EntityType="StopoverHolidaysDBModel.OrderStopoverData" />
+          <EntitySet Name="StopoverSearch_v" EntityType="StopoverHolidaysDBModel.StopoverSearch_v" />
+          <EntitySet Name="database_firewall_rules" EntityType="StopoverHolidaysDBModel.database_firewall_rules" />
         </EntityContainer>
         <EntityType Name="ActivityBlockedDay">
           <Key>
@@ -2101,6 +2147,30 @@
           <Property Name="Emd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Int32" />
         </EntityType>
+        <EntityType Name="StopoverSearch_v">
+          <Key>
+            <PropertyRef Name="orderid" />
+            <PropertyRef Name="findstring" />
+          </Key>
+          <Property Name="orderid" Type="Int32" Nullable="false" />
+          <Property Name="findstring" Type="String" Nullable="false" MaxLength="675" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="start_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="end_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2621,6 +2691,26 @@
                 <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StopoverSearch_v">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.StopoverSearch_v">
+              <MappingFragment StoreEntitySet="StopoverSearch_v">
+                <ScalarProperty Name="findstring" ColumnName="findstring" />
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="StopoverHolidaysDBModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

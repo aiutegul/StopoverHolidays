@@ -13,6 +13,7 @@ using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using StopoverAdminPanel.Auth;
+using StopoverAdminPanel.CurrencyConverterServiceReference;
 
 namespace StopoverAdminPanel.Models.Controllers
 {
@@ -150,6 +151,7 @@ namespace StopoverAdminPanel.Models.Controllers
 			var model = new OrderRequests();
 			var values = form.Get("values");
 			JsonConvert.PopulateObject(values, model);
+
 			model.RequestDate = DateTime.UtcNow;
 			model.RequestStatus = 0;
 
@@ -185,8 +187,8 @@ namespace StopoverAdminPanel.Models.Controllers
 			var result = _context.OrderRequests.Add(model);
 			_context.SaveChanges();
 
-			model.RegistrationNumber = "SP" + result.Id; // should be a switch from model.type
-			_context.SaveChanges();
+			//model.RegistrationNumber = "SP" + result.Id; // should be a switch from model.type
+			//_context.SaveChanges();
 			return Request.CreateResponse(HttpStatusCode.Created, result.Id);
 		}
 
@@ -200,6 +202,12 @@ namespace StopoverAdminPanel.Models.Controllers
 
 			var values = form.Get("values");
 			JsonConvert.PopulateObject(values, model);
+
+		    if (model.RequestStatus == 2)
+		    {
+		        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Cannot edit confirmed order" +
+		                                                                      " request!");
+            }
 
 			if (model.CheckOut < model.CheckIn)
 			{
@@ -402,10 +410,12 @@ namespace StopoverAdminPanel.Models.Controllers
 			};
 
 			orderStopover.IsPromo = checkStopoverPromo(orderStopover, flight);
+		    orderStopover.Price = calculateStopoverPrice(orderRequest.Id, orderStopover);
 
-			_context.Flight.Add(flight);
+            _context.Flight.Add(flight);
+		    
 
-			createBookingReference(orderRequest.Id, flight, orderStopover);
+            createBookingReference(orderRequest.Id, flight, orderStopover);
 
 			try
 			{
@@ -420,7 +430,7 @@ namespace StopoverAdminPanel.Models.Controllers
 			order.Email = "Sayat.Amanbayev@airastana.com";
 			order.Referral = "Agent";
 
-			orderStopover.Price = calculateStopoverPrice(orderRequest.Id, orderStopover);
+			//orderStopover.Price = calculateStopoverPrice(orderRequest.Id, orderStopover);
 
 			orderRequest.RegistrationNumber = order.RegistrationNumber; // makes more sense this way
 			orderRequest.RequestStatus = 2; //confirmed
@@ -603,89 +613,98 @@ namespace StopoverAdminPanel.Models.Controllers
 					BookingReference = bookingReference,
 					RoomNum = passenger.RoomNum.GetValueOrDefault(),
 					TicketNumber = passenger.TicketNumber,
-					PromoUsed = false //change this once you clarify with Janna, should be true after a payment has been made
+					PromoUsed = true // AS TOLD BY JANNA THIS SHOULD BE TRUE REGARDLESS
 				};
 
 				_context.StopoverPassenger.Add(stopoverPassenger);
 			}
 		}
 
-		//private bool CheckPromoUsedTicketNumber() -- need to implement
-
 		private int calculateStopoverPrice(int requestId, OrderStopover os)
 		{
 		    int TotalPrice = 0;
-		    int firstNightPrice = 0;
 
-			var roomTypesInRequest = _context.OrderStopoverData.Select(r => new
-			{
-				r.OrderId,
-				r.RoomTypeId,
-				r.RoomNum
-			}).Where(r => r.OrderId == requestId).Distinct();
+            List<OrderStopoverData> spList = new List<OrderStopoverData>();
 
-			var promoUsedRooms = from sd in _context.OrderStopoverData
-								 join sp in _context.StopoverPassenger on sd.TicketNumber equals sp.TicketNumber
-								 where sp.PromoUsed.HasValue && sp.PromoUsed.GetValueOrDefault()
-								 where sd.OrderId == requestId
-								 select new
-								 {
-									 sd.OrderId,
-									 sd.RoomTypeId,
-									 sd.RoomNum
-								 };
+		    var stopoverData = _context.OrderStopoverData.Where(o => o.OrderId == requestId);
 
-			foreach (var roomtype in roomTypesInRequest)
-			{
-				var room = _context.Room.First(r => r.HotelId == os.HotelId && r.RoomTypeId == roomtype.RoomTypeId);
-				//Here we should check if OrderStopover.CheckIn falls between ExtraRoomPrice.StartDate and EndDate
-				//and add that price, after I clarify with Janna how it works
-				//also check if promo had been previously used on the ticket number
-				//if not then first Night price should be 1 dora
-				if (os.IsPromo)
-				{
-					if (promoUsedRooms.Contains(roomtype))
-					{
-						firstNightPrice = room.FirstNightPrice;
-					}
-					else
-					{
-						firstNightPrice = 370;//CONVERT TO 1 DORA PRICE HERE
-					}
-				}
-				else
-				{
-					firstNightPrice = room.FirstNightPrice;
-				}
+		    foreach (var sp in stopoverData)
+		    {
+		        if (!sp.IsChild.GetValueOrDefault())
+		        {
+		            if (promoUsedTicketNumber(sp.TicketNumber))
+		            {
+                        spList.Add(sp);
+		            }
+		            else
+		            {
+		                TotalPrice += sp.Price.Value;
+                    }
+		            
+		        }
 
-				TotalPrice += firstNightPrice;
+		    }
 
-				//HOW MANY NIGHTS ARE THERE??? CAN THERE BE 3 NIGHTS?
-				if (os.Nights > 1)
-				{
-					TotalPrice += room.SecondNightPrice;
-				}
-			}
+		    foreach (var sp in spList)
+		    {
+		        var paxInRoomWithPromoUsedPax = stopoverData.Where(sd => sd.RoomTypeId == sp.RoomTypeId &&
+		                                                                 sd.RoomNum == sp.RoomNum &&
+		                                                                 sd.FirstName != sp.FirstName &&
+		                                                                 sd.LastName != sp.LastName).Distinct();
+		        var room = _context.Room.First(r => r.HotelId == os.HotelId &&
+		                                            r.RoomTypeId == sp.RoomTypeId);
+                foreach (var spData in paxInRoomWithPromoUsedPax)
+		        {
+		            TotalPrice -= spData.Price.Value;
+		        }
+
+
+		        using (ServiceCurConverterClient client =
+		            new ServiceCurConverterClient())
+		        {
+		            TotalPrice += (int)client.ConvertCurrency(room.FirstNightPrice, "KZT", "USD");
+		            if (os.Nights > 1)
+		            {
+		                TotalPrice += (int)client.ConvertCurrency(room.SecondNightPrice, "KZT", "USD");
+		            }
+                }
+
+		        
+		            
+		    }
 
 			var transfer = _context.Transfer.FirstOrDefault(t => t.Id == os.TransferId);
+		    using (ServiceCurConverterClient client = new ServiceCurConverterClient())
+		    {
+		        if (os.FromAirportTransferUsed && os.FromHotelTransferUsed)
+		        {
+		            TotalPrice += 2 * (int) client.ConvertCurrency(transfer.Price, "KZT", "USD");
+		        }
 
-			if (os.FromAirportTransferUsed && os.FromHotelTransferUsed)
-			{
-				TotalPrice += 2 * transfer.Price;
-			}
+		        if (os.FromAirportTransferUsed && !os.FromHotelTransferUsed)
+		        {
+		            TotalPrice += (int)client.ConvertCurrency(transfer.Price, "KZT", "USD"); 
+		        }
 
-			if (os.FromAirportTransferUsed && !os.FromHotelTransferUsed)
-			{
-				TotalPrice += transfer.Price;
-			}
-
-			if (!os.FromAirportTransferUsed && os.FromHotelTransferUsed)
-			{
-				TotalPrice += transfer.Price;
-			}
-
+		        if (!os.FromAirportTransferUsed && os.FromHotelTransferUsed)
+		        {
+		            TotalPrice += (int)client.ConvertCurrency(transfer.Price, "KZT", "USD");
+                }
+            }
 			return TotalPrice;
 		}
+
+	    private bool promoUsedTicketNumber(string ticketNum)
+	    {
+	        var promoUsedPassenger = _context.StopoverPassenger.FirstOrDefault(sp => sp.TicketNumber == ticketNum &&
+	                                                                                 sp.PromoUsed.HasValue);
+	        if (promoUsedPassenger == null)
+	        {
+	            return false;
+	        }
+
+	        return promoUsedPassenger.PromoUsed.Value;
+	    }
 
 		private string GetFullErrorMessage(ModelStateDictionary modelState)
 		{

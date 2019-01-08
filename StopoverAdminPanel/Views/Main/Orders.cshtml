@@ -7,68 +7,80 @@
 <h2>Orders</h2>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script>
-	@if (User.IsInRole("Office"))
-	{
-		ViewBag.Allowed = false;
-	}
-	else if (User.IsInRole("Admin"))
-	{
-		ViewBag.Allowed = true;
-	}
+    @if (User.IsInRole("Office"))
+    {
+        ViewBag.Allowed = false;
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        ViewBag.Allowed = true;
+    }
 </script>
+
+
+<div class="row">
+    <div class="col-lg-6" style="margin-top: 21px">
+        <input id="queryStr" type="text" class="form-control" placeholder="Ticket No., Booking Ref, Last Name, First Name" />
+    </div>
+    <div class="col-lg-2" style="text-align: center">
+        <button id="findOrders" class="btn btn-primary" style="width: 200px; margin-top: 20px; margin-bottom: 20px">Find Orders</button>
+    </div>
+</div>
+
 @(Html.DevExtreme().DataGrid<StopoverAdminPanel.Models.Order>()
-										.DataSource(ds => ds.WebApi()
-											.OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }")
-											.RouteName("OrdersApi")
-											.LoadAction("Get")
-											.InsertAction("Post")
-											.UpdateAction("Put")
-											.DeleteAction("Delete")
-											.Key("Id")
-										)
-										.ShowBorders(true)
-										.Paging(p => p.PageSize(10))
-										.FilterRow(f => f.Visible(true))
-										.HeaderFilter(f => f.Visible(true))
-										.GroupPanel(p => p.Visible(true))
-										.Grouping(g => g.AutoExpandAll(false))
-										.Sorting(s => s.Mode(GridSortingMode.Single))
-										.RemoteOperations(true)
-										.Columns(columns =>
-										{
+                                        .ID("orderGrid")
+                                        .DataSource(ds => ds.WebApi()
+                                            .OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }")
+                                            .RouteName("OrdersApi")
+                                            .LoadAction("Get")
+                                            .InsertAction("Post")
+                                            .UpdateAction("Put")
+                                            .DeleteAction("Delete")
+                                            .Key("Id")
+                                        )
+                                        .ShowBorders(true)
+                                        .Paging(p => p.PageSize(10))
+                                        .FilterRow(f => f.Visible(true))
+                                        .HeaderFilter(f => f.Visible(true))
+                                        .GroupPanel(p => p.Visible(true))
+                                        .Grouping(g => g.AutoExpandAll(false))
+                                        .Sorting(s => s.Mode(GridSortingMode.Single))
+                                        .RemoteOperations(true)
+                                        .Columns(columns =>
+                                        {
 
-											columns.AddFor(m => m.CreatedDate).Visible(false).SortOrder(SortOrder.Desc).FormItem(f => f.Visible(false));
+                                            columns.AddFor(m => m.CreatedDate).Visible(false).SortOrder(SortOrder.Desc).FormItem(f => f.Visible(false));
 
-											columns.AddFor(m => m.RegistrationNumber);
+                                            columns.AddFor(m => m.RegistrationNumber);
 
-											columns.AddFor(m => m.CityId).Lookup(lookup => lookup
-												.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("OrdersApi").LoadAction("CityLookup").Key("Value"))
-												.ValueExpr("Value")
-												.DisplayExpr("Text")
-											);
+                                            columns.AddFor(m => m.CityId).Lookup(lookup => lookup
+                                                .DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("OrdersApi").LoadAction("CityLookup").Key("Value"))
+                                                .ValueExpr("Value")
+                                                .DisplayExpr("Text")
+                                            );
 
-											columns.AddFor(m => m.PartnerId).Lookup(lookup => lookup
-												.DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("OrdersApi").LoadAction("PartnerLookup").Key("Value"))
-												.ValueExpr("Value")
-												.DisplayExpr("Text")
-											);
+                                            columns.AddFor(m => m.PartnerId).Lookup(lookup => lookup
+                                                .DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("OrdersApi").LoadAction("PartnerLookup").Key("Value"))
+                                                .ValueExpr("Value")
+                                                .DisplayExpr("Text")
+                                            );
 
-											columns.AddFor(m => m.Email);
+                                            columns.AddFor(m => m.Email);
 
-											columns.AddFor(m => m.Referral);
+                                            columns.AddFor(m => m.Referral);
 
-											columns.AddFor(m => m.Passengers);
+                                            columns.AddFor(m => m.Passengers);
 
-											columns.AddFor(m => m.Language);
+                                            columns.AddFor(m => m.Language);
 
-											columns.AddFor(m => m.MailSent);
+                                            columns.AddFor(m => m.MailSent);
 
-											columns.AddFor(m => m.Comments);
-										})
-										 .MasterDetail(md =>
-											{
-												md.Enabled(true);
-												md.Template(@<text>
+                                            columns.AddFor(m => m.Comments);
+                                        })
+                                         .MasterDetail(md =>
+                                         {
+                                         md.Enabled(true);
+                                         md.Template(@<text>
 													<div class="master-detail-caption"><h2>OrderStopovers for Order <%= data.RegistrationNumber%>:</h2></div>
 													@Html.Partial("_OrderStopoversForOrder")
 													<hr style="clear:both" />
@@ -124,5 +136,54 @@
 				};
 			}
 		});
-	}
+    }
+
+	$("#findOrders").click(function() {
+	    var token = $.cookie("access_token");
+        var queryString = $("#queryStr").val();
+        if (queryString === null || queryString === "") {
+            $("#orderGrid").dxDataGrid("instance").filter(null);
+            return;
+        }
+	    $("#orderGrid").dxDataGrid("instance").filter(null);
+
+        //get response from api, form filter string
+	    $.ajax({
+	        url: '/api/Order/FindOrders?queryString='+queryString,
+	        type: 'GET',
+	        headers: { Authorization: 'Bearer ' + token },
+	        contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                //form filter string for all orderIds here (see below for SAMPLE with "or" in between arrays)
+                var filterParam = formFilterParam(response, response.length - 1, []);
+                console.log(filterParam);
+                $("#orderGrid").dxDataGrid("instance").filter(filterParam);
+	        },
+	        error: function (data) {
+	            alert(data.responseJSON.Message);
+	        }
+	    });
+       
+	    //
+        //$("#orderGrid").dxDataGrid("instance").filter([["RegistrationNumber", "contains", queryString]]);
+        //alert('findOrders click');
+    }); 
+
+    function formFilterParam(response, n, result) {
+        if (n === 0) {
+            if (response[n] != null) {
+                var operand = ["Id", "=", response[n]];
+                result.push(operand);
+                return result;
+            } else {
+                return result;
+            }
+        }
+
+        result.push(["Id", "=", response[n]]);
+        result.push("or");
+        return formFilterParam(response, n - 1, result);
+    }
+	    
+	
 </script>

@@ -65,6 +65,12 @@ namespace StopoverAdminPanel.Models.Controllers
 			var values = form.Get("values");
 			JsonConvert.PopulateObject(values, model);
 
+		    var orderRequestForStopoverData = _context.OrderRequests.First(o => o.Id == model.OrderId);
+		    if (orderRequestForStopoverData.RequestStatus == 2)
+		    {
+		        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Cannot Edit Confirmed Order Request");
+            }
+
 			//Validate(model);
 			if (!ModelState.IsValid)
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, GetFullErrorMessage(ModelState));

@@ -25,6 +25,12 @@
 
 			columns.AddFor(m => m.Id);
 
+		    columns.AddFor(m => m.CityId).Lookup(lookup => lookup
+		        .DataSource(ds => ds.WebApi().OnBeforeSend("function(method, ajaxOptions) { onBeforeSendSetToken(ajaxOptions); }").RouteName("HotelsApi").LoadAction("CityLookup").Key("Value"))
+		        .ValueExpr("Value")
+		        .DisplayExpr("Text")
+		        );
+
 			columns.AddFor(m => m.PassengerAmount);
 
 			columns.AddFor(m => m.Price);

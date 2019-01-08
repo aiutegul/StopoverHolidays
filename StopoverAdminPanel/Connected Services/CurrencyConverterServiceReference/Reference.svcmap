@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="04cea051-bfe5-4343-80ea-fe9676899e2b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://ecomala:105/CurrencyConverterWCF.Service.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CurrencyConverterWCF.disco" MetadataType="Disco" ID="a65aedca-7c7f-4695-9de1-b9f7b86576f3" SourceId="1" SourceUrl="http://ecomala:105/CurrencyConverterWCF.Service.svc?disco" />
+    <MetadataFile FileName="CurrencyConverterWCF.xsd" MetadataType="Schema" ID="10b8cf9b-d6c8-4d9e-bc2c-d7914a1a449b" SourceId="1" SourceUrl="http://ecomala:105/CurrencyConverterWCF.Service.svc?xsd=xsd1" />
+    <MetadataFile FileName="Service.wsdl" MetadataType="Wsdl" ID="62f3830e-7aff-4909-af9c-81dc991881a6" SourceId="1" SourceUrl="http://ecomala:105/CurrencyConverterWCF.Service.svc?wsdl" />
+    <MetadataFile FileName="CurrencyConverterWCF1.xsd" MetadataType="Schema" ID="4fda5d8f-6759-417c-b8ed-483c5138b4d4" SourceId="1" SourceUrl="http://ecomala:105/CurrencyConverterWCF.Service.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

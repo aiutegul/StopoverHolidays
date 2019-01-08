@@ -191,6 +191,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\CurrencyConverterServiceReference\CurrencyConverterWCF.disco" />
+    <None Include="Connected Services\CurrencyConverterServiceReference\configuration91.svcinfo" />
+    <None Include="Connected Services\CurrencyConverterServiceReference\configuration.svcinfo" />
+    <None Include="Connected Services\CurrencyConverterServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.AuthenticateResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -233,6 +240,13 @@
     <Content Include="Connected Services\StopoverHolidaysServiceReference\StopoverAdminPanel.StopoverHolidaysServiceReference.ThirdStepResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Connected Services\CurrencyConverterServiceReference\CurrencyConverterWCF.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CurrencyConverterServiceReference\CurrencyConverterWCF1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CurrencyConverterServiceReference\Service.wsdl" />
     <None Include="Connected Services\StopoverHolidaysServiceReference\configuration91.svcinfo" />
     <None Include="Connected Services\StopoverHolidaysServiceReference\configuration.svcinfo" />
     <None Include="Connected Services\StopoverHolidaysServiceReference\Reference.svcmap">
@@ -498,6 +512,11 @@
     <Compile Include="Auth\SimpleAuthorizationProvider.cs" />
     <Compile Include="Auth\Token.cs" />
     <Compile Include="Auth\UserModel.cs" />
+    <Compile Include="Connected Services\CurrencyConverterServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\StopoverHolidaysServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -532,6 +551,7 @@
     <Compile Include="Controllers\PromoUsedBookingReferencesController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\RoomTypesController.cs" />
+    <Compile Include="Controllers\StopoverPassengerMVCController.cs" />
     <Compile Include="Controllers\StopoverPassengersController.cs" />
     <Compile Include="Controllers\TransfersController.cs" />
     <Compile Include="Controllers\TranslationsController.cs" />
@@ -564,6 +584,9 @@
       <DependentUpon>StopoverDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Config.cs">
+      <DependentUpon>StopoverDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\database_firewall_rules.cs">
       <DependentUpon>StopoverDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ExtraRoomPrice.cs">
@@ -646,6 +669,9 @@
     <Compile Include="Models\StopoverPassenger.cs">
       <DependentUpon>StopoverDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StopoverSearch_v.cs">
+      <DependentUpon>StopoverDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Transfer.cs">
       <DependentUpon>StopoverDbContext.tt</DependentUpon>
     </Compile>
@@ -661,6 +687,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Libs\" />
+    <Folder Include="Views\StopoverPassengerMVC\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -669,6 +696,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\CurrencyConverterServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\StopoverHolidaysServiceReference\" />
   </ItemGroup>
   <PropertyGroup>

@@ -27,6 +27,7 @@ namespace StopoverAdminPanel.Models.Controllers
 				i.CreatedDate,
 				i.UpdatedDate,
 				i.DeletedDate,
+                i.CityId,
 				i.PassengerAmount,
 				i.Price,
 				i.Comments
