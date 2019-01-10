@@ -45,6 +45,8 @@
                                         .GroupPanel(p => p.Visible(true))
                                         .Grouping(g => g.AutoExpandAll(false))
                                         .Sorting(s => s.Mode(GridSortingMode.Single))
+                                        .Selection(s => s.Mode(SelectionMode.Multiple))
+                                        .HoverStateEnabled(true)
                                         .RemoteOperations(true)
                                         .Columns(columns =>
                                         {
@@ -123,7 +125,8 @@
 	}
 
 	function ToolbarPreparing (e) {
-		var toolbarItems = e.toolbarOptions.items;
+        var toolbarItems = e.toolbarOptions.items;
+	    var token = $.cookie("access_token");
 		$.each(toolbarItems, function (_, item) {
 			if (item.name === "addRowButton") {
 				item.options.onClick = function (args) {
@@ -135,7 +138,37 @@
 					window.location.href = window.applicationBaseUrl + "Main/OrderRequests";
 				};
 			}
-		});
+        });
+
+	    toolbarItems.unshift({
+	        location: 'after',
+	        widget: 'dxButton',
+            options: {
+                text: "Send",
+	            icon: "doc",
+	            type: 'normal',
+	            hint: 'Send Voucher(s)',
+                onClick: function () {
+                    var selectedOrderIds = $("#orderGrid").dxDataGrid("instance").getSelectedRowKeys();
+                    console.log(selectedOrderIds);
+	                $.ajax({
+	                    url: '/api/Order/SendVouchers',
+	                    type: 'POST',
+	                    headers: { Authorization: 'Bearer ' + token },
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(selectedOrderIds),
+	                    success: function (response) {
+	                        console.log(response);
+	                    },
+	                    error: function (data) {
+	                        alert(data.responseJSON.Message);
+	                    }
+	                });
+
+	            }
+	        }
+
+	    });
     }
 
 	$("#findOrders").click(function() {

@@ -143,7 +143,35 @@ namespace StopoverAdminPanel.Models.Controllers
 	        return Request.CreateResponse(HttpStatusCode.OK, orderIDs);
 	    }
 
-		protected override void Dispose(bool disposing)
+	    [HttpPost]
+	    [Authorize(Roles = "Admin, Office")]
+	    public HttpResponseMessage SendVouchers([FromBody]int[] orderIds)
+	    {
+	        if (orderIds == null || orderIds.Length == 0)
+	        {
+	            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "No orders selected!");
+	        }
+	        using (StopoverHolidaysServiceReference.StopoverHolidaysServiceClient client =
+	            new StopoverHolidaysServiceReference.StopoverHolidaysServiceClient())
+	        {
+	            for (int i = 0; i < orderIds.Length; i++)
+	            {
+	                try
+	                {
+	                    client.SendVoucherTo(orderIds[i], "hotel");
+	                }
+	                catch (Exception e)
+	                {
+	                    Request.CreateErrorResponse(HttpStatusCode.BadRequest, e.Message);
+                    }
+	                
+	            }
+	        }
+
+	        return Request.CreateResponse(HttpStatusCode.OK, "Vouchers sent");
+	    }
+
+        protected override void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
